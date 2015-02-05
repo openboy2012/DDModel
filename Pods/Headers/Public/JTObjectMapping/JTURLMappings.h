@@ -1,0 +1,1 @@
+../../../JTObjectMapping/JTObjectMapping/Source/JTURLMappings.h

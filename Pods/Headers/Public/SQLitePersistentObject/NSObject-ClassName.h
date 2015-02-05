@@ -1,0 +1,1 @@
+../../../SQLitePersistentObject/DDSQLiteKit/SQLitePersistentObject/NSObject-ClassName.h
