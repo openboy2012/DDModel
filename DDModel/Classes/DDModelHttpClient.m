@@ -32,10 +32,18 @@ static int hudCount = 0;
     static DDModelHttpClient *client = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        client = [[DDModelHttpClient alloc] initWithBaseURL:[NSURL URLWithString:kAppUrl]];
+        NSURL *clientURL = [NSURL URLWithString:kAppUrl];
+        if([clientURL.scheme isEqualToString:@"https"]){
+            client.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+        }
+        if(!clientURL.host){
+            NSLog(@"you have lost the method 'startWithURL:' or 'startWithURL:delegate:' in lanuching AppDelegate");
+        }
+        client = [[DDModelHttpClient alloc] initWithBaseURL:clientURL];
         
         //instance the ddHttpQueueDictionary
         client.ddHttpQueueDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+        
     });
     return client;
 }

@@ -21,8 +21,6 @@
     
     [DDModelHttpClient startWithURL:@"https://api.app.net/" delegate:self];
     
-    [DDModelHttpClient sharedInstance].securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-    
     return YES;
 }
 
