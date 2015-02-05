@@ -5,7 +5,7 @@ a HTTP-JSON-ORM-Persisent Object Kit
 How to use
 ----
 ###get code
-1.pod search DDModel.  the lasted version is 0.1 (new version waiting more....).
+1.pod search DDModel.  the lasted version is 0.1.1 (new version waiting more....).  
 2.clone the master then copy the files in Classes document to your project.  
 
 ###use code
@@ -14,12 +14,15 @@ How to use
 
 中文解释
 ====
-闪动的数字用UILabel的分类实现
+一个封装了HTTP、SQLite持久化、实现ORM的Model类
 
 如何使用
 ----
-1.用Pod搜索FlickerNumber。  
-2.克隆该项目master到本地，然后复制项目中的Classes的Category文件到你的项目中去。  
+### 获得代码
+1.用Pod搜索DDModel。最新版本是0.1.1版本（代码版本持续更新中，喜欢的请加星或者follow本人）。  
+2.克隆该项目master到本地，然后复制项目中的Classes中的文件到你的项目中去。 
+
+### 代码使用
 
 
 LICENSE(软件许可)
