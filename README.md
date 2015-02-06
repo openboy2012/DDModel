@@ -19,7 +19,7 @@ you also can initialized a clinet with the 'startWithURL:delegate:' if you want 
 3.create any entity inherit DDModel Class.
   define the property according the JSON value Property. e.g. {"name":"DeJohn",email:"dongjia_9251@126.com"},your property is name & email, the JSON string will immediately convert to entity.
   create your custom http request methods in the created entity class for get the initialzed entity from server  
-  override the 'parseNode:' & 'parseMappings' if you need.
+  override the 'parseNode:' & 'parseMappings' if you need.  
 4.please see more in the Demo Project.
 
 中文解释
