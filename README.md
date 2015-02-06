@@ -9,7 +9,7 @@ You can also use custom parse methods
 How to use
 ----
 ###get code
-1.pod search DDModel.  the lasted version is 0.1.1 (new version waiting more....).  
+1.pod search DDModel.  the lasted version is 0.1.1 (new version to be continue...).  
 2.clone the master then copy the files in Classes document to your project.  
 
 ###use code
