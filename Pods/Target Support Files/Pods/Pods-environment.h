@@ -63,6 +63,6 @@
 // SQLitePersistentObject
 #define COCOAPODS_POD_AVAILABLE_SQLitePersistentObject
 #define COCOAPODS_VERSION_MAJOR_SQLitePersistentObject 0
-#define COCOAPODS_VERSION_MINOR_SQLitePersistentObject 1
+#define COCOAPODS_VERSION_MINOR_SQLitePersistentObject 2
 #define COCOAPODS_VERSION_PATCH_SQLitePersistentObject 0
 

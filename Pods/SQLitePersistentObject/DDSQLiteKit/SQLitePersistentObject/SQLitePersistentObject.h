@@ -19,10 +19,9 @@
 // ----------------------------------------------------------------------
 
 #import <Foundation/Foundation.h>
-//#import "/usr/include/sqlite3.h"
 #import <sqlite3.h>
 
-#if (! TARGET_OS_IPHONE)
+#if (!TARGET_OS_IPHONE)
 #import <objc/objc-runtime.h>
 #else
 #import <objc/runtime.h>
@@ -44,7 +43,6 @@
     static NSDictionary *propertiesWithEncodedTypesDict = nil; \
     if(!propertiesWithEncodedTypesDict) { \
       propertiesWithEncodedTypesDict = [super propertiesWithEncodedTypes]; \
-      [propertiesWithEncodedTypesDict retain]; \
     } \
     return propertiesWithEncodedTypesDict; \
   }
@@ -58,6 +56,12 @@
  
  */
 // TODO: Look at marking object "dirty" when changes are made, and if it's not dirty, save becomes a no-op.
+
+
+#if NS_BLOCKS_AVAILABLE
+typedef void(^ DBQueryResult)(id data);
+#endif
+
 
 @class SQLiteInstanceManager;
 
@@ -80,17 +84,17 @@
 /*!
  Find by criteria lets you specify the SQL conditions that will be used. The string passed in should start with the word WHERE. So, to search for a value with a pk value of 1, you would pass in @"WHERE pk = 1". When comparing to strings, the string comparison must be in single-quotes like this @"WHERE name = 'smith'".
  */
-+(NSArray *)findByCriteria:(NSString *)criteriaString, ...;
-+(SQLitePersistentObject *)findFirstByCriteria:(NSString *)criteriaString, ...;
-+(SQLitePersistentObject *)findByPK:(int)inPk;
-+(NSArray *)allObjects;
++ (NSArray *)findByCriteria:(NSString *)criteriaString, ...;
++ (SQLitePersistentObject *)findFirstByCriteria:(NSString *)criteriaString, ...;
++ (SQLitePersistentObject *)findByPK:(int)inPk;
++ (NSArray *)allObjects;
 
 /*!
  Find related objects
  */
--(NSArray *)findRelated:(Class)cls forProperty:(NSString *)prop filter:(NSString *)filter, ...;
--(NSArray *)findRelated:(Class)cls filter:(NSString *)filter, ...;
--(NSArray *)findRelated:(Class)cls;
+- (NSArray *)findRelated:(Class)cls forProperty:(NSString *)prop filter:(NSString *)filter, ...;
+- (NSArray *)findRelated:(Class)cls filter:(NSString *)filter, ...;
+- (NSArray *)findRelated:(Class)cls;
 
 
 // Allows easy execution of SQL commands that return a single row, good for getting sums and averages of a single property
@@ -99,29 +103,29 @@
  This method should be overridden by subclasses in order to specify performance indices on the underyling table. 
  @result Should return an array of arrays. Each array represents one index, and should contain a list of the properties that the index should be created on, in the order the database should use to create it. This is case sensitive, and the values must match the value of property names
  */
-+(NSArray *)indices;
++ (NSArray *)indices;
 
 /*!
  This method should be overridden by subclasses in order to specify transient properties on the underlying table. 
  @result Should return an array of property names to be ignored.  These are case sensitive, and the values must match the value of property names
  */
-+(NSArray *)transients;
++ (NSArray *)transients;
 
 // This method returns a list of the names of thecolumns actually used in the database 
 // table backing this class. It's used to make sure that all properties have a corresponding column 
-+(NSArray *)tableColumns;
++ (NSArray *)tableColumns;
 
 /*!
  Deletes this object's corresponding row from the database table. This version does NOT cascade to child objects in other tables.
  */
--(void)deleteObject;
-+(void)deleteObject:(int)pk cascade:(BOOL)cascade;
+- (void)deleteObject;
++ (void)deleteObject:(int)pk cascade:(BOOL)cascade;
 
 /*!
  Deletes this object's corresponding row from the database table.
  @param cascade Specifies whether child rows should be also deleted
  */
--(void)deleteObjectCascade:(BOOL)cascade;
+- (void)deleteObjectCascade:(BOOL)cascade;
 
 /*!
  This is just a convenience routine; in several places we have to iterate through the properties and take some action based
@@ -162,52 +166,45 @@
 /*!
  Indicates whether this object has ever been saved to the database. It does not indicate that the data matches what's in the database, just that there is a corresponding row
  */
--(BOOL) existsInDB;
-
-/*!
- Saves this object's current data to the database. If it has never been saved before, it will assign a primary key value based on the database contents. Scalar values (ints, floats, doubles, etc.) will be stored in appropriate database columns, objects will be stored using the SQLitePersistence protocol methods - objects that don't implement that protocol will be archived into the database. Collection clases will be stored in child cross-reference tables that serve double duty. Any object they contain that is a subclass of SQLItePersistentObject will be stored as a foreign key to the appropriate table, otherwise objects will be stored in a column according to SQLitePersistence. Currently, collection classes inside collection classes are simply serialized into the x-ref table, which works, but is not the most efficient means. 
- 
- //TODO: Look at adding recursion of some form to allow collection objects within collection objects to be stored in a normalized fashion
- */
--(void)save;
+- (BOOL)existsInDB;
 
 /*
  * Reverts the object back to database state. Any changes that have been
  * made since the object was loaded are undone.
  */
--(void)revert;
+- (void)revert;
 
 /*
  * Reverts the given property (by name) back to its database state. 
  */
--(void)revertProperty:(NSString *)propName;
+- (void)revertProperty:(NSString *)propName;
 
 /*
  * Reverts an NSArray of property names back to their database states. 
  */
--(void)revertProperties:(NSArray *)propNames;
+- (void)revertProperties:(NSArray *)propNames;
 
 /*!
  Returns this objects primary key
  */
 - (int)pk;
 
-- (BOOL)areAllPropertiesEqual:(SQLitePersistentObject*)object;
+- (BOOL)areAllPropertiesEqual:(SQLitePersistentObject *)object;
 
 + (void)tableCheck;
 
 /*! 
  This method will return a dictionary using the value for one specified field as the key and the pk stored as an NSNumber as the object. This is designed for letting you retrieve a list for display without having to load all objects into memory.
  */
-+(NSMutableDictionary *)sortedFieldValuesWithKeysForProperty:(NSString *)theProp;
++ (NSMutableDictionary *)sortedFieldValuesWithKeysForProperty:(NSString *)theProp;
 
 /*!
  This method will return paired mutable arrays (packed into an array) for each of the specified fields in the theProps array. The number of returned arrays will always be one greater than the number of values in theProps (assuming all of the passed values are valid fields), as the first mutable array will contain the primary key values for the object; the remainder of the arrays will correspond to the props in the same order they were passed in. The paired arrays will containe information at the same index about the same object. The values will be returned as formatted strings, as this method is intended for display in an iPhone table
  */
-+(NSArray *)pairedArraysForProperties:(NSArray *)theProps withCriteria:(NSString *)criteriaString, ...;
-+(NSArray *)pairedArraysForProperties:(NSArray *)theProps;
++ (NSArray *)pairedArraysForProperties:(NSArray *)theProps withCriteria:(NSString *)criteriaString, ...;
++ (NSArray *)pairedArraysForProperties:(NSArray *)theProps;
 
-+(NSArray *)pairedArraySelect:(NSString *)selectString fields:(NSInteger)fieldCount;
++ (NSArray *)pairedArraySelect:(NSString *)selectString fields:(NSInteger)fieldCount;
 
 + (NSInteger)count; 
 + (NSInteger)countByCriteria:(NSString *)criteriaString, ...;
@@ -218,5 +215,44 @@
 
 + (sqlite3 *)database;
 + (SQLiteInstanceManager *)manager;
+
+#pragma mark - DeJohn Dong Added Methods
+/**
+ *  Asynchronous add/update an object to db.
+ */
+- (void)save;
+
+/**
+ *  Asynchronous delete an object from db.
+ */
+- (void)asynDeleteObject;
+
+/**
+ *  Asynchronous delete an object and the cascade objects from db.
+ */
+- (void)asynDeleteObjectCascade:(BOOL)cascade;
+
+/**
+ *  Asynchronous Query the object list with criteria from db.
+ *
+ *  @param criteria criteria string
+ *  @param result   result list
+ */
++ (void)queryByCriteria:(NSString *)criteria result:(DBQueryResult)result;
+
+/**
+ *  Asynchronous Query the first object with criteria from db
+ *
+ *  @param criteria criteria string
+ *  @param result   result object
+ */
++ (void)queryFirstItemByCriteria:(NSString *)criteria result:(DBQueryResult)result;
+
+/**
+ *  Asynchronous Query all the objects from db
+ *
+ *  @param result result list
+ */
++ (void)queryResult:(DBQueryResult)result;
 
 @end

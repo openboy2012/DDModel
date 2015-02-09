@@ -32,6 +32,27 @@
 #import <objc/message.h>
 #endif
 
+/**
+ *  Define db queue name by DeJohn Dong 2015-02-06
+ *
+ *  @return db queue name
+ */
+#define db_queue_name "com.ddkit.db.queue"
+
+/**
+ *  Singleton a dispatch_queue_t by DeJohn Dong 2015-02-16
+ *
+ *  @return a singleton dispatch_queue_t 'ddkit_db_queue'
+ */
+static __unused dispatch_queue_t ddkit_db_queue() {
+    static dispatch_queue_t ddkit_db_queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        ddkit_db_queue = dispatch_queue_create(db_queue_name, DISPATCH_QUEUE_SERIAL);
+    });
+    return ddkit_db_queue;
+}
+
 typedef enum SQLITE3AutoVacuum
 {
     kSQLITE3AutoVacuumNoAutoVacuum = 0,
@@ -55,8 +76,10 @@ typedef enum SQLITE3LockingMode
     sqlite3 *database;
 }
 
-@property (nonatomic, readwrite, retain) NSString *databaseName;
-@property (nonatomic, readwrite, retain) NSString *databaseFilepath;
+@property (nonatomic, readwrite, copy) NSString *databaseName;
+@property (nonatomic, readwrite, copy) NSString *databaseFilepath;
+// add by DeJohn Dong
+@property (nonatomic, strong) NSMutableArray *dbEvents;
 
 + (id)sharedManager;
 - (sqlite3 *)database;

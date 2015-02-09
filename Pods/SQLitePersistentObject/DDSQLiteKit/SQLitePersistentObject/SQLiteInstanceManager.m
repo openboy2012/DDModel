@@ -39,13 +39,14 @@
     static SQLiteInstanceManager *sharedSQLiteManager = nil;
     dispatch_once(&onceToken, ^{
         sharedSQLiteManager = [[self alloc] init];
+        sharedSQLiteManager.dbEvents = [[NSMutableArray alloc] initWithCapacity:0];
     });
     return sharedSQLiteManager;
 }
 
 #pragma mark -
 #pragma mark Public Instance Methods
--(sqlite3 *)database
+- (sqlite3 *)database
 {
     static BOOL first = YES;
     
@@ -71,6 +72,7 @@
     }
     return database;
 }
+
 - (BOOL)tableExists:(NSString *)tableName
 {
     BOOL ret = NO;
@@ -105,8 +107,8 @@
 
 - (void)deleteDatabase
 {
-    NSString* path = [self databaseFilepath];
-    NSFileManager* fm = [NSFileManager defaultManager];
+    NSString *path = [self databaseFilepath];
+    NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:path error:NULL];
     database = NULL;
     [SQLitePersistentObject clearCache];
@@ -127,8 +129,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Private Methods
+#pragma mark -  Private Methods
 
 - (NSString *)databaseFilepath
 {
@@ -147,8 +148,6 @@
     }
     return databaseFilepath;
 }
-
-
 
 - (NSString *)databaseName
 {

@@ -57,10 +57,12 @@ static id aggregateMethodWithCriteriaImp(id self, SEL _cmd, id value)
     double avg = [self performSQLAggregation:query];
     return [NSNumber numberWithDouble:avg];
 }
+
 static id aggregateMethodImp(id self, SEL _cmd, id value)
 {
     return aggregateMethodWithCriteriaImp(self, _cmd, @"");
 }
+
 static id findByMethodImp(id self, SEL _cmd, id value)
 {
     NSString *methodBeingCalled = [NSString stringWithUTF8String:sel_getName(_cmd)];
@@ -92,22 +94,41 @@ static id findByMethodImp(id self, SEL _cmd, id value)
     return [self findByCriteria:queryCondition];
 }
 
-
-
 @interface SQLitePersistentObject (private)
 + (void)tableCheck;
 - (void)setPk:(int)newPk;
 + (NSString *)classNameForTableName:(NSString *)theTable;
-//+ (void)setUpDynamicMethods;
 - (void)makeClean;
 - (void)markDirty;
 - (BOOL)isDirty;
 @end
+
 @interface SQLitePersistentObject (private_memory)
+
 + (void)registerObjectInMemory:(SQLitePersistentObject *)theObject;
 + (void)unregisterObject:(SQLitePersistentObject *)theObject;
 + (NSString *)memoryMapKeyForObject:(int)thePK;
 - (NSString *)memoryMapKey;
+
+@end
+
+@interface SQLitePersistentObject(){
+    NSMutableArray *recursionCheck;
+}
+
+/**
+ *  rename the save method which save object to db synchronous as saveInDB;
+ *  Saves this object's current data to the database. If it has never been saved before, it will assign a primary key value based on the database contents. Scalar values (ints, floats, doubles, etc.) will be stored in appropriate database columns, objects will be stored using the SQLitePersistence protocol methods - objects that don't implement that protocol will be archived into the database. Collection clases will be stored in child cross-reference tables that serve double duty. Any object they contain that is a subclass of SQLItePersistentObject will be stored as a foreign key to the appropriate table, otherwise objects will be stored in a column according to SQLitePersistence. Currently, collection classes inside collection classes are simply serialized into the x-ref table, which works, but is not the most efficient means.
+ 
+ //TODO: Look at adding recursion of some form to allow collection objects within collection objects to be stored in a normalized fashion
+ */
+- (void)saveInDB;
+
+/**
+ *  runLoop DB Hanlder add by DeJohn Dong
+ */
++ (void)runLoopDBHandler;
+
 @end
 
 NSMutableDictionary *objectMap;
@@ -115,8 +136,8 @@ NSMutableArray *checkedTables;
 
 @implementation SQLitePersistentObject
 
-#pragma mark -
-#pragma mark Public Class Methods
+#pragma mark -  Public Class Methods
+
 + (double)performSQLAggregation: (NSString *)query, ...
 {
     double ret = -1.0;
@@ -170,10 +191,12 @@ NSMutableArray *checkedTables;
             return [array objectAtIndex:0];
     return  nil;
 }
+
 + (NSInteger)count
 {
     return [self countByCriteria:@""];
 }
+
 + (NSInteger)countByCriteria:(NSString *)criteriaString, ...
 {
     [self tableCheck];
@@ -199,10 +222,12 @@ NSMutableArray *checkedTables;
     sqlite3_finalize(statement);
     return countOfRecords;
 }
+
 + (NSArray *)allObjects
 {
     return [[self class] findByCriteria:@""];
 }
+
 + (void)deleteObject:(int)inPk cascade:(BOOL)cascade
 {
     if(inPk < 0)
@@ -215,6 +240,7 @@ NSMutableArray *checkedTables;
     [objToDelete deleteObjectCascade:cascade];
     
 }
+
 + (SQLitePersistentObject *)findByPK:(int)inPk
 {
     SQLitePersistentObject *ret = nil;
@@ -238,6 +264,7 @@ NSMutableArray *checkedTables;
     va_list argumentList;
     va_start(argumentList, criteriaString);
     NSString *queryString = [[NSString alloc] initWithFormat:criteriaString arguments:argumentList];
+    va_end(argumentList);
     
     NSString *query = [NSString stringWithFormat:@"SELECT pk,* FROM %@ %@", [[self class] tableName], queryString];
     
@@ -575,10 +602,12 @@ NSMutableArray *checkedTables;
     sqlite3_finalize(statement);
     return ret;
 }
+
 + (NSArray *)pairedArraysForProperties:(NSArray *)theProps
 {
     return [self pairedArraysForProperties:theProps withCriteria:@""];
 }
+
 + (NSArray *)pairedArraysForProperties:(NSArray *)theProps withCriteria:(NSString *)criteriaString, ...
 {
     NSMutableArray *ret = [NSMutableArray array];
@@ -595,6 +624,7 @@ NSMutableArray *checkedTables;
     va_list argumentList;
     va_start(argumentList, criteriaString);
     NSString *queryString = [[NSString alloc] initWithFormat:criteriaString arguments:argumentList];
+    va_end(argumentList);
     
     [query appendFormat:@" FROM %@ %@ ORDER BY PK", [[self class] tableName], queryString];
     
@@ -696,7 +726,7 @@ NSMutableArray *checkedTables;
     int i;
     
     // Loop through properties and add declarations for the create
-    for (i=0; i < outCount; i++)
+    for (i = 0; i < outCount; i++)
     {
 #ifndef TARGET_OS_COCOTRON
         objc_property_t oneProp = propList[i];
@@ -729,13 +759,15 @@ NSMutableArray *checkedTables;
 #endif
     return theProps;
 }
-#pragma mark -
-#pragma mark Public Instance Methods
+
+#pragma mark - Public Instance Methods
+
 - (int)pk
 {
     return pk;
 }
-- (void)save
+
+- (void)saveInDB
 {
     if (alreadySaving)
         return;
@@ -1250,9 +1282,7 @@ NSMutableArray *checkedTables;
     return [self findRelated:cls forProperty:[[self class] tableName] filter:nil];
 }
 
-NSMutableArray* recursionCheck;
-
-- (BOOL) areAllPropertiesEqual:(SQLitePersistentObject*)object
+- (BOOL)areAllPropertiesEqual:(SQLitePersistentObject *)object
 {
     NSDictionary *theProps = [[self class] propertiesWithEncodedTypes];
     BOOL returnValue = TRUE;
@@ -1288,15 +1318,6 @@ NSMutableArray* recursionCheck;
                fabs([myProperty timeIntervalSinceDate: theirProperty]) < 0.001
                )
                 continue;
-            
-            //      NSMutableString *desc = [[NSMutableString alloc]initWithCapacity:9999];
-            //      [desc appendString:@"\nProperty was not equal:"];
-            //      [desc appendString:prop];
-            //      [desc appendString:@" = "];
-            //      [desc appendString:[myProperty description]];
-            //      [desc appendString:@" was not equal to "];
-            //      [desc appendString:[theirProperty description]];
-            //      NSLog(desc);
             returnValue = FALSE;
         }
         
@@ -1317,14 +1338,12 @@ NSMutableArray* recursionCheck;
     return returnValue;
 }
 
-#pragma mark -
-#pragma mark NSObject Overrides
+#pragma mark -  NSObject Overrides
+
 + (BOOL)resolveClassMethod:(SEL)theMethod
 {
     @synchronized(self)
     {
-        
-        
         const char *methodName = sel_getName(theMethod);
         //NSString *methodBeingCalled = [[NSString alloc] initWithUTF8String:methodName];
         NSString *methodBeingCalled = [NSString stringWithUTF8String:methodName];
@@ -1479,18 +1498,22 @@ NSMutableArray* recursionCheck;
     
     return ret;
 }
+
 - (void)markDirty
 {
     dirty = YES;
 }
+
 - (void)makeClean
 {
     dirty = NO;
 }
+
 - (BOOL)isDirty
 {
     return dirty;
 }
+
 + (NSString *)tableName
 {
     static NSMutableDictionary *tableNamesByClass = nil;
@@ -1520,7 +1543,8 @@ NSMutableArray* recursionCheck;
     [tableNamesByClass setObject:ret forKey:[self className]];
     return ret;
 }
-+(NSArray *)tableColumns
+
++ (NSArray *)tableColumns
 {
     NSMutableArray *ret = [NSMutableArray array];
     // pragma table_info(i_c_project);
@@ -1540,7 +1564,8 @@ NSMutableArray* recursionCheck;
     return ret;
     
 }
-+(void)tableCheck
+
++ (void)tableCheck
 {
     NSArray *theTransients = [[self class] transients];
     
@@ -1556,7 +1581,7 @@ NSMutableArray* recursionCheck;
         sqlite3 *database = [self database];
         NSMutableString *createSQL = [NSMutableString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (pk INTEGER PRIMARY KEY",[self tableName]];
         
-        NSDictionary* props = [[self class] propertiesWithEncodedTypes];
+        NSDictionary *props = [[self class] propertiesWithEncodedTypes];
         for (NSString *oneProp in props)
         { 
             if ([theTransients containsObject:oneProp]) continue;
@@ -1744,13 +1769,13 @@ NSMutableArray* recursionCheck;
         }
     }
 }
+
 - (void)setPk:(int)newPk
 {
     pk = newPk;
 }
 
-#pragma mark -
-#pragma mark Multi-DB Support
+#pragma mark -  Multi-DB Support
 + (sqlite3 *)database
 {
     return [[SQLiteInstanceManager sharedManager] database];
@@ -1761,8 +1786,11 @@ NSMutableArray* recursionCheck;
     return [SQLiteInstanceManager sharedManager];
 }
 
-#pragma mark -
-#pragma mark KV
++ (NSMutableArray *)dbEvents{
+    return [[SQLiteInstanceManager sharedManager] dbEvents];
+}
+
+#pragma mark - KV
 - (void)takeValuesFromDictionary:(NSDictionary *)properties
 {
     [self markDirty];
@@ -1778,24 +1806,27 @@ NSMutableArray* recursionCheck;
     [self markDirty];
     [super setValue:value forKey:key];
 }
-#pragma mark -
-#pragma mark Memory Map Methods
+
+#pragma mark -  Memory Map Methods
+
 + (NSString *)memoryMapKeyForObject:(int)thePK
 {
     return [NSString stringWithFormat:@"%@-%d", [self className], thePK];
 }
+
 - (NSString *)memoryMapKey
 {
     return [[self class] memoryMapKeyForObject:[self pk]];
 }
+
 + (void)registerObjectInMemory:(SQLitePersistentObject *)theObject
 {
     if (objectMap == nil)
         objectMap = [[NSMutableDictionary alloc] init];
     
     [objectMap setObject:theObject forKey:[theObject memoryMapKey]];
-    
 }
+
 + (void)unregisterObject:(SQLitePersistentObject *)theObject
 {
     if (objectMap == nil)
@@ -1807,4 +1838,107 @@ NSMutableArray* recursionCheck;
         [objectMap removeObjectForKey:[theObject memoryMapKey]]; 
     }
 }
+
+#pragma mark - DeJohn Dong's Aysnchronous Methods
+
+#define ddObject @"object"
+#define ddParameters @"params"
+#define ddPerformerMethod @"performMethod"
+#define ddType @"type"
+#define ddCriteria @"criteria"
+#define ddBlock @"block"
+#define ddClass @"classType"
+
+- (void)save{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dictionary setObject:self forKey:ddObject];
+    SEL saveSEL = @selector(saveInDB);
+    [dictionary setObject:[NSValue valueWithBytes:&saveSEL objCType:@encode(SEL)] forKey:ddPerformerMethod];
+    [[[self class] dbEvents] addObject:dictionary];
+    [[self class] runLoopDBHandler];
+}
+
+- (void)asynDeleteObject{
+    [self asynDeleteObjectCascade:NO];
+}
+
+- (void)asynDeleteObjectCascade:(BOOL)cascade{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dictionary setObject:self forKey:ddObject];
+    SEL saveSEL = @selector(deleteObjectCascade:);
+    [dictionary setObject:[NSValue valueWithBytes:&saveSEL objCType:@encode(SEL)] forKey:ddPerformerMethod];
+    [dictionary setObject:@(cascade) forKey:ddParameters];
+    [[[self class] dbEvents] addObject:dictionary];
+    [[self class] runLoopDBHandler];
+}
+
++ (void)queryByCriteria:(NSString *)criteria result:(DBQueryResult)result{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dictionary setObject:[self class] forKey:ddClass];
+    [dictionary setObject:criteria?:@"" forKey:ddCriteria];
+    [dictionary setObject:@"Query" forKey:ddType];
+    [dictionary setObject:result forKey:ddBlock];
+    [[self dbEvents] insertObject:dictionary atIndex:0];
+    [self runLoopDBHandler];
+}
+
++ (void)queryFirstItemByCriteria:(NSString *)criteria result:(DBQueryResult)result{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dictionary setObject:[self class] forKey:ddClass];
+    [dictionary setObject:criteria?:@"" forKey:ddCriteria];
+    [dictionary setObject:@"QueryFirst" forKey:ddType];
+    [dictionary setObject:result forKey:ddBlock];
+    [[self dbEvents] insertObject:dictionary atIndex:0];
+    [self runLoopDBHandler];
+}
+
++  (void)queryResult:(DBQueryResult)result{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dictionary setObject:self forKey:ddClass];
+    [dictionary setObject:@"Query" forKey:ddType];
+    [dictionary setObject:result forKey:ddBlock];
+    [[self dbEvents] insertObject:dictionary atIndex:0];
+    [self runLoopDBHandler];
+}
+
+#pragma mark - DeJohn Dong's DB RunLoop Methods
+
++ (void)runLoopDBHandler{
+    dispatch_async(ddkit_db_queue(), ^{
+        while ([[self class] dbEvents].count > 0 && [self database]){
+            NSDictionary *dict = [[self class] dbEvents][0];
+            if([dict[ddType] isEqualToString:@"Query"]){
+                Class cla = dict[ddClass];
+                NSArray *array = [cla findByCriteria:dict[ddCriteria]?:@""];
+                if(dict[ddBlock]){
+                    DBQueryResult result = dict[ddBlock];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        result(array);
+                    });
+                }
+            }else if([dict[ddType] isEqualToString:@"QueryFirst"]){
+                id cla = dict[ddClass];
+                __typeof(cla) item = [[cla class] findFirstByCriteria:dict[ddCriteria]?:@""];
+                if(dict[ddBlock]){
+                    DBQueryResult result = dict[ddBlock];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        result(item);
+                    });
+                }
+            }else{
+                SEL outSelector;
+                [(NSValue *)[dict objectForKey:ddPerformerMethod] getValue:&outSelector];
+                id target = dict[ddObject];
+                if([target respondsToSelector:outSelector]){
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                    [target performSelector:outSelector withObject:dict[ddParameters]];
+#pragma clang diagnostic pop
+                }
+            }
+            [[[self class] dbEvents] removeObject:dict];
+        };
+    });
+}
+
 @end

@@ -48,8 +48,8 @@
 #ifdef TARGET_OS_COCOTRON
   static NSDateFormatter *dateFormatter = nil; 
   if (!dateFormatter) 
-    dateFormatter = [[[NSDateFormatter alloc] initWithDateFormat:
-                      @"%Y-%m-%d %H:%M:%S.%F" allowNaturalLanguage:NO] retain];
+    dateFormatter = [[NSDateFormatter alloc] initWithDateFormat:
+                      @"%Y-%m-%d %H:%M:%S.%F" allowNaturalLanguage:NO]];
   return [dateFormatter stringForObjectValue:self];
 #else
   static NSDateFormatter *dateFormatter = nil;
