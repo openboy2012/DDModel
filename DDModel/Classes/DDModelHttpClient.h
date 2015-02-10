@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <AFHTTPRequestOperationManager.h>
 #import <MBProgressHUD.h>
-
+#import "DDModel.h"
 
 @protocol DDHttpClientDelegate;
 
 @interface DDModelHttpClient : AFHTTPRequestOperationManager
 
 @property (nonatomic, strong) MBProgressHUD *hud;
+@property (nonatomic, strong) NSDictionary *checkKeyValue;
 
 /**
  *  show hud if flag = YES
@@ -112,6 +113,16 @@
  */
 - (NSString *)responseStringHandler:(NSString *)responseString;
 
+/**
+ *   Check the response values is an avaliable value
+ *
+ *  @param values  origin value
+ *  @param failure failure block
+ *
+ *  @return true or false
+ */
+- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure;
+
 @end
 
 @protocol DDHttpClientDelegate <NSObject>
@@ -134,5 +145,15 @@
  *  @return new responseString
  */
 - (NSString *)decodeResponseString:(NSString *)responseString;
+
+/**
+ *  Check the response values is an avaliable value
+ *
+ *  @param values  should check value
+ *  @param failure failure block
+ *
+ *  @return true or false
+ */
+- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure;
 
 @end

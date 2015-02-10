@@ -121,6 +121,13 @@ static int hudCount = 0;
     return responseString;
 }
 
+- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure{
+    if([self.delegate respondsToSelector:@selector(checkResponseValueAvaliable:failure:)]){
+        return [self.delegate checkResponseValueAvaliable:values failure:failure];
+    }
+    return YES;
+}
+
 #pragma mark - HTTP HUD methods
 
 - (void)showHud:(BOOL)flag{

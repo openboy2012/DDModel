@@ -22,6 +22,9 @@
 		8E76A7831A81FB4C00352063 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E76A7821A81FB4C00352063 /* Images.xcassets */; };
 		8E76A7861A81FB4C00352063 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E76A7841A81FB4C00352063 /* LaunchScreen.xib */; };
 		8E76A7921A81FB4C00352063 /* DDModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E76A7911A81FB4C00352063 /* DDModelTests.m */; };
+		8E9AE9DD1A8A3D4A006606F2 /* DDModel.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 8E9AE9DC1A8A3D4A006606F2 /* DDModel.podspec */; };
+		8ED91EB11A8860B800E25CD6 /* NSDictionary+DDUploadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED91EB01A8860B800E25CD6 /* NSDictionary+DDUploadFile.m */; };
+		8ED91EB51A889A6E00E25CD6 /* NSDictionary+DDCheckKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED91EB41A889A6E00E25CD6 /* NSDictionary+DDCheckKeyValue.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +63,11 @@
 		8E76A78B1A81FB4C00352063 /* DDModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DDModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E76A7901A81FB4C00352063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E76A7911A81FB4C00352063 /* DDModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDModelTests.m; sourceTree = "<group>"; };
+		8E9AE9DC1A8A3D4A006606F2 /* DDModel.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DDModel.podspec; sourceTree = "<group>"; };
+		8ED91EAF1A8860B800E25CD6 /* NSDictionary+DDUploadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDUploadFile.h"; sourceTree = "<group>"; };
+		8ED91EB01A8860B800E25CD6 /* NSDictionary+DDUploadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDUploadFile.m"; sourceTree = "<group>"; };
+		8ED91EB31A889A6E00E25CD6 /* NSDictionary+DDCheckKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDCheckKeyValue.h"; sourceTree = "<group>"; };
+		8ED91EB41A889A6E00E25CD6 /* NSDictionary+DDCheckKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDCheckKeyValue.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,7 @@
 		8E76A7691A81FB4C00352063 = {
 			isa = PBXGroup;
 			children = (
+				8E9AE9DC1A8A3D4A006606F2 /* DDModel.podspec */,
 				8E76A7741A81FB4C00352063 /* DDModel */,
 				8E76A78E1A81FB4C00352063 /* DDModelTests */,
 				8E76A7731A81FB4C00352063 /* Products */,
@@ -167,6 +176,7 @@
 		8E76A79B1A81FD9D00352063 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8ED91EAE1A88605900E25CD6 /* Category */,
 				8E0CEF721A82F265005B3196 /* DDModelKit.h */,
 				8E0CEF6C1A820E3C005B3196 /* DDModel.h */,
 				8E0CEF6D1A820E3C005B3196 /* DDModel.m */,
@@ -174,6 +184,17 @@
 				8E0CEF701A820E78005B3196 /* DDModelHttpClient.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		8ED91EAE1A88605900E25CD6 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				8ED91EAF1A8860B800E25CD6 /* NSDictionary+DDUploadFile.h */,
+				8ED91EB01A8860B800E25CD6 /* NSDictionary+DDUploadFile.m */,
+				8ED91EB31A889A6E00E25CD6 /* NSDictionary+DDCheckKeyValue.h */,
+				8ED91EB41A889A6E00E25CD6 /* NSDictionary+DDCheckKeyValue.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +279,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E9AE9DD1A8A3D4A006606F2 /* DDModel.podspec in Resources */,
 				8E76A7811A81FB4C00352063 /* Main.storyboard in Resources */,
 				8E76A7861A81FB4C00352063 /* LaunchScreen.xib in Resources */,
 				8E183C9F1A834CE30005AB69 /* root_ca.cer in Resources */,
@@ -315,12 +337,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ED91EB51A889A6E00E25CD6 /* NSDictionary+DDCheckKeyValue.m in Sources */,
 				8E0CEF711A820E78005B3196 /* DDModelHttpClient.m in Sources */,
 				8E76A77E1A81FB4C00352063 /* ViewController.m in Sources */,
 				8E0CEF6E1A820E3C005B3196 /* DDModel.m in Sources */,
 				8E76A77B1A81FB4C00352063 /* AppDelegate.m in Sources */,
 				8E76A7781A81FB4C00352063 /* main.m in Sources */,
 				8E183C9A1A834B370005AB69 /* Post.m in Sources */,
+				8ED91EB11A8860B800E25CD6 /* NSDictionary+DDUploadFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,13 +8,17 @@
 
 #import "DDModel.h"
 #import "DDModelHttpClient.h"
+#import "NSDictionary+DDUploadFile.h"
+
+#define DDFILE @"fileInfo"
 
 @interface DDModel()
 
 /**
  *  parse the responseString to JSON object
  */
-+ (id)getJSONObjectFromString:(NSString *)responseString;
++ (id)getJSONObjectFromString:(NSString *)responseString
+                      failure:(DDResponseFailureBlock)failure;
 
 /**
  *  conver JSON object to Model
@@ -49,7 +53,7 @@ parentViewController:(id)viewController
                                         [[DDModelHttpClient sharedInstance] hideHud:show];
                                         
                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                        id JSON = [self getJSONObjectFromString:operation.responseString];
+                                        id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
                                         if (success)
                                             success([[self class] convertJsonToObject:JSON]);
                                     }
@@ -86,9 +90,11 @@ parentViewController:(id)viewController
                                          
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          
-                                         id JSON = [self getJSONObjectFromString:operation.responseString];
+                                         id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
+                                         
                                          if (success)
                                              success([[self class] convertJsonToObject:JSON]);
+                                         
                                      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          [[DDModelHttpClient sharedInstance] hideHud:show];
@@ -116,16 +122,14 @@ parentViewController:(id)viewController
     [[DDModelHttpClient sharedInstance] POST:path
                                   parameters:params
                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                       NSString *name = userInfo[@"fileInfo"][@"name"]?:@"uploadFile";
-                       NSString *fileName = userInfo[@"fileInfo"][@"fileName"]?:@"file";
-                       NSString *mineType = userInfo[@"fileInfo"][@"mimeType"]?:@"image/jpg";
-                       [formData appendPartWithFileData:stream name:name fileName:fileName mimeType:mineType];
+                       NSDictionary *uploadInfo = userInfo[DDFILE];
+                       [formData appendPartWithFileData:stream name:uploadInfo.name fileName:uploadInfo.fileName mimeType:uploadInfo.mimeType];
                    }
                                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                          [[DDModelHttpClient sharedInstance] hideHud:show];
                                          
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                         id JSON = [self getJSONObjectFromString:operation.responseString];
+                                         id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
                                          if (success)
                                              success([[self class] convertJsonToObject:JSON]);
                                      }
@@ -133,9 +137,6 @@ parentViewController:(id)viewController
                                          [[DDModelHttpClient sharedInstance] showHud:show];
                                          
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                         if([error code] != kCFURLErrorCancelled){
-                                             NSLog(@"error = %@",error);
-                                         }
                                      }];
     uploadOperation.userInfo = userInfo;
     [[DDModelHttpClient sharedInstance] addOperation:uploadOperation withKey:viewController];
@@ -143,7 +144,7 @@ parentViewController:(id)viewController
 
 #pragma mark -
 
-+ (id)getJSONObjectFromString:(NSString *)responseString{
++ (id)getJSONObjectFromString:(NSString *)responseString failure:(DDResponseFailureBlock)failure{
     
     /**
      *  decode if you should decode responseString
@@ -156,6 +157,9 @@ parentViewController:(id)viewController
     NSDictionary *jsonValue = [NSJSONSerialization JSONObjectWithData:decodeData
                                                               options:NSJSONReadingAllowFragments
                                                                 error:&decodeError];
+    if(![[DDModelHttpClient sharedInstance] checkResponseValue:jsonValue failure:failure]){
+        return @{};
+    }
     return jsonValue?:@{};
 }
 
@@ -192,6 +196,5 @@ parentViewController:(id)viewController
     }
     return [[self class] objectFromJSONObject:data mapping:[[self class] parseMappings]];
 }
-
 
 @end

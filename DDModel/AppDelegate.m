@@ -19,7 +19,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.]
     
-    [DDModelHttpClient startWithURL:@"https://api.app.net/" delegate:self];
+//    [DDModelHttpClient startWithURL:@"https://api.app.net/" delegate:self];
+    
+    [DDModelHttpClient startWithURL:@"http://"];
     
     return YES;
 }
