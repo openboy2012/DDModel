@@ -9,7 +9,7 @@ You can also use custom parse methods
 How to use
 ----
 ###get code
-1.pod search DDModel.  the lasted version is 0.1.1 (new version to be continue...).  
+1.pod search DDModel.  the lasted version is 0.2(new version to be continue...).  
 2.clone the master then copy the files in Classes document to your project.  
 
 ###use code
@@ -29,7 +29,7 @@ you also can initialized a clinet with the 'startWithURL:delegate:' if you want 
 如何使用
 ----
 ### 获得代码
-1.用Pod搜索DDModel。最新版本是0.1.1版本（代码版本持续更新中，喜欢的请加星或者follow本人）。  
+1.用Pod搜索DDModel。最新版本是0.2版本（代码版本持续更新中，喜欢的请加星或者follow本人）。  
 2.克隆该项目master到本地，然后复制项目中的Classes中的文件到你的项目中去。 
 
 ### 代码使用
