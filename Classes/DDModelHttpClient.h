@@ -147,7 +147,8 @@
 - (NSString *)decodeResponseString:(NSString *)responseString;
 
 /**
- *  Check the response values is an avaliable value
+ *  Check the response values is an avaliable value.
+    e.g. You will sign in an account but you press a wrong username/password, server will response a error for you, you can catch them use this protocol methods and handle this error exception.
  *
  *  @param values  should check value
  *  @param failure failure block

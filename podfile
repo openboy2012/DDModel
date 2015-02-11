@@ -1,8 +1,8 @@
-source "https://github.com/CocoaPods/Specs.git"
+source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '6.0'
 
-pod "AFNetworking", "~> 2.5.0"
+pod 'AFNetworking', '~> 2.5.0'
 pod 'SQLitePersistentObject', '~> 0.2'
-pod "JTObjectMapping", "~> 1.1.2" 
-pod "MBProgressHUD","~> 0.9"
+pod 'JTObjectMapping', '~> 1.1.2'
+pod 'MBProgressHUD','~> 0.9'

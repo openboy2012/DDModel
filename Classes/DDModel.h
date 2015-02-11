@@ -106,3 +106,46 @@ parentViewController:(id)viewController
 + (void)cancelRequest:(id)viewController;
 
 @end
+
+@interface DDModel(Deprecated)
+
+
+/**
+ *  First Version Post Methods, now is deprecated
+ *
+ *  @param path       HTTP path
+ *  @param params     get params
+ *  @param postParams post params
+ *  @param view       carray view
+ *  @param success    success block
+ *  @param failure    failure block
+ */
++ (void)post:(NSString *)path
+      params:(id)params
+  postParams:(id)postParams
+  parentView:(id)view
+     success:(DDResponseSuccessBlock)success
+     failure:(DDResponseFailureBlock)failure __deprecated_msg("use' post:params:showHUD:parentViewController:success:failure:' method replace");
+/**
+ *  Parse self to a dictionary (deprecated)
+ *
+ *  @return a dictionary of self
+ */
+- (NSDictionary *)propertiesOfSelf __deprecated;
+
+/**
+ *  Parse json node, deprecated
+ *
+ *  @return string key
+ */
++ (NSString *)jsonNode __deprecated_msg("use 'parseNode:' method replace");
+
+/**
+ *  Parse mapping method, deprecated
+ *
+ *  @return a parse mapping dictionary
+ */
++ (NSDictionary *)jsonMappings __deprecated_msg("use 'parseMappings:' method replace");
+
+
+@end

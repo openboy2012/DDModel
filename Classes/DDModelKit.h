@@ -11,5 +11,6 @@
 
     #import "DDModel.h"
     #import "DDModelHttpClient.h"
+    #import "NSDictionary+DDUploadFile.h"
 
 #endif

@@ -7,15 +7,15 @@ Pod::Spec.new do |s|
  s.author   = { 'DeJohn Dong' => 'dongjia_9251@126.com' }
  s.source   = { :git => 'https://github.com/openboy2012/DDModel.git',:tag =>"0.2" }
  s.ios.deployment_target = '6.0'
- s.public_header_files = 'DDModel/Classes/*.h'
- s.source_files = 'DDModel/Classes/*.{h,m}'
+ s.public_header_files = 'Classes/*.h'
+ s.source_files = 'Classes/*.{h,m}'
  s.requires_arc = true
  s.dependency 'AFNetworking','~>2.5.0'
  s.dependency 'SQLitePersistentObject','~>0.2'
  s.dependency 'JTObjectMapping','~>1.1.2'
  s.dependency 'MBProgressHUD','~> 0.9'
- s.subspec 'Category' do |category|
-  category.source_files = 'Classes/Category/*.{h,m}'
+ s.subspec 'Category' do |ss|
+  ss.source_files = '{NS}*.{h,m}'
  end
 end
 

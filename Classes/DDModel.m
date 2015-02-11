@@ -54,7 +54,7 @@ parentViewController:(id)viewController
                                         
                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                         id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
-                                        if (success)
+                                        if (success && JSON)
                                             success([[self class] convertJsonToObject:JSON]);
                                     }
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -92,7 +92,7 @@ parentViewController:(id)viewController
                                          
                                          id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
                                          
-                                         if (success)
+                                         if (success && JSON)
                                              success([[self class] convertJsonToObject:JSON]);
                                          
                                      }
@@ -130,7 +130,7 @@ parentViewController:(id)viewController
                                          
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
-                                         if (success)
+                                         if (success && JSON)
                                              success([[self class] convertJsonToObject:JSON]);
                                      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -158,7 +158,7 @@ parentViewController:(id)viewController
                                                               options:NSJSONReadingAllowFragments
                                                                 error:&decodeError];
     if(![[DDModelHttpClient sharedInstance] checkResponseValue:jsonValue failure:failure]){
-        return @{};
+        return nil;
     }
     return jsonValue?:@{};
 }
@@ -170,10 +170,24 @@ parentViewController:(id)viewController
 #pragma mark - Object Mapping Handle Methods
 
 + (NSString *)parseNode{
+    //Compatibility to the jsonNode Method in old version
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    if([self jsonNode]){
+        return [self jsonNode];
+    }
+#pragma clang diagnostic pop
     return @"NULL";
 }
 
 + (NSDictionary *)parseMappings{
+    //Compatibile to the jsonMappings Method in old version
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    if([self jsonMappings]){
+        return [self jsonMappings];
+    }
+#pragma clang diagnostic pop
     return nil;
 }
 
@@ -195,6 +209,53 @@ parentViewController:(id)viewController
         return nil;
     }
     return [[self class] objectFromJSONObject:data mapping:[[self class] parseMappings]];
+}
+
+
+@end
+
+@implementation DDModel(Deprecated)
+
++ (NSString *)jsonNode{
+    return @"NULL";
+}
+
++ (NSDictionary *)jsonMappings{
+    return nil;
+}
+
+- (NSDictionary *)propertiesOfSelf{
+    NSMutableDictionary *props = [NSMutableDictionary dictionary];
+    unsigned int outCount, i;
+    objc_property_t *properties = class_copyPropertyList([self class], &outCount);
+    for (i = 0; i < outCount; i++) {
+        objc_property_t property = properties[i];
+        NSString *propertyName = [[NSString alloc] initWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
+        id propertyValue = [self valueForKey:propertyName];
+        if ([propertyValue isKindOfClass:[NSArray class]]){
+            NSMutableArray *list = [NSMutableArray arrayWithCapacity:0];
+            for (id propetyItem in propertyValue) {
+                if([propetyItem isKindOfClass:[DDModel class]]){
+                    [list addObject:[propetyItem propertiesOfSelf]];
+                }else{
+                    if(propetyItem)
+                        [list addObject:propetyItem];
+                }
+            }
+            [props setObject:list forKey:propertyName];
+        }else if ([propertyValue isKindOfClass:[DDModel class]]){
+            [props setObject:[propertyValue propertiesOfSelf] forKey:propertyName];
+        }else{
+            if(propertyValue)
+                [props setObject:propertyValue forKey:propertyName];
+        }
+    }
+    free(properties);
+    return props;
+}
+
++ (void)post:(NSString *)path params:(id)params postParams:(id)postParams parentView:(id)view success:(DDResponseSuccessBlock)success failure:(DDResponseFailureBlock)failure{
+    //depreacted
 }
 
 @end
