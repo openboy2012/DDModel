@@ -16,6 +16,8 @@
 
 + (instancetype)dictionaryWithName:(NSString *)name
                           fileName:(NSString *)fileName
-                          mimeType:(NSDictionary *)mimeType;
+                          mimeType:(NSString *)mimeType;
+
++ (instancetype)defaultFile;
 
 @end

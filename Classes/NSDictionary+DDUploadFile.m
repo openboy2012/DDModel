@@ -14,12 +14,16 @@
 
 @implementation NSDictionary (DDUploadFile)
 
-+ (instancetype)dictionaryWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSDictionary *)mimeType{
++ (instancetype)dictionaryWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType{
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:0];
     [dictionary setObject:name forKey:ddname];
     [dictionary setObject:fileName forKey:ddfile];
-    [dictionary setObject:mimeType forKey:mimeType];
+    [dictionary setObject:mimeType forKey:ddmime];
     return dictionary;
+}
+
++ (instancetype)defaultFile{
+    return [self dictionaryWithName:@"uploadFile" fileName:@"file" mimeType:@"image/jpg"];
 }
 
 - (NSString *)mimeType{
@@ -27,7 +31,7 @@
 }
 
 - (NSString *)fileName{
-    return [self objectForKey:ddmime];
+    return [self objectForKey:ddfile];
 }
 
 - (NSString *)name{

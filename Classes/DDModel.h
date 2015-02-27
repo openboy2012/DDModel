@@ -11,18 +11,26 @@
 #import <NSObject+JTObjectMapping.h>
 
 /**
- *  Basic Success Block callback an object or an object arrays;
+ *  Http Response Success Block callback an object or an object arrays;
  *
  *  @param data an object or an object arrays
  */
 typedef void(^DDResponseSuccessBlock)(id data);
 /**
- *  Basic Failure Block callback an error object & a message object
+ *  Http Response Failure Block callback an error object & a message object
  *
  *  @param error   error
  *  @param message error message
  */
 typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message);
+
+/**
+ *  Http Upload file response success block callback with userinfo & response object
+ *
+ *  @param userInfo userInfo
+ *  @param data     response object
+ */
+typedef void(^DDUploadReponseSuccessBlock)(NSDictionary *userInfo, id data);
 
 @interface DDModel : SQLitePersistentObject
 
@@ -95,7 +103,7 @@ parentViewController:(id)viewController
     userInfo:(id)userInfo
      showHUD:(BOOL)show
 parentViewController:(id)viewController
-     success:(DDResponseSuccessBlock)success
+     success:(DDUploadReponseSuccessBlock)success
      failure:(DDResponseFailureBlock)failure;
 
 /**

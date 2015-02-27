@@ -112,7 +112,7 @@ parentViewController:(id)viewController
     userInfo:(id)userInfo
      showHUD:(BOOL)show
 parentViewController:(id)viewController
-     success:(DDResponseSuccessBlock)success
+     success:(DDUploadReponseSuccessBlock)success
      failure:(DDResponseFailureBlock)failure{
     
     [[DDModelHttpClient sharedInstance] showHud:show];
@@ -123,6 +123,8 @@ parentViewController:(id)viewController
                                   parameters:params
                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                        NSDictionary *uploadInfo = userInfo[DDFILE];
+                       if(!uploadInfo)
+                           uploadInfo = [NSDictionary defaultFile];
                        [formData appendPartWithFileData:stream name:uploadInfo.name fileName:uploadInfo.fileName mimeType:uploadInfo.mimeType];
                    }
                                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -131,7 +133,7 @@ parentViewController:(id)viewController
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
                                          if (success && JSON)
-                                             success([[self class] convertJsonToObject:JSON]);
+                                             success(userInfo,[[self class] convertJsonToObject:JSON]);
                                      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          [[DDModelHttpClient sharedInstance] showHud:show];
