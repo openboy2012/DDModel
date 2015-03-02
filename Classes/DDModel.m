@@ -166,7 +166,7 @@ parentViewController:(id)viewController
 }
 
 + (void)cancelRequest:(id)viewController{
-    [[DDModelHttpClient sharedInstance] cancelOperationWithKey:NSStringFromClass([viewController class])];
+    [[DDModelHttpClient sharedInstance] cancelOperationWithKey:viewController];
 }
 
 #pragma mark - Object Mapping Handle Methods
