@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1CE94457405E247B699B3A15 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6838089F4BD1C8C012F49E /* libPods.a */; };
+		8E0B67351AAD918D0020FD73 /* NSDictionary+DDUploadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B672C1AAD918D0020FD73 /* NSDictionary+DDUploadFile.m */; };
+		8E0B67361AAD918D0020FD73 /* DDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B672F1AAD918D0020FD73 /* DDModel.m */; };
+		8E0B67371AAD918D0020FD73 /* DDModelHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B67311AAD918D0020FD73 /* DDModelHttpClient.m */; };
 		8E183C9A1A834B370005AB69 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E183C991A834B370005AB69 /* Post.m */; };
 		8E183C9D1A834CE30005AB69 /* adn.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9B1A834CE30005AB69 /* adn.cer */; };
 		8E183C9E1A834CE30005AB69 /* adn.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9B1A834CE30005AB69 /* adn.cer */; };
@@ -20,9 +23,6 @@
 		8E76A7831A81FB4C00352063 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E76A7821A81FB4C00352063 /* Images.xcassets */; };
 		8E76A7861A81FB4C00352063 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E76A7841A81FB4C00352063 /* LaunchScreen.xib */; };
 		8E76A7921A81FB4C00352063 /* DDModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E76A7911A81FB4C00352063 /* DDModelTests.m */; };
-		8E82A8321AA495F400C43AA9 /* DDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82A82A1AA495F400C43AA9 /* DDModel.m */; };
-		8E82A8331AA495F400C43AA9 /* DDModelHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82A82C1AA495F400C43AA9 /* DDModelHttpClient.m */; };
-		8E82A8341AA495F400C43AA9 /* NSDictionary+DDUploadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82A82F1AA495F400C43AA9 /* NSDictionary+DDUploadFile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +39,13 @@
 		09B82CB2FC0265BCA81EEC52 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4A6838089F4BD1C8C012F49E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FC4DE19BCFAEA876CA7C5F4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		8E0B672B1AAD918D0020FD73 /* NSDictionary+DDUploadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDUploadFile.h"; sourceTree = "<group>"; };
+		8E0B672C1AAD918D0020FD73 /* NSDictionary+DDUploadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDUploadFile.m"; sourceTree = "<group>"; };
+		8E0B672E1AAD918D0020FD73 /* DDModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModel.h; sourceTree = "<group>"; };
+		8E0B672F1AAD918D0020FD73 /* DDModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDModel.m; sourceTree = "<group>"; };
+		8E0B67301AAD918D0020FD73 /* DDModelHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModelHttpClient.h; sourceTree = "<group>"; };
+		8E0B67311AAD918D0020FD73 /* DDModelHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDModelHttpClient.m; sourceTree = "<group>"; };
+		8E0B67331AAD918D0020FD73 /* DDModelKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModelKit.h; sourceTree = "<group>"; };
 		8E183C981A834B370005AB69 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		8E183C991A834B370005AB69 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		8E183C9B1A834CE30005AB69 /* adn.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = adn.cer; sourceTree = "<group>"; };
@@ -56,13 +63,6 @@
 		8E76A78B1A81FB4C00352063 /* DDModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DDModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E76A7901A81FB4C00352063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E76A7911A81FB4C00352063 /* DDModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDModelTests.m; sourceTree = "<group>"; };
-		8E82A8281AA495F400C43AA9 /* DDModelKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModelKit.h; sourceTree = "<group>"; };
-		8E82A8291AA495F400C43AA9 /* DDModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModel.h; sourceTree = "<group>"; };
-		8E82A82A1AA495F400C43AA9 /* DDModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDModel.m; sourceTree = "<group>"; };
-		8E82A82B1AA495F400C43AA9 /* DDModelHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModelHttpClient.h; sourceTree = "<group>"; };
-		8E82A82C1AA495F400C43AA9 /* DDModelHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDModelHttpClient.m; sourceTree = "<group>"; };
-		8E82A82E1AA495F400C43AA9 /* NSDictionary+DDUploadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDUploadFile.h"; sourceTree = "<group>"; };
-		8E82A82F1AA495F400C43AA9 /* NSDictionary+DDUploadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDUploadFile.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +101,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8E0B672D1AAD918D0020FD73 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				8E0B672B1AAD918D0020FD73 /* NSDictionary+DDUploadFile.h */,
+				8E0B672C1AAD918D0020FD73 /* NSDictionary+DDUploadFile.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
+		8E0B67321AAD918D0020FD73 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				8E0B672E1AAD918D0020FD73 /* DDModel.h */,
+				8E0B672F1AAD918D0020FD73 /* DDModel.m */,
+				8E0B67301AAD918D0020FD73 /* DDModelHttpClient.h */,
+				8E0B67311AAD918D0020FD73 /* DDModelHttpClient.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		8E0B67341AAD918D0020FD73 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8E0B672D1AAD918D0020FD73 /* Category */,
+				8E0B67321AAD918D0020FD73 /* Core */,
+				8E0B67331AAD918D0020FD73 /* DDModelKit.h */,
+			);
+			name = Classes;
+			path = ../Classes;
+			sourceTree = "<group>";
+		};
 		8E76A7691A81FB4C00352063 = {
 			isa = PBXGroup;
 			children = (
@@ -124,7 +155,7 @@
 		8E76A7741A81FB4C00352063 /* DDModel */ = {
 			isa = PBXGroup;
 			children = (
-				8E82A8311AA495F400C43AA9 /* Classes */,
+				8E0B67341AAD918D0020FD73 /* Classes */,
 				8E76A7791A81FB4C00352063 /* AppDelegate.h */,
 				8E76A77A1A81FB4C00352063 /* AppDelegate.m */,
 				8E76A77C1A81FB4C00352063 /* ViewController.h */,
@@ -165,37 +196,6 @@
 				8E76A7901A81FB4C00352063 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		8E82A82D1AA495F400C43AA9 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				8E82A8291AA495F400C43AA9 /* DDModel.h */,
-				8E82A82A1AA495F400C43AA9 /* DDModel.m */,
-				8E82A82B1AA495F400C43AA9 /* DDModelHttpClient.h */,
-				8E82A82C1AA495F400C43AA9 /* DDModelHttpClient.m */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		8E82A8301AA495F400C43AA9 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				8E82A82E1AA495F400C43AA9 /* NSDictionary+DDUploadFile.h */,
-				8E82A82F1AA495F400C43AA9 /* NSDictionary+DDUploadFile.m */,
-			);
-			path = Category;
-			sourceTree = "<group>";
-		};
-		8E82A8311AA495F400C43AA9 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				8E82A8281AA495F400C43AA9 /* DDModelKit.h */,
-				8E82A82D1AA495F400C43AA9 /* Core */,
-				8E82A8301AA495F400C43AA9 /* Category */,
-			);
-			name = Classes;
-			path = ../Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,12 +337,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E82A8331AA495F400C43AA9 /* DDModelHttpClient.m in Sources */,
 				8E76A77E1A81FB4C00352063 /* ViewController.m in Sources */,
-				8E82A8341AA495F400C43AA9 /* NSDictionary+DDUploadFile.m in Sources */,
-				8E82A8321AA495F400C43AA9 /* DDModel.m in Sources */,
+				8E0B67361AAD918D0020FD73 /* DDModel.m in Sources */,
 				8E76A77B1A81FB4C00352063 /* AppDelegate.m in Sources */,
+				8E0B67351AAD918D0020FD73 /* NSDictionary+DDUploadFile.m in Sources */,
 				8E76A7781A81FB4C00352063 /* main.m in Sources */,
+				8E0B67371AAD918D0020FD73 /* DDModelHttpClient.m in Sources */,
 				8E183C9A1A834B370005AB69 /* Post.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

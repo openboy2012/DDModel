@@ -8,9 +8,15 @@ Pod::Spec.new do |s|
  s.source   = { :git => 'https://github.com/openboy2012/DDModel.git',:tag => s.version.to_s}
  s.ios.deployment_target = '6.0'
  s.public_header_files = 'Classes/*.h'
- s.source_files = 'Classes/*'
+ s.source_files = 'Classes/DDModelKit.h'
  s.requires_arc = true
- s.dependency 'AFNetworking','~> 2.5.0'
+ s.subspec 'Core' do |ss|
+    ss.source_files = 'Classes/{DD}*.{h,m}'
+ end
+ s.subspec 'Category' do |ss|
+    ss.source_files = 'Classes/{NS}*.{h,m}'
+ end
+ s.dependency 'AFNetworking','~> 2.5.1'
  s.dependency 'SQLitePersistentObject','~> 0.3'
  s.dependency 'JTObjectMapping','~> 1.1.2'
  s.dependency 'MBProgressHUD','~> 0.9.1'

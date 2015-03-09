@@ -7,11 +7,18 @@
    <Group
       location = "group:Classes"
       name = "Classes">
-      <FileRef
-         location = "group:DDModelKit.h">
-      </FileRef>
       <Group
-         location = "group:Core"
+         location = "container:Classes"
+         name = "Category">
+         <FileRef
+            location = "group:NSDictionary+DDUploadFile.h">
+         </FileRef>
+         <FileRef
+            location = "group:NSDictionary+DDUploadFile.m">
+         </FileRef>
+      </Group>
+      <Group
+         location = "container:Classes"
          name = "Core">
          <FileRef
             location = "group:DDModel.h">
@@ -26,16 +33,9 @@
             location = "group:DDModelHttpClient.m">
          </FileRef>
       </Group>
-      <Group
-         location = "group:Category"
-         name = "Category">
-         <FileRef
-            location = "group:NSDictionary+DDUploadFile.h">
-         </FileRef>
-         <FileRef
-            location = "group:NSDictionary+DDUploadFile.m">
-         </FileRef>
-      </Group>
+      <FileRef
+         location = "group:DDModelKit.h">
+      </FileRef>
    </Group>
    <FileRef
       location = "group:DDModel.xcodeproj">

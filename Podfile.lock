@@ -26,7 +26,7 @@ PODS:
   - XMLDictionary (1.4)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.5.0)
+  - AFNetworking (~> 2.5.1)
   - JTObjectMapping (~> 1.1.2)
   - MBProgressHUD (~> 0.9)
   - SQLitePersistentObject (~> 0.3)
