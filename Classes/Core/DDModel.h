@@ -113,6 +113,11 @@ parentViewController:(id)viewController
  */
 + (void)cancelRequest:(id)viewController;
 
+/**
+ *  Prase self entity into a dictionary
+ *
+ *  @return a dictionary of self entity
+ */
 - (NSDictionary *)propertiesOfObject;
 
 @end

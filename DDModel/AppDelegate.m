@@ -59,6 +59,11 @@
     return params;
 }
 
+- (NSString *)decodeResponseString:(NSString *)responseString{
+    NSLog(@"responseString = %@",responseString);
+    return responseString;
+}
+
 
 #pragma mark - Custom Methods
 
