@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <SQLitePersistentObject.h>
 #import <NSObject+JTObjectMapping.h>
+#import <XMLDictionary.h>
 
 /**
  *  Http Response Success Block callback an object or an object arrays;

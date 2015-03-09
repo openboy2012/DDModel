@@ -9,7 +9,6 @@
 #import "DDModel.h"
 #import "DDModelHttpClient.h"
 #import "NSDictionary+DDUploadFile.h"
-#import <XMLDictionary.h>
 
 #define DDFILE @"fileInfo"
 
