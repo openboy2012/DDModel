@@ -2,8 +2,8 @@
 ps:my English isn't 100% fluent,but I am trying to improve it.
 
 ##a HTTP-JSON-ORM-Persisent Object Kit.  
-DDModel package the http request and inherit SQLitePersisentObject then you can save objects into SQLite immediately, use this model you can reduce the UIViewController & http code coupling.    
-You won't worried how to package http request in your project when you use the DDModelKit in the future.
+DDModel inherit SQLitePersisentObject so you can save objects into SQLite immediately.   
+it package the http request to reduce the UIViewController & http code coupling, you won't worried how to package http request in your project when you use the DDModelKit in the future.
 Your development will be simple.
 
 ##Installation
