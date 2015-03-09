@@ -21,19 +21,22 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - JTObjectMapping (1.1.2)
-  - MBProgressHUD (0.9)
-  - SQLitePersistentObject (0.2)
+  - MBProgressHUD (0.9.1)
+  - SQLitePersistentObject (0.3)
+  - XMLDictionary (1.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5.0)
   - JTObjectMapping (~> 1.1.2)
   - MBProgressHUD (~> 0.9)
-  - SQLitePersistentObject (~> 0.2)
+  - SQLitePersistentObject (~> 0.3)
+  - XMLDictionary (~> 1.4)
 
 SPEC CHECKSUMS:
   AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
   JTObjectMapping: eb39b1ec7ecb7d1079a53595bbe46be8b2ed482b
-  MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
-  SQLitePersistentObject: 7a272a1089792398a1a196708d561f423002c6aa
+  MBProgressHUD: f3747dcbd45a9e855a6b0674550651e0b7ed250c
+  SQLitePersistentObject: bd9c88e2d5507ae5e953e40c01d7ac298a2dcbe2
+  XMLDictionary: 735e81b9a043e220b0d24e9d4f16719606f2e0fc
 
 COCOAPODS: 0.36.0.rc.1

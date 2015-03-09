@@ -58,11 +58,17 @@
 #define COCOAPODS_POD_AVAILABLE_MBProgressHUD
 #define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
-#define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
+#define COCOAPODS_VERSION_PATCH_MBProgressHUD 1
 
 // SQLitePersistentObject
 #define COCOAPODS_POD_AVAILABLE_SQLitePersistentObject
 #define COCOAPODS_VERSION_MAJOR_SQLitePersistentObject 0
-#define COCOAPODS_VERSION_MINOR_SQLitePersistentObject 2
+#define COCOAPODS_VERSION_MINOR_SQLitePersistentObject 3
 #define COCOAPODS_VERSION_PATCH_SQLitePersistentObject 0
+
+// XMLDictionary
+#define COCOAPODS_POD_AVAILABLE_XMLDictionary
+#define COCOAPODS_VERSION_MAJOR_XMLDictionary 1
+#define COCOAPODS_VERSION_MINOR_XMLDictionary 4
+#define COCOAPODS_VERSION_PATCH_XMLDictionary 0
 

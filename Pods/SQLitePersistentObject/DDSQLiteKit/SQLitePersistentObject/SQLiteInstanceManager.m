@@ -107,6 +107,21 @@
 
 - (void)deleteDatabase
 {
+    if(self.dbEvents.count > 0){
+        dispatch_async(ddkit_db_queue(), ^{
+            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+            [dictionary setObject:self forKey:@"object"];
+            SEL methodSEL = @selector(doDeleteDatabase);
+            [dictionary setObject:[NSValue valueWithBytes:&methodSEL objCType:@encode(SEL)] forKey:@"performMethod"];
+            [dictionary setObject:@"removeAllObjects" forKey:@"params"];
+            [self.dbEvents insertObject:dictionary atIndex:0];
+        });
+        return;
+    }
+    [self doDeleteDatabase];
+}
+
+- (void)doDeleteDatabase{
     NSString *path = [self databaseFilepath];
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:path error:NULL];
@@ -119,11 +134,24 @@
     [self executeUpdateSQL:@"VACUUM"];
 }
 
-- (void)executeUpdateSQL:(NSString *) updateSQL
+- (void)executeUpdateSQL:(NSString *)updateSQL
 {
+    if([self.dbEvents count] > 0){
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+        [dictionary setObject:self forKey:@"object"];
+        SEL methodSEL = @selector(executeUpdateSQLWithSQLString:);
+        [dictionary setObject:[NSValue valueWithBytes:&methodSEL objCType:@encode(SEL)] forKey:@"performMethod"];
+        [dictionary setObject:updateSQL?:@"" forKey:@"params"];
+        [self.dbEvents insertObject:dictionary atIndex:0];
+        return;
+    }
+    [self executeUpdateSQLWithSQLString:updateSQL];
+}
+
+- (void)executeUpdateSQLWithSQLString:(NSString *)sqlString{
     char *errorMsg;
-    if (sqlite3_exec([self database],[updateSQL UTF8String] , NULL, NULL, &errorMsg) != SQLITE_OK) {
-        __unused NSString *errorMessage = [NSString stringWithFormat:@"Failed to execute SQL '%@' with message '%s'.", updateSQL, errorMsg];
+    if (sqlite3_exec([self database],[sqlString UTF8String] , NULL, NULL, &errorMsg) != SQLITE_OK) {
+        __unused NSString *errorMessage = [NSString stringWithFormat:@"Failed to execute SQL '%@' with message '%s'.", sqlString, errorMsg];
         NSAssert(0, errorMessage);
         sqlite3_free(errorMsg);
     }

@@ -47,3 +47,22 @@
 }
 
 @end
+
+@implementation Station
+
++ (NSString *)parseNode{
+    return @"Item";
+}
+
++ (NSDictionary *)parseMappings{
+    NSDictionary *mappings = @{@"StationID":@"id",
+                               @"StationName":@"name",
+                               @"StationDescription":@"desc"};
+    return mappings;
+}
+
++ (void)getStationList:(id)params parentVC:(id)viewController showHUD:(BOOL)show success:(DDResponseSuccessBlock)success failure:(DDResponseFailureBlock)failure{
+    [[self class] get:@"index.php" params:params showHUD:show parentViewController:params success:success failure:failure];
+}
+
+@end

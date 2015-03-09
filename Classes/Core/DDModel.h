@@ -113,6 +113,8 @@ parentViewController:(id)viewController
  */
 + (void)cancelRequest:(id)viewController;
 
+- (NSDictionary *)propertiesOfObject;
+
 @end
 
 @interface DDModel(Deprecated)
@@ -139,7 +141,7 @@ parentViewController:(id)viewController
  *
  *  @return a dictionary of self
  */
-- (NSDictionary *)propertiesOfSelf __deprecated;
+- (NSDictionary *)propertiesOfSelf __deprecated_msg("use 'propertiesOfObject' method replace");
 
 /**
  *  Parse json node, deprecated

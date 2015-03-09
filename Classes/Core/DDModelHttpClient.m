@@ -44,6 +44,8 @@ static int hudCount = 0;
         //instance the ddHttpQueueDictionary
         client.ddHttpQueueDict = [[NSMutableDictionary alloc] initWithCapacity:0];
         
+        client.type = DDResponseJSON;
+        
     });
     return client;
 }
@@ -126,6 +128,17 @@ static int hudCount = 0;
         return [self.delegate checkResponseValueAvaliable:values failure:failure];
     }
     return YES;
+}
+
+#pragma mark - Get & set methods
+
+- (void)setType:(DDResponseType)type{
+    _type = type;
+    if(type == DDResponseXML){
+        self.responseSerializer = [AFXMLParserResponseSerializer serializer];
+    }else{
+        self.responseSerializer = [AFJSONResponseSerializer serializer];
+    }
 }
 
 #pragma mark - HTTP HUD methods

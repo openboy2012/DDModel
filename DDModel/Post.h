@@ -31,3 +31,18 @@
 
 @end
 
+@interface Station : DDModel
+
+@property (nonatomic, strong) NSNumber *id;
+@property (nonatomic, copy) NSString *streamURL;
+@property (nonatomic, copy) NSString *picture;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *desc;
+
++ (void)getStationList:(id)params
+              parentVC:(id)viewController
+               showHUD:(BOOL)show
+               success:(DDResponseSuccessBlock)success
+               failure:(DDResponseFailureBlock)failure;
+
+@end

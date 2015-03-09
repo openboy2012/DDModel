@@ -9,16 +9,20 @@
 #import "DDModel.h"
 #import "DDModelHttpClient.h"
 #import "NSDictionary+DDUploadFile.h"
+#import <XMLDictionary.h>
 
 #define DDFILE @"fileInfo"
 
 @interface DDModel()
 
++ (id)getObjectFromReponseString:(NSString *)reponseString
+                         failure:(DDResponseFailureBlock)failure;
+
 /**
  *  parse the responseString to JSON object
  */
 + (id)getJSONObjectFromString:(NSString *)responseString
-                      failure:(DDResponseFailureBlock)failure;
+                      failure:(DDResponseFailureBlock)failure __deprecated_msg(" use 'getObjectFromReponseString:failure:' method replace.");
 
 /**
  *  conver JSON object to Model
@@ -53,7 +57,7 @@ parentViewController:(id)viewController
                                         [[DDModelHttpClient sharedInstance] hideHud:show];
                                         
                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                        id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
+                                        id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
                                         if (success && JSON)
                                             success([[self class] convertJsonToObject:JSON]);
                                     }
@@ -90,7 +94,7 @@ parentViewController:(id)viewController
                                          
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          
-                                         id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
+                                         id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
                                          
                                          if (success && JSON)
                                              success([[self class] convertJsonToObject:JSON]);
@@ -131,7 +135,7 @@ parentViewController:(id)viewController
                                          [[DDModelHttpClient sharedInstance] hideHud:show];
                                          
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                         id JSON = [self getJSONObjectFromString:operation.responseString failure:failure];
+                                         id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
                                          if (success && JSON)
                                              success(userInfo,[[self class] convertJsonToObject:JSON]);
                                      }
@@ -144,7 +148,32 @@ parentViewController:(id)viewController
     [[DDModelHttpClient sharedInstance] addOperation:uploadOperation withKey:viewController];
 }
 
-#pragma mark -
+#pragma mark - 
+
++ (id)getObjectFromReponseString:(NSString *)responseString failure:(DDResponseFailureBlock)failure{
+    /**
+     *  decode if you should decode responseString
+     */
+    responseString = [[DDModelHttpClient sharedInstance] responseStringHandler:responseString];
+    
+    NSError *decodeError = nil;
+    NSDictionary *value = nil;
+    
+    NSData *decodeData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    if([DDModelHttpClient sharedInstance].type == DDResponseXML){
+        value = [NSDictionary dictionaryWithXMLData:decodeData];
+    }else
+        value = [NSJSONSerialization JSONObjectWithData:decodeData
+                                                options:NSJSONReadingAllowFragments
+                                                  error:&decodeError];
+
+    if(![[DDModelHttpClient sharedInstance] checkResponseValue:value failure:failure]){
+        return nil;
+    }
+    return value?:@{};
+}
 
 + (id)getJSONObjectFromString:(NSString *)responseString failure:(DDResponseFailureBlock)failure{
     
@@ -167,6 +196,38 @@ parentViewController:(id)viewController
 
 + (void)cancelRequest:(id)viewController{
     [[DDModelHttpClient sharedInstance] cancelOperationWithKey:viewController];
+}
+
+#pragma mark - Propery Methods
+
+- (NSDictionary *)propertiesOfObject{
+    NSMutableDictionary *props = [NSMutableDictionary dictionary];
+    unsigned int outCount, i;
+    objc_property_t *properties = class_copyPropertyList([self class], &outCount);
+    for (i = 0; i < outCount; i++) {
+        objc_property_t property = properties[i];
+        NSString *propertyName = [[NSString alloc] initWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
+        id propertyValue = [self valueForKey:propertyName];
+        if ([propertyValue isKindOfClass:[NSArray class]]){
+            NSMutableArray *list = [NSMutableArray arrayWithCapacity:0];
+            for (id propetyItem in propertyValue) {
+                if([[propetyItem class] isSubclassOfClass:[DDModel class]]){
+                    [list addObject:[propetyItem propertiesOfObject]];
+                }else{
+                    if(propetyItem)
+                        [list addObject:propetyItem];
+                }
+            }
+            [props setObject:list forKey:propertyName];
+        }else if ([[propertyValue class] isSubclassOfClass:[DDModel class]]){
+            [props setObject:[propertyValue propertiesOfObject] forKey:propertyName];
+        }else{
+            if(propertyValue)
+                [props setObject:propertyValue forKey:propertyName];
+        }
+    }
+    free(properties);
+    return props;
 }
 
 #pragma mark - Object Mapping Handle Methods

@@ -1149,7 +1149,7 @@ NSMutableArray *checkedTables;
     }
     
     [[self class] unregisterObject:self];
-    SQLitePersistentObject* dbObj = [[self class] findByPK:[self pk]];
+    SQLitePersistentObject *dbObj = [[self class] findByPK:[self pk]];
     for(NSString *fieldName in propNames)
     {
         if([dbObj valueForKey:fieldName] != [self valueForKey:fieldName])
@@ -1755,8 +1755,8 @@ NSMutableArray *checkedTables;
                         [propType isEqualToString:@"q"] || // long long
                         [propType isEqualToString:@"Q"] || // unsigned long long
                         [propType isEqualToString:@"s"] || // short
-                        [propType isEqualToString:@"S"] ||  // unsigned short
-                        [propType isEqualToString:@"B"] )   // bool or _Bool
+                        [propType isEqualToString:@"S"] || // unsigned short
+                        [propType isEqualToString:@"B"] )  // bool or _Bool
                         colType = @"INTEGER"; 
                     else if ([propType isEqualToString:@"f"] || // float
                              [propType isEqualToString:@"d"] )  // double
@@ -1934,6 +1934,11 @@ NSMutableArray *checkedTables;
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                     [target performSelector:outSelector withObject:dict[ddParameters]];
 #pragma clang diagnostic pop
+                }
+                if ([dict[ddParameters] isKindOfClass:[NSString class]] &&
+                    [dict[ddParameters] isEqualToString:@"removeAllObjects"]) {
+                    [[[self class] dbEvents] removeAllObjects];
+                    return;
                 }
             }
             [[[self class] dbEvents] removeObject:dict];

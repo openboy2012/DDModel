@@ -17,12 +17,15 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.]
+    // Override point for customization after application launch.
     
+#if UseXMLDemo
+    [DDModelHttpClient startWithURL:@"http://prov.mobile.arnd.fm" delegate:self];
+    [DDModelHttpClient sharedInstance].type = DDResponseXML;
+#else
     [DDModelHttpClient startWithURL:@"https://api.app.net/" delegate:self];
-    
-//    [DDModelHttpClient startWithURL:@"http://"];
-    
+#endif
+
     return YES;
 }
 
