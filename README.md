@@ -35,9 +35,9 @@ for example:
 
 You can set response type use the property of DDModelHttpClient like this: `[DDModelHttpClient sharedInstance].type = DDResponseXML`. so httpClient will handle the reponse datatype is XML.
 
-Please implement the Protocol Methods `- (NSDictionary *)encodeParameters:(NSDictionary *)params;` or `- (NSString *)decodeResponseString:(NSString *)responseString; ` if you want to handler http request parameters or response string.
+Please implement the Protocol Methods `- (NSDictionary *)encodeParameters:(NSDictionary *)params;` or `- (NSString *)decodeResponseString:(NSString *)responseString; ` if you want to handle http request parameters or response string.
 
-you should implement the Protocol Method `- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure` if you have custom business logic in your api.
+you should implement the Protocol Method `- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure` if you have custom business logic in your API.
 
 for example:
 
