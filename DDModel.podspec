@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name     = 'DDModel'
- s.version  = '0.3'
+ s.version  = '0.3.1'
  s.license  = 'MIT'
  s.summary  = 'a HTTP-JSON-ORM-Persisent Object Kit'
  s.homepage = 'https://github.com/openboy2012/DDModel.git'
@@ -10,10 +10,10 @@ Pod::Spec.new do |s|
  s.public_header_files = 'Classes/*.h'
  s.source_files = 'Classes/*'
  s.requires_arc = true
- s.dependency 'AFNetworking','~>2.5.0'
- s.dependency 'SQLitePersistentObject','~>0.3'
- s.dependency 'JTObjectMapping','~>1.1.2'
- s.dependency 'MBProgressHUD','~> 0.9'
+ s.dependency 'AFNetworking','~> 2.5.0'
+ s.dependency 'SQLitePersistentObject','~> 0.3'
+ s.dependency 'JTObjectMapping','~> 1.1.2'
+ s.dependency 'MBProgressHUD','~> 0.9.1'
 end
 
 

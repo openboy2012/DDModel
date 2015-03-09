@@ -35,14 +35,14 @@ typedef void(^DDUploadReponseSuccessBlock)(NSDictionary *userInfo, id data);
 @interface DDModel : SQLitePersistentObject
 
 /**
- *  set the parse node, every subclass override the method if you want parse any node
+ *  Set the parse node, every subclass override the method if you want parse any node
  *
  *  @return node
  */
 + (NSString *)parseNode;
 
 /**
- *  handle the mappings about the json key-value transform to a model object.
+ *  Handle the mappings about the json key-value transform to a model object.
     The method support for KeyPathValue. e.g. you have a  @property name, you want get value from "{user:{name:'mike',id:10011},picture:'https://xxxx/headerimage/header01.jpg'}", you just set mapping dictionary is @{@"user.name":@"name"}.
  *
  *  @return mappings
@@ -107,14 +107,14 @@ parentViewController:(id)viewController
      failure:(DDResponseFailureBlock)failure;
 
 /**
- *  cancel all the request in the viewController.
+ *  Cancel all the request in the viewController.
  *
  *  @param viewController viewcontroller
  */
 + (void)cancelRequest:(id)viewController;
 
 /**
- *  Prase self entity into a dictionary
+ *  Parse self entity into a dictionary
  *
  *  @return a dictionary of self entity
  */
