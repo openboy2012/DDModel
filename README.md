@@ -310,7 +310,7 @@ parentViewController:(id)viewController
 
 ## Updates
 
-- 0.3.1 add the xml parser fuction
+- 0.3.1 add the xml parser function
 - 0.2 add the function of check api business logic 
 
 ## Requirements
