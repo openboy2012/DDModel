@@ -150,7 +150,8 @@ Model Define:
 4.Please see more in demo project,thanks.
 
 ## Methods
-### DDModelHttpClient
+
+##### DDModelHttpClient.h
 ```
 /**
  *  start a singleton HTTP client with url<启动一个设置URL单例HTTP请求>
@@ -217,7 +218,7 @@ Model Define:
 
 ```
 
-### DDModel
+##### DDModel.h
 
 ```
 /**
