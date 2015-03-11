@@ -237,6 +237,46 @@ Model Define:
 + (NSDictionary *)parseMappings;
 
 /**
+ *  Get json data first from db cache then from http server by HTTP GET Mehod.
+ *
+ *  @param path           HTTP Path
+ *  @param params         GET Paramtters
+ *  @param show           is show the HUD on the view
+ *  @param viewController parentViewController
+ *  @param dbResult       db cache result block
+ *  @param success        success block
+ *  @param failure        failre block
+ */
++ (void)get:(NSString *)path
+     params:(id)params
+    showHUD:(BOOL)show
+parentViewController:(id)viewController
+  dbSuccess:(DDSQLiteBlock)dbResult
+    success:(DDResponseSuccessBlock)success
+    failure:(DDResponseFailureBlock)failure;
+
+/**
+ *  Get json data first from db cache then from http server by HTTP POST Mehod.
+ *
+ *  @param path           HTTP Path
+ *  @param params         GET Paramtters
+ *  @param show           is show the HUD on the view
+ *  @param viewController parentViewController
+ *  @param dbResult       db cache result block
+ *  @param success        success block
+ *  @param failure        failre block
+ *
+ */
++ (void)post:(NSString *)path
+      params:(id)params
+     showHUD:(BOOL)show
+parentViewController:(id)viewController
+   dbSuccess:(DDSQLiteBlock)dbResult
+     success:(DDResponseSuccessBlock)success
+     failure:(DDResponseFailureBlock)failure;
+
+
+/**
  *  Get json data from http server by HTTP GET Mehod.
  *
  *  @param path           HTTP Path
@@ -310,6 +350,7 @@ parentViewController:(id)viewController
 
 ## Updates
 
+- 0.4 add the db cache function
 - 0.3 add the xml parser function
 - 0.2 add the function of check api business logic 
 
