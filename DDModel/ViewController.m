@@ -32,6 +32,9 @@
     [Station getStationList:params
                    parentVC:self
                     showHUD:YES
+                  dbSuccess:^(id data){
+                      NSLog(@"data = %@",data);
+                  }
                     success:^(id data) {
                         NSLog(@"data = %@",data);
                         [dataList removeAllObjects];

@@ -42,6 +42,7 @@
 + (void)getStationList:(id)params
               parentVC:(id)viewController
                showHUD:(BOOL)show
+             dbSuccess:(DDSQLiteBlock)dbResult
                success:(DDResponseSuccessBlock)success
                failure:(DDResponseFailureBlock)failure;
 

@@ -33,7 +33,18 @@ typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message);
  */
 typedef void(^DDUploadReponseSuccessBlock)(NSDictionary *userInfo, id data);
 
-@interface DDModel : SQLitePersistentObject
+/**
+ *  DB callback an object or an object arrays
+ *
+ *  @param data an object or an object arrays
+ */
+typedef void(^DDSQLiteBlock)(id data);
+
+@interface DDModel : SQLitePersistentObject{
+    
+}
+
+@property (nonatomic, copy) NSString *parameter;
 
 /**
  *  Set the parse node, every subclass override the method if you want parse any node
@@ -49,6 +60,45 @@ typedef void(^DDUploadReponseSuccessBlock)(NSDictionary *userInfo, id data);
  *  @return mappings
  */
 + (NSDictionary *)parseMappings;
+
+/**
+ *  Get json data first from db cache then from http server by HTTP GET Mehod.
+ *
+ *  @param path           HTTP Path
+ *  @param params         GET Paramtters
+ *  @param show           is show the HUD on the view
+ *  @param viewController parentViewController
+ *  @param dbResult       db cache result block
+ *  @param success        success block
+ *  @param failure        failre block
+ */
++ (void)get:(NSString *)path
+     params:(id)params
+    showHUD:(BOOL)show
+parentViewController:(id)viewController
+  dbSuccess:(DDSQLiteBlock)dbResult
+    success:(DDResponseSuccessBlock)success
+    failure:(DDResponseFailureBlock)failure;
+
+/**
+ *  Get json data first from db cache then from http server by HTTP POST Mehod.
+ *
+ *  @param path           HTTP Path
+ *  @param params         GET Paramtters
+ *  @param show           is show the HUD on the view
+ *  @param viewController parentViewController
+ *  @param dbResult       db cache result block
+ *  @param success        success block
+ *  @param failure        failre block
+ *
+ */
++ (void)post:(NSString *)path
+      params:(id)params
+     showHUD:(BOOL)show
+parentViewController:(id)viewController
+   dbSuccess:(DDSQLiteBlock)dbResult
+     success:(DDResponseSuccessBlock)success
+     failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Get json data from http server by HTTP GET Mehod.

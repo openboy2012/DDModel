@@ -61,8 +61,13 @@
     return mappings;
 }
 
-+ (void)getStationList:(id)params parentVC:(id)viewController showHUD:(BOOL)show success:(DDResponseSuccessBlock)success failure:(DDResponseFailureBlock)failure{
-    [[self class] get:@"index.php" params:params showHUD:show parentViewController:params success:success failure:failure];
++ (void)getStationList:(id)params
+              parentVC:(id)viewController
+               showHUD:(BOOL)show
+             dbSuccess:(DDSQLiteBlock)dbResult
+               success:(DDResponseSuccessBlock)success
+               failure:(DDResponseFailureBlock)failure{
+    [[self class] get:@"index.php" params:params showHUD:show parentViewController:params dbSuccess:dbResult success:success failure:failure];
 }
 
 @end

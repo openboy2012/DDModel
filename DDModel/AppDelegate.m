@@ -60,7 +60,7 @@
 }
 
 - (NSString *)decodeResponseString:(NSString *)responseString{
-    NSLog(@"responseString = %@",responseString);
+//    NSLog(@"responseString = %@",responseString);
     return responseString;
 }
 

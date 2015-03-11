@@ -21,3 +21,10 @@
 + (instancetype)defaultFile;
 
 @end
+
+
+@interface NSDictionary (JSON)
+
+- (NSString *)JSONString;
+
+@end
