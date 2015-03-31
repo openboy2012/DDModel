@@ -217,7 +217,8 @@ NSMutableArray *checkedTables;
         if (sqlite3_step(statement) == SQLITE_ROW)
             countOfRecords = sqlite3_column_int(statement, 0);
     }
-    else NSLog(@"Error determining count of rows in table %@", [self  tableName]);
+    else
+        NSLog(@"Error determining count of rows in table %@", [self  tableName]);
     
     sqlite3_finalize(statement);
     return countOfRecords;
@@ -296,8 +297,10 @@ NSMutableArray *checkedTables;
             [[self class] registerObjectInMemory:oneItem];
             
             int i;
-            for (i=0; i <  sqlite3_column_count(statement); i++)
+            for (i = 0; i <  sqlite3_column_count(statement); i++)
             {
+                if(i >= sqlite3_column_count(statement))
+                    break;
                 NSString *colName = [NSString stringWithUTF8String:sqlite3_column_name(statement, i)];
                 if ([colName isEqualToString:@"pk"])
                 {
@@ -310,8 +313,10 @@ NSMutableArray *checkedTables;
                     NSString *propName = [colName stringAsPropertyString];
                     
                     NSString *colType = [theProps valueForKey:propName];
-                    if (colType == nil)
-                        break;
+                    if (colType == nil){
+                        NSLog(@"please check your properies have changed by yourself. lost the property [%@]",propName);
+                        continue;
+                    }
                     if ([colType isEqualToString:@"i"] || // int
                         [colType isEqualToString:@"l"] || // long
                         [colType isEqualToString:@"q"] || // long long
@@ -396,7 +401,6 @@ NSMutableArray *checkedTables;
                             if (NULL != columnText)
                                 colData = [propClass objectWithSqlColumnRepresentation:[NSString stringWithUTF8String:columnText]];
                             
-                            
                             [oneItem setValue:colData forKey:propName];
                         }
                     }
@@ -410,7 +414,7 @@ NSMutableArray *checkedTables;
                 NSString *propType = [theProps objectForKey:propName];
                 if ([propType hasPrefix:@"@"])
                 {
-                    NSString *className = [propType substringWithRange:NSMakeRange(2, [propType length]-3)];
+                    NSString *className = [propType substringWithRange:NSMakeRange(2, [propType length] - 3)];
                     if (isCollectionType(className))
                     {
                         if (isNSSetType(className))
@@ -731,7 +735,7 @@ NSMutableArray *checkedTables;
 #ifndef TARGET_OS_COCOTRON
         objc_property_t oneProp = propList[i];
         NSString *propName = [NSString stringWithUTF8String:property_getName(oneProp)];
-        NSString *attrs = [NSString stringWithUTF8String: property_getAttributes(oneProp)];
+        NSString *attrs = [NSString stringWithUTF8String:property_getAttributes(oneProp)];
         // Read only attributes are assumed to be derived or calculated
         // See http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/chapter_8_section_3.html
         if ([attrs rangeOfString:@",R,"].location == NSNotFound)
@@ -867,7 +871,8 @@ NSMutableArray *checkedTables;
         
         for (NSString *propName in props)
         {
-            if ([theTransients containsObject:propName]) continue;
+            if ([theTransients containsObject:propName])
+                continue;
             
             NSString *propType = [props objectForKey:propName];
             NSString *className = @"";
@@ -1353,7 +1358,6 @@ NSMutableArray *checkedTables;
             NSRange theRange = NSMakeRange(6, [methodBeingCalled length] - 7);
             NSString *property = [[methodBeingCalled substringWithRange:theRange] stringByLowercasingFirstLetter];
             NSDictionary *properties = [self propertiesWithEncodedTypes];
-            //      NSLog(@"Property: %@", property);
             if ([[properties allKeys] containsObject:property])
             {
                 SEL newMethodSelector = sel_registerName([methodBeingCalled UTF8String]);
@@ -1398,9 +1402,12 @@ NSMutableArray *checkedTables;
         {
             NSRange rangeOfOf = [methodBeingCalled rangeOfString:@"Of"];
             NSString *operation = [methodBeingCalled substringToIndex:rangeOfOf.location];
-            if ([operation isEqualToString:@"sum"] || [operation isEqualToString:@"avg"]
-                || [operation isEqualToString:@"average"] || [operation isEqualToString:@"min"]
-                || [operation isEqualToString:@"max"] || [operation isEqualToString:@"count"])
+            if ([operation isEqualToString:@"sum"] ||
+                [operation isEqualToString:@"avg"] ||
+                [operation isEqualToString:@"average"] ||
+                [operation isEqualToString:@"min"] ||
+                [operation isEqualToString:@"max"] ||
+                [operation isEqualToString:@"count"])
             {
                 NSRange criteriaRange = [methodBeingCalled rangeOfString:@"WithCriteria"];
                 if (criteriaRange.location == NSNotFound)
@@ -1438,7 +1445,8 @@ NSMutableArray *checkedTables;
 
 - (id)init
 {
-    if ((self=[super init]))
+    self = [super init];
+    if (self)
     {
         pk = -1;
         dirty = YES;
@@ -1457,6 +1465,9 @@ NSMutableArray *checkedTables;
     }
     [[self class] unregisterObject:self];
 }
+
+
+#pragma mark - KVO handler methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {

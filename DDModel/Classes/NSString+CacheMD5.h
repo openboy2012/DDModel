@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (md5)
+@interface NSString (CacheMD5)
 
-- (NSString *)md5;
+- (NSString *)cacheMD5;
 
 @end

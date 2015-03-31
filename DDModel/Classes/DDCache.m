@@ -8,14 +8,14 @@
 
 #import "DDCache.h"
 #import "NSDictionary+DDUploadFile.h"
-#import "NSString+md5.h"
+#import "NSString+CacheMD5.h"
 
 @implementation DDCache
 
 + (void)queryWithPath:(NSString *)path
             parameter:(NSDictionary *)parameter
                result:(DBQueryResult)result{
-    NSString *queryParameter = [NSString stringWithFormat:@"WHERE parameter = '%@' AND path = '%@';",[[parameter JSONString] md5], [path md5]];
+    NSString *queryParameter = [NSString stringWithFormat:@"WHERE parameter = '%@' AND path = '%@';",[[parameter JSONString] cacheMD5], [path cacheMD5]];
     [[self class] queryFirstItemByCriteria:queryParameter
                                     result:result];
 }
@@ -25,9 +25,9 @@
                      content:(NSString *)content{
     self = [super init];
     if(self){
-        self.path = [path md5];
+        self.path = [path cacheMD5];
         self.content = content;
-        self.parameter = [[parameter JSONString] md5];
+        self.parameter = [[parameter JSONString] cacheMD5];
     }
     return self;
 }

@@ -6,12 +6,12 @@
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
-#import "NSString+md5.h"
+#import "NSString+CacheMD5.h"
 #import <CommonCrypto/CommonCrypto.h>
 
-@implementation NSString (md5)
+@implementation NSString (CacheMD5)
 
-- (NSString *)md5
+- (NSString *)cacheMD5
 {
     const char *cStr = [self UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];

@@ -10,11 +10,11 @@ Pod::Spec.new do |s|
  s.public_header_files = 'Classes/*.h'
  s.source_files = 'Classes/*'
  s.requires_arc = true
- s.dependency 'AFNetworking','~> 2.5.1'
+ s.dependency 'AFNetworking', '2.5.1'
  s.dependency 'SQLitePersistentObject','~> 0.3'
- s.dependency 'JTObjectMapping','~> 1.1.2'
- s.dependency 'MBProgressHUD','~> 0.9.1'
- s.dependency 'XMLDictionary','~> 1.4'
+ s.dependency 'JTObjectMapping','1.1.2'
+ s.dependency 'MBProgressHUD','0.9.1'
+ s.dependency 'XMLDictionary','1.4'
 end
 
 

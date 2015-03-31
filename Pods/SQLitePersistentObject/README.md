@@ -15,7 +15,7 @@ in original this library is non-safe-thread in multithread opearations , I just 
 ##Installation
 
 [![Version](http://cocoapod-badges.herokuapp.com/v/SQLitePersistentObject/badge.png)](http://cocoadocs.org/docsets/SQLitePersistentObject/) [![Platform](http://cocoapod-badges.herokuapp.com/p/SQLitePersistentObject/badge.png)](http://cocoadocs.org/docsets/SQLitePersistentObject/)   
-FlickerNumber is available through [CocoaPods](http://cocoapods.org), to install
+SQLitePersisentObject is available through [CocoaPods](http://cocoapods.org), to install
 it simply add the following line to your Podfile:
 
     pod "SQLitePersistentObject"
