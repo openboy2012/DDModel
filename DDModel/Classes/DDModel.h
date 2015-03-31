@@ -10,28 +10,7 @@
 #import <SQLitePersistentObject.h>
 #import <NSObject+JTObjectMapping.h>
 #import <XMLDictionary.h>
-
-/**
- *  Http Response Success Block callback an object or an object arrays;
- *
- *  @param data an object or an object arrays
- */
-typedef void(^DDResponseSuccessBlock)(id data);
-/**
- *  Http Response Failure Block callback an error object & a message object
- *
- *  @param error   error
- *  @param message error message
- */
-typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message);
-
-/**
- *  Http Upload file response success block callback with userinfo & response object
- *
- *  @param userInfo userInfo
- *  @param data     response object
- */
-typedef void(^DDUploadReponseSuccessBlock)(NSDictionary *userInfo, id data);
+#import "DDModelHttpClient.h"
 
 /**
  *  DB callback an object or an object arrays

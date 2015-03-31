@@ -10,6 +10,7 @@
     #define _DDModelKit_
 
     #import "DDModel.h"
+    #import "DDCache.h"
     #import "DDModelHttpClient.h"
     #import "NSDictionary+DDUploadFile.h"
 

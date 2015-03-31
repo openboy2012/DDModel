@@ -9,7 +9,29 @@
 #import <Foundation/Foundation.h>
 #import <AFHTTPRequestOperationManager.h>
 #import <MBProgressHUD.h>
-#import "DDModel.h"
+
+
+/**
+ *  Http Response Success Block callback an object or an object arrays;
+ *
+ *  @param data an object or an object arrays
+ */
+typedef void(^DDResponseSuccessBlock)(id data);
+/**
+ *  Http Response Failure Block callback an error object & a message object
+ *
+ *  @param error   error
+ *  @param message error message
+ */
+typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message);
+
+/**
+ *  Http Upload file response success block callback with userinfo & response object
+ *
+ *  @param userInfo userInfo
+ *  @param data     response object
+ */
+typedef void(^DDUploadReponseSuccessBlock)(NSDictionary *userInfo, id data);
 
 typedef enum : NSUInteger {
     DDResponseXML,
