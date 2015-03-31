@@ -1,1 +1,0 @@
-../../../SQLitePersistentObject/DDSQLiteKit/SQLitePersistentObject/NSString-UppercaseFirst.h

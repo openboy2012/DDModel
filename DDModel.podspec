@@ -34,7 +34,7 @@ Pod::Spec.new do |s|
    ss.dependency 'JTObjectMapping','1.1.2'
    ss.dependency 'XMLDictionary','1.4'
 
-   ss.source_files = 'DDModel/Classes/{DD}*.{h,m}'
+   ss.source_files = 'DDModel/Classes/DDModel.{h,m}'
  end
 end
 

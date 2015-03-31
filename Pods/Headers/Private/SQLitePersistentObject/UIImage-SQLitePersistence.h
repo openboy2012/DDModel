@@ -1,1 +1,0 @@
-../../../SQLitePersistentObject/DDSQLiteKit/SQLitePersistentObject/UIImage-SQLitePersistence.h
