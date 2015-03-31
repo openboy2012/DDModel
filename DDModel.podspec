@@ -7,14 +7,31 @@ Pod::Spec.new do |s|
  s.author   = { 'DeJohn Dong' => 'dongjia_9251@126.com' }
  s.source   = { :git => 'https://github.com/openboy2012/DDModel.git',:tag=>s.version.to_s}
  s.ios.deployment_target = '6.0'
- s.public_header_files = 'Classes/*.h'
- s.source_files = 'Classes/*'
+ s.public_header_files = 'Classes/DDModelKit.h'
+ s.source_files = 'Classes/DDModelKit.h'
  s.requires_arc = true
- s.dependency 'AFNetworking', '2.5.1'
- s.dependency 'SQLitePersistentObject','~> 0.3'
- s.dependency 'JTObjectMapping','1.1.2'
- s.dependency 'MBProgressHUD','0.9.1'
- s.dependency 'XMLDictionary','1.4'
+ s.subspec 'Categories' do |ss|
+   ss.source_files = 'DDModel/Classes/{NS}*.{h,m}'
+ end
+ s.subsepc 'Cache' do |ss|
+   ss.dependency 'DDModel/Categories'
+   ss.dependency 'SQLitePersistentObject','~> 0.3'
+
+   ss.source_files = 'DDModel/Classes/DDCache.{h,m}'
+ end
+ s.subspec 'HTTP' do |ss|
+   ss.dependency 'DDModel/Categories'
+   ss.dependency 'AFNetworking', '2.5.1'
+   ss.dependency 'MBProgressHUD','0.9.1'
+
+   ss.source_files = 'DDModel/Classes/DDModelHttpClient.{h,m}'
+ end
+ s.subspec 'Core' do |ss|
+   ss.dependency 'JTObjectMapping','1.1.2'
+   ss.dependency 'XMLDictionary','1.4'
+
+   ss.source_files = 'DDModel/Classes/{DD}*.{h,m}'
+ end
 end
 
 
