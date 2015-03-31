@@ -10,7 +10,6 @@
 #import <AFHTTPRequestOperationManager.h>
 #import <MBProgressHUD.h>
 
-
 /**
  *  Http Response Success Block callback an object or an object arrays;
  *

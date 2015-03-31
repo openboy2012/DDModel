@@ -15,6 +15,14 @@
 
 @interface DDModel()
 
+/**
+ *  Get Object(s) from reponse string
+ *
+ *  @param reponseString reponse string
+ *  @param failure       failure handler block
+ *
+ *  @return Object(s)
+ */
 + (id)getObjectFromReponseString:(NSString *)reponseString
                          failure:(DDResponseFailureBlock)failure;
 
