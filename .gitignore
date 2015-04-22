@@ -1,2 +1,5 @@
 .DS_Store
 Pods/*
+DDModel.xcodeproj/xcuserdata/*
+DDModel.xcworkspace/xcshareddata/*
+DDModel.xcworkspace/xcuserdata/*
