@@ -21,10 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
     if(!dataList)
         dataList = [[NSMutableArray alloc] initWithCapacity:0];
-    
 #if UseXMLDemo
 
     NSDictionary *params = @{@"q":@"admin/station/station/bygroupid",

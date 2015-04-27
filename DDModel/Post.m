@@ -23,8 +23,20 @@
  * 2.对象的嵌套关系，如本例里Post对象嵌套了User对象
  */
 + (NSDictionary *)parseMappings{
+    /**
+     *  in [mappingWithKey:mappings:] method, key is your defined property key;
+     *  在'mappingWithKey:mapping:'中的key值是您定义的属性名名称,所以JSON字符串中的Value会映射给该属性字段；
+     */
     id userHandler = [User mappingWithKey:@"user" mapping:[User parseMappings]];
+    /**
+     *  this 'user' key is the JSON String's Key
+     *  这个字典中的'user' key值就是 JSON 字符串中的 user key;
+     */
     NSDictionary *jsonMappings = @{@"user":userHandler};
+    
+    /**
+     *  所以整个JSON的映射关系就是把JSON字符串的User内容映射给我定义属性的user属性里，内部递归的关系按照user的parseMapping执行
+     */
     return jsonMappings;
 }
 
