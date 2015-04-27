@@ -71,7 +71,7 @@ static int hudCount = 0;
 
 #pragma mark - HTTP Operation Methods
 
-- (void)addTask:(NSURLSessionTask *)task withKey:(id)key{
+- (void)addTask:(NSURLSessionDataTask *)task withKey:(id)key{
     __block NSString *keyStr = [self description];
     if(key)
         keyStr = [key description];
@@ -85,7 +85,7 @@ static int hudCount = 0;
     });
 }
 
-- (void)removeTask:(NSURLSessionTask *)task withKey:(id)key{
+- (void)removeTask:(NSURLSessionDataTask *)task withKey:(id)key{
     __block NSString *keyStr = [self description];
     if(key)
         keyStr = [key description];

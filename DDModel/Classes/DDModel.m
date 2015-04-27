@@ -10,6 +10,7 @@
 #import "DDModelHttpClient.h"
 #import "NSDictionary+DDUploadFile.h"
 #import "DDCache.h"
+#import "NSString+CacheMD5.h"
 #import "NSURLSessionUploadTask+DDModel.h"
 
 #define DDFILE @"fileInfo"
@@ -57,7 +58,7 @@ parentViewController:(id)viewController
                         result:^(id data) {
                             DDCache *cache = data;
                             if(cache){
-                                id JSON = [self getObjectFromReponseObject:cache.content failure:NULL];
+                                id JSON = [cache.content dictionaryWithJSON];
                                 dbBlock([[self class] convertJsonToObject:JSON]);
                             }
                         }];
@@ -75,10 +76,9 @@ parentViewController:(id)viewController
                                         
                                         [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
                                         
-                                        //save the cache
-                                        [DDCache cacheWithPath:path parameter:params content:responseObject];
-                                        
                                         id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
+                                        //save the cache
+                                        [DDCache cacheWithPath:path parameter:params content:JSON];
                                         if (success && JSON){
                                             success([[self class] convertJsonToObject:JSON]);
                                         }
@@ -109,7 +109,7 @@ parentViewController:(id)viewController
                         result:^(id data) {
                             DDCache *cache = data;
                             if([cache.content length] > 1){
-                                id JSON = [self getObjectFromReponseObject:cache.content failure:NULL];
+                                id JSON = [cache.content dictionaryWithJSON];
                                 dbBlock([[self class] convertJsonToObject:JSON]);
                             }
                         }];
@@ -127,10 +127,10 @@ parentViewController:(id)viewController
                                          
                                          [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
                                          
-                                         //save the cache
-                                         [DDCache cacheWithPath:path parameter:params content:responseObject];
-                                         
                                          id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
+                                         
+                                         //save the cache
+                                         [DDCache cacheWithPath:path parameter:params content:JSON];
                                          if (success && JSON){
                                              success([[self class] convertJsonToObject:JSON]);
                                          }
@@ -246,7 +246,7 @@ parentViewController:(id)viewController
                                                                    [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
                                                                    id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
                                                                    if (success && JSON)
-                                                                       success(userInfo,[[self class] convertJsonToObject:JSON]);
+                                                                       success([(NSURLSessionUploadTask *)task userInfo],[[self class] convertJsonToObject:JSON]);
                                                                }
                                                                failure:^(NSURLSessionDataTask *task, NSError *error) {
                                                                    [[DDModelHttpClient sharedInstance] showHud:show];
@@ -260,28 +260,36 @@ parentViewController:(id)viewController
 #pragma mark - 
 
 + (id)getObjectFromReponseObject:(id)responseObject failure:(DDResponseFailureBlock)failure{
-    
-    /**
-     *  decode if you should decode responseString
-     */
-    if([responseObject isKindOfClass:[NSData class]]){
+    NSDictionary *value = nil;
+    if([responseObject isKindOfClass:[NSDictionary class]] && [DDModelHttpClient sharedInstance].type == DDResponseJSON){
+        value = responseObject;
+    }else if([responseObject isKindOfClass:[NSXMLParser class]] && [DDModelHttpClient sharedInstance].type == DDResponseXML){
+        value = [NSDictionary dictionaryWithXMLParser:responseObject];
+    }else{
+        NSString *responseString  = nil;
+        if([responseObject isKindOfClass:[NSData class]]){
+            responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        }else{
+            responseString = responseObject;
+        }
+        /**
+         *  decode if you should decode responseString
+         */
+        responseString = [[DDModelHttpClient sharedInstance] responseStringHandler:responseString];
+        
+        NSError *decodeError = nil;
+        
+        NSData *decodeData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        
+        if([DDModelHttpClient sharedInstance].type == DDResponseXML){
+            value = [NSDictionary dictionaryWithXMLData:decodeData];
+        }else
+            value = [NSJSONSerialization JSONObjectWithData:decodeData
+                                                    options:NSJSONReadingAllowFragments
+                                                      error:&decodeError];
         
     }
-//    responseString = [[DDModelHttpClient sharedInstance] responseStringHandler:responseString];
-//    
-//    NSError *decodeError = nil;
-    NSDictionary *value = responseObject;
-//
-//    NSData *decodeData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-//    
-//    
-//    if([DDModelHttpClient sharedInstance].type == DDResponseXML){
-//        value = [NSDictionary dictionaryWithXMLData:decodeData];
-//    }else
-//        value = [NSJSONSerialization JSONObjectWithData:decodeData
-//                                                options:NSJSONReadingAllowFragments
-//                                                  error:&decodeError];
-//
     if(![[DDModelHttpClient sharedInstance] checkResponseValue:value failure:failure]){
         return nil;
     }

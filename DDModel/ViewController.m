@@ -32,6 +32,9 @@
                     showHUD:YES
                   dbSuccess:^(id data){
                       NSLog(@"data = %@",data);
+                      [dataList removeAllObjects];
+                      [dataList addObjectsFromArray:data];
+                      [self.tableView reloadData];
                   }
                     success:^(id data) {
                         NSLog(@"data = %@",data);

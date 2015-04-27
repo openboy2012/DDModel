@@ -36,7 +36,7 @@
  */
 - (instancetype)initWithPath:(NSString *)path
                    parameter:(NSDictionary *)parameter
-                     content:(NSString *)content;
+                     content:(id)content;
 
 /**
  *  save a DDCache Object
@@ -47,6 +47,6 @@
  */
 + (void)cacheWithPath:(NSString *)path
             parameter:(NSDictionary *)parameter
-              content:(NSString *)content;
+              content:(id)content;
 
 @end
