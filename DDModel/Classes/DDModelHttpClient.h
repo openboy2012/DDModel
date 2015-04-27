@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AFHTTPRequestOperationManager.h>
+#import <AFHTTPSessionManager.h>
 #import <MBProgressHUD.h>
 
 /**
@@ -40,7 +40,7 @@ typedef enum : NSUInteger {
 
 @protocol DDHttpClientDelegate;
 
-@interface DDModelHttpClient : AFHTTPRequestOperationManager
+@interface DDModelHttpClient : AFHTTPSessionManager
 
 @property (nonatomic, strong) MBProgressHUD *hud;
 @property (nonatomic, strong) NSDictionary *checkKeyValue;
@@ -98,29 +98,30 @@ typedef enum : NSUInteger {
  */
 + (void)removeHTTPHeaderFieldValue:(NSDictionary *)keyValue;
 
-#pragma mark - operation handler methods
-/**
- *  Add operation with key <根据Key值加入Opeartion>
- *
- *  @param operation requesting operation <正在请求的HTTP Operation>
- *  @param key       key <关键字，方便再次查找>
- */
-- (void)addOperation:(AFURLConnectionOperation *)operation withKey:(id)key;
+#pragma mark - NSURLSessionDataTask handler methods
 
 /**
- *  Cancel operation with key <根据Key值取消某个Opeartion>
+ *  add the NSURLSessionDataTask with key identifier into the DDHttpClient Container
  *
- *  @param operation requesting operation <正在请求的HTTP Operation>
- *  @param key       key <关键字，方便再次查找>
+ *  @param task NSURLSessionDataTask
+ *  @param key  key identifier
  */
-- (void)removeOperation:(AFURLConnectionOperation *)operation withKey:(id)key;
+- (void)addTask:(NSURLSessionDataTask *)task withKey:(id)key;
 
 /**
- *  Cancel all operation with key <根据Key取消所有的Operation>
+ *  remove the NSURLSessionDataTask with key identifier from the DDHttpClient Container
  *
- *  @param key key <关键字>
+ *  @param task NSURLSessionDataTask
+ *  @param key  key idenitifier
  */
-- (void)cancelOperationWithKey:(id)key;
+- (void)removeTask:(NSURLSessionDataTask *)task withKey:(id)key;
+
+/**
+ *  cancel all the NSURLSessionTask with the key identifier
+ *
+ *  @param key key identifier
+ */
+- (void)cancelTasksWithKey:(id)key;
 
 #pragma mark - decode & encode methods
 /**

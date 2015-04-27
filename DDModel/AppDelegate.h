@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define UseXMLDemo 1
+#define UseXMLDemo 0
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

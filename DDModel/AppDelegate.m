@@ -24,6 +24,7 @@
     [DDModelHttpClient sharedInstance].type = DDResponseXML;
 #else
     [DDModelHttpClient startWithURL:@"https://api.app.net/" delegate:self];
+    [DDModelHttpClient sharedInstance].type = DDResponseJSON;
 #endif
 
     return YES;

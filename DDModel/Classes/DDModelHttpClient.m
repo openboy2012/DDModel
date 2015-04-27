@@ -44,7 +44,7 @@ static int hudCount = 0;
         //instance the ddHttpQueueDictionary
         client.ddHttpQueueDict = [[NSMutableDictionary alloc] initWithCapacity:0];
         
-        client.type = DDResponseJSON;
+        client.type = DDResponseOhter;
         
     });
     return client;
@@ -71,38 +71,38 @@ static int hudCount = 0;
 
 #pragma mark - HTTP Operation Methods
 
-- (void)addOperation:(AFURLConnectionOperation *)operation withKey:(id)key{
+- (void)addTask:(NSURLSessionTask *)task withKey:(id)key{
     __block NSString *keyStr = [self description];
     if(key)
         keyStr = [key description];
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableArray *operations = self.ddHttpQueueDict[keyStr];
-        if(!operations)
-            operations = [[NSMutableArray alloc] initWithObjects:operation, nil];
+        NSMutableArray *tasks = self.ddHttpQueueDict[keyStr];
+        if(!tasks)
+            tasks = [[NSMutableArray alloc] initWithObjects:task, nil];
         else
-            [operations addObject:operation];
-        [self.ddHttpQueueDict setObject:operations forKey:keyStr];
+            [tasks addObject:task];
+        [self.ddHttpQueueDict setObject:tasks forKey:keyStr];
     });
 }
 
-- (void)removeOperation:(AFURLConnectionOperation *)operation withKey:(id)key{
+- (void)removeTask:(NSURLSessionTask *)task withKey:(id)key{
     __block NSString *keyStr = [self description];
     if(key)
         keyStr = [key description];
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableArray *operations = self.ddHttpQueueDict[keyStr];
-        [operations removeObject:operation];
+        NSMutableArray *tasks = self.ddHttpQueueDict[keyStr];
+        [tasks removeObject:task];
     });
 }
 
-- (void)cancelOperationWithKey:(id)key{
+- (void)cancelTasksWithKey:(id)key{
     __block NSString *keyStr = [self description];
     if(key)
         keyStr = [key description];
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableArray *operations = self.ddHttpQueueDict[keyStr];
-        if(operations.count > 0)
-            [operations makeObjectsPerformSelector:@selector(cancel)];
+        NSMutableArray *tasks = self.ddHttpQueueDict[keyStr];
+        if(tasks.count > 0)
+            [tasks makeObjectsPerformSelector:@selector(cancel)];
         [self.ddHttpQueueDict removeObjectForKey:keyStr];
     });
 }
@@ -136,8 +136,10 @@ static int hudCount = 0;
     _type = type;
     if(type == DDResponseXML){
         self.responseSerializer = [AFXMLParserResponseSerializer serializer];
-    }else{
+    }else if(type == DDResponseJSON){
         self.responseSerializer = [AFJSONResponseSerializer serializer];
+    }else{
+        self.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
 }
 
