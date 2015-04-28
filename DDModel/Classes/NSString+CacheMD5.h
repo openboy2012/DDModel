@@ -14,7 +14,7 @@
 
 @end
 
-@interface NSString (JSON)
+@interface NSString (DDJSON)
 
 - (NSDictionary *)dictionaryWithJSON;
 
