@@ -13,3 +13,9 @@
 - (NSString *)cacheMD5;
 
 @end
+
+@interface NSString (JSON)
+
+- (NSDictionary *)dictionaryWithJSON;
+
+@end

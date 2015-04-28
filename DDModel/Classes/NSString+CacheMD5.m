@@ -26,3 +26,17 @@
 }
 
 @end
+
+@implementation NSString (JSON)
+
+- (NSDictionary *)dictionaryWithJSON{
+    NSError *jsonError = nil;
+    NSData *jsonData = [self dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                               options:NSJSONReadingAllowFragments
+                                                                 error:&jsonError];
+    return dictionary;
+}
+
+@end
+

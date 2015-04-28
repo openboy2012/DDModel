@@ -10,6 +10,7 @@
 #import "DDModelHttpClient.h"
 #import "NSDictionary+DDUploadFile.h"
 #import "DDCache.h"
+#import "NSString+CacheMD5.h"
 
 #define DDFILE @"fileInfo"
 
@@ -62,7 +63,7 @@ parentViewController:(id)viewController
                         result:^(id data) {
                             DDCache *cache = data;
                             if(cache){
-                                id JSON = [self getObjectFromReponseString:cache.content failure:NULL];
+                                id JSON = [cache.content dictionaryWithJSON];
                                 dbBlock([[self class] convertJsonToObject:JSON]);
                             }
                         }];
@@ -80,10 +81,10 @@ parentViewController:(id)viewController
                                         
                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                         
-                                        //save the cache
-                                        [DDCache cacheWithPath:path parameter:params content:operation.responseString];
-                                        
                                         id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
+                                        
+                                        //save the cache
+                                        [DDCache cacheWithPath:path parameter:params content:JSON];
                                         if (success && JSON){
                                             success([[self class] convertJsonToObject:JSON]);
                                         }
@@ -114,7 +115,7 @@ parentViewController:(id)viewController
                         result:^(id data) {
                             DDCache *cache = data;
                             if([cache.content length] > 1){
-                                id JSON = [self getObjectFromReponseString:cache.content failure:NULL];
+                                id JSON = [cache.content dictionaryWithJSON];
                                 dbBlock([[self class] convertJsonToObject:JSON]);
                             }
                         }];
@@ -132,10 +133,10 @@ parentViewController:(id)viewController
                                          
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          
+                                         id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
+                                         
                                          //save the cache
                                          [DDCache cacheWithPath:path parameter:params content:operation.responseString];
-                                         
-                                         id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
                                          if (success && JSON){
                                              success([[self class] convertJsonToObject:JSON]);
                                          }
