@@ -27,7 +27,7 @@
 
 @end
 
-@implementation NSString (JSON)
+@implementation NSString (DDJSON)
 
 - (NSDictionary *)dictionaryWithJSON{
     NSError *jsonError = nil;
