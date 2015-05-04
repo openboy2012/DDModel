@@ -12,18 +12,7 @@
 #import <XMLDictionary.h>
 #import "DDModelHttpClient.h"
 
-/**
- *  DB callback an object or an object arrays
- *
- *  @param data an object or an object arrays
- */
-typedef void(^DDSQLiteBlock)(id data);
-
-@interface DDModel : SQLitePersistentObject{
-    
-}
-
-@property (nonatomic, copy) NSString *parameter;
+@protocol DDMappings
 
 /**
  *  Set the parse node, every subclass override the method if you want parse any node
@@ -34,11 +23,26 @@ typedef void(^DDSQLiteBlock)(id data);
 
 /**
  *  Handle the mappings about the json key-value transform to a model object.
-    The method support for KeyPathValue. e.g. you have a  @property name, you want get value from "{user:{name:'mike',id:10011},picture:'https://xxxx/headerimage/header01.jpg'}", you just set mapping dictionary is @{@"user.name":@"name"}.
+ The method support for KeyPathValue. e.g. you have a  @property name, you want get value from "{user:{name:'mike',id:10011},picture:'https://xxxx/headerimage/header01.jpg'}", you just set mapping dictionary is @{@"user.name":@"name"}.
  *
  *  @return mappings
  */
 + (NSDictionary *)parseMappings;
+
+@end
+
+/**
+ *  DB callback an object or an object arrays
+ *
+ *  @param data an object or an object arrays
+ */
+typedef void(^DDSQLiteBlock)(id data);
+
+@interface DDModel : SQLitePersistentObject<DDMappings>{
+    
+}
+
+@property (nonatomic, copy) NSString *parameter;
 
 /**
  *  Get json data first from db cache then from http server by HTTP GET Mehod.
