@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
  s.subspec 'Cache' do |ss|
    ss.dependency 'DDModel/Categories'
    ss.dependency 'SQLitePersistentObject','~> 0.3'
+   ss.dependency 'XMLDictionary','1.4'
 
    ss.source_files = 'DDModel/Classes/DDCache.{h,m}'
  end

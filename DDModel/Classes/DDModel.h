@@ -156,3 +156,14 @@ parentViewController:(id)viewController
 
 @end
 
+@interface DDModel(DDKit)
+
+/**
+ *  Get the property names of object
+ *
+ *  @return a array of all property name
+ */
++ (NSArray *)getPropertyNames;
+
+@end
+
