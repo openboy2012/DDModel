@@ -6,7 +6,7 @@ DDModel inherit SQLitePersisentObject so you can save objects into SQLite immedi
 DDModel package the http request to reduce the UIViewController & http code coupling, you won't worried how to package http request in your project any more when you use the DDModelKit.   
 Your development will be simple.  
 
-if you should support iOS 6.0, please use the version 0.x, 
+if you should support iOS 6.0, please use the version 0.x,  
 now, I will have more working on the version 1.x, 1.x version need iOS 7.0 and Later.
 
 ##Installation
@@ -352,7 +352,7 @@ parentViewController:(id)viewController
 ```
 
 ## Updates
-- 1.0 
+- 1.0 use the NSURLSession replace NSURLConnection
 
 - 0.4 add the db cache function
 - 0.3 add the xml parser function
