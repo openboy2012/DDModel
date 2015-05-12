@@ -4,7 +4,10 @@ ps:my English isn't 100% fluent,but I am trying to improve it.
 ##a HTTP-JSON-ORM-Persisent Object Kit.  
 DDModel inherit SQLitePersisentObject so you can save objects into SQLite immediately.   
 DDModel package the http request to reduce the UIViewController & http code coupling, you won't worried how to package http request in your project any more when you use the DDModelKit.   
-Your development will be simple.
+Your development will be simple.  
+
+if you should support iOS 6.0, please use the version 0.x, 
+now, I will have more working on the version 1.x, 1.x version need iOS 7.0 and Later.
 
 ##Installation
 
@@ -349,6 +352,7 @@ parentViewController:(id)viewController
 ```
 
 ## Updates
+- 1.0 
 
 - 0.4 add the db cache function
 - 0.3 add the xml parser function
@@ -357,7 +361,7 @@ parentViewController:(id)viewController
 ## Requirements
 
 - Xcode 6
-- iOS 5.1.1 or Mac OSX 10.8
+- iOS 5.1.1 or Mac OSX 10.8 (0.x)/ iOS 7.0 and Later or OSX 10.9 (1.x)
 
 ## Author
 
