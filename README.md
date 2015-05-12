@@ -13,7 +13,7 @@ DDModel is available through [CocoaPods](http://cocoapods.org), to install
 it simply add the following line to your Podfile:
 
     pod "DDModel"
-Alternatively, you can just drag the files from `DDModel / Classes` into your own project. 
+Alternatively, you can just drag the files from `DDModel / Classes` into your own project. then you should clone the repositories: [AFNetworking](https://github.com/AFNetworking/AFNetworking)、[XMLDictionary](https://github.com/nicklockwood/XMLDictionary)、[JTObjectMapping](https://github.com/jamztang/JTObjectMapping)、[SQLitePersistentObject](https://github.com/openboy2012/DDSQLiteKit)、[MBProgressHUD](https://github.com/jdg/MBProgressHUD)
 
 ## Usage
 
