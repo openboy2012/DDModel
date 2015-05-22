@@ -9,6 +9,23 @@
 #import "ViewController.h"
 #import "Post.h"
 #import "AppDelegate.h"
+#import <UITableView+FDTemplateLayoutCell.h>
+
+@interface PostCell : UITableViewCell
+
+@property (nonatomic, weak) IBOutlet UILabel *lblTitle;
+
+- (void)setPost:(Post *)post;
+
+@end
+
+@implementation PostCell
+
+- (void)setPost:(Post *)post{
+    self.lblTitle.text = [NSString stringWithFormat:@"%@-%@",post.user.username,post.text];
+}
+
+@end
 
 @interface ViewController (){
     NSMutableArray *dataList;
@@ -23,6 +40,8 @@
     // Do any additional setup after loading the view, typically from a nib.
     if(!dataList)
         dataList = [[NSMutableArray alloc] initWithCapacity:0];
+    
+    self.tableView.estimatedRowHeight = 100;
 #if UseXMLDemo
 
     NSDictionary *params = @{@"q":@"admin/station/station/bygroupid",
@@ -68,15 +87,24 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
+    PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell" forIndexPath:indexPath];
 #if UseXMLDemo
     Station *s = dataList[indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@-%@",s.name,s.desc];
 #else
     Post *p = dataList[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@-%@",p.user.username,p.text];
+    [cell setPost:p];
 #endif
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return [tableView fd_heightForCellWithIdentifier:@"PostCell"
+                                    cacheByIndexPath:indexPath
+                                       configuration:^(PostCell *cell) {
+                                           Post *p = dataList[indexPath.row];
+                                           [cell setPost:p];
+                                       }];;
 }
 
 @end
