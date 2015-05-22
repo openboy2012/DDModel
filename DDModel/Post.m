@@ -2,8 +2,8 @@
 //  Post.m
 //  DDKit
 //
-//  Created by Diaoshu on 14-12-15.
-//  Copyright (c) 2014年 Dejohn Dong. All rights reserved.
+//  Created by DeJohn Dong on 14-12-15.
+//  Copyright (c) 2014年 DDKit. All rights reserved.
 //
 
 #import "Post.h"
