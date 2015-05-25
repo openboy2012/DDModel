@@ -42,23 +42,8 @@ typedef enum : NSUInteger {
 
 @interface DDModelHttpClient : AFHTTPRequestOperationManager
 
-@property (nonatomic, strong) MBProgressHUD *hud;
 @property (nonatomic, strong) NSDictionary *checkKeyValue;
 @property (nonatomic) DDResponseType type;
-
-/**
- *  show hud if flag = YES
- *
- *  @param flag flag
- */
-- (void)showHud:(BOOL)flag;
-
-/**
- *  hide hud if flag = YES
- *
- *  @param flag flag
- */
-- (void)hideHud:(BOOL)flag;
 
 #pragma mark - initlize methods
 /**

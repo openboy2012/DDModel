@@ -11,6 +11,7 @@
 #import "NSDictionary+DDUploadFile.h"
 #import "DDCache.h"
 #import "NSString+CacheMD5.h"
+#import "DDModelHttpClient+Addition.h"
 
 #define DDFILE @"fileInfo"
 
@@ -28,19 +29,13 @@
                          failure:(DDResponseFailureBlock)failure;
 
 /**
- *  parse the responseString to JSON object
- */
-+ (id)getJSONObjectFromString:(NSString *)responseString
-                      failure:(DDResponseFailureBlock)failure __deprecated_msg(" use 'getObjectFromReponseString:failure:' method replace.");
-
-/**
- *  conver JSON object to Model
+ *  conver dictionary object to Model
  *
- *  @param jsonObject json object
+ *  @param dictObject dictionary object
  *
  *  @return modol or model array
  */
-+ (id)convertJsonToObject:(id)jsonObject;
++ (id)convertToObject:(id)dictObject;
 
 @end
 
@@ -48,13 +43,11 @@
 
 #pragma mark - DB Cache - Http Handler Methods
 
-+ (void)get:(NSString *)path
-     params:(id)params
-    showHUD:(BOOL)show
-parentViewController:(id)viewController
-  dbSuccess:(DDSQLiteBlock)dbBlock
-    success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure
++ (AFHTTPRequestOperation *)get:(NSString *)path
+                         params:(id)params
+                      dbSuccess:(DDSQLiteBlock)dbBlock
+                        success:(DDResponseSuccessBlock)success
+                        failure:(DDResponseFailureBlock)failure
 {
     if(dbBlock){
         //query the cache
@@ -64,45 +57,33 @@ parentViewController:(id)viewController
                             DDCache *cache = data;
                             if(cache){
                                 id JSON = [cache.content dictionaryWithJSON];
-                                dbBlock([[self class] convertJsonToObject:JSON]);
+                                dbBlock([[self class] convertToObject:JSON]);
                             }
                         }];
     }
     
-    [[DDModelHttpClient sharedInstance] showHud:show];
-    
     NSDictionary *getParams = [[DDModelHttpClient sharedInstance] parametersHandler:params];
-    AFHTTPRequestOperation *getOperation =
-    [[DDModelHttpClient sharedInstance] GET:path
-                                 parameters:getParams
-                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                        
-                                        [[DDModelHttpClient sharedInstance] hideHud:show];
-                                        
-                                        [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                        
-                                        id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
-                                        
-                                        //save the cache
-                                        [DDCache cacheWithPath:path parameter:params content:JSON];
-                                        if (success && JSON){
-                                            success([[self class] convertJsonToObject:JSON]);
-                                        }
-                                    }
-                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        [[DDModelHttpClient sharedInstance] hideHud:show];
-                                        
-                                        [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                        if(failure)
-                                            failure(error, [error description]);
-                                    }];
-    [[DDModelHttpClient sharedInstance] addOperation:getOperation withKey:viewController];
+    
+    return [[DDModelHttpClient sharedInstance] GET:path
+                                        parameters:getParams
+                                           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                               
+                                               id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
+                                               
+                                               //save the cache
+                                               [DDCache cacheWithPath:path parameter:params content:JSON];
+                                               if (success && JSON){
+                                                   success([[self class] convertToObject:JSON]);
+                                               }
+                                           }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               if(failure)
+                                                   failure(error, [error description]);
+                                           }];
 }
 
-+ (void)post:(NSString *)path
++ (AFHTTPRequestOperation *)post:(NSString *)path
       params:(id)params
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
    dbSuccess:(DDSQLiteBlock)dbBlock
      success:(DDResponseSuccessBlock)success
      failure:(DDResponseFailureBlock)failure
@@ -116,123 +97,81 @@ parentViewController:(id)viewController
                             DDCache *cache = data;
                             if([cache.content length] > 1){
                                 id JSON = [cache.content dictionaryWithJSON];
-                                dbBlock([[self class] convertJsonToObject:JSON]);
+                                dbBlock([[self class] convertToObject:JSON]);
                             }
                         }];
     }
     
-    [[DDModelHttpClient sharedInstance] showHud:show];
-    
     NSDictionary *postParams = [[DDModelHttpClient sharedInstance] parametersHandler:params];
-    AFHTTPRequestOperation *getOperation =
+    AFHTTPRequestOperation *postOperation =
     [[DDModelHttpClient sharedInstance] POST:path
                                   parameters:postParams
                                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                         
-                                         [[DDModelHttpClient sharedInstance] hideHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          
                                          id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
                                          
                                          //save the cache
                                          [DDCache cacheWithPath:path parameter:params content:operation.responseString];
                                          if (success && JSON){
-                                             success([[self class] convertJsonToObject:JSON]);
+                                             success([[self class] convertToObject:JSON]);
                                          }
                                      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                         [[DDModelHttpClient sharedInstance] hideHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          if(failure)
                                              failure(error, [error description]);
                                      }];
-    [[DDModelHttpClient sharedInstance] addOperation:getOperation withKey:viewController];
+    return postOperation;
 }
 
 #pragma mark - HTTP Request Handler Methods
 
-+ (void)get:(NSString *)path
-     params:(id)params
-    showHUD:(BOOL)show
-parentViewController:(id)viewController
-    success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure{
-    
-    [[DDModelHttpClient sharedInstance] showHud:show];
++ (AFHTTPRequestOperation *)get:(NSString *)path
+                         params:(id)params
+                        success:(DDResponseSuccessBlock)success
+                        failure:(DDResponseFailureBlock)failure{
     
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
-    AFHTTPRequestOperation *getOperation =
-    [[DDModelHttpClient sharedInstance] GET:path
-                                 parameters:params
-                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                        
-                                        [[DDModelHttpClient sharedInstance] hideHud:show];
-                                        
-                                        [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                        id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
-                                        if (success && JSON)
-                                            success([[self class] convertJsonToObject:JSON]);
-                                    }
-                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        [[DDModelHttpClient sharedInstance] hideHud:show];
-                                        
-                                        [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                        if(failure)
-                                            failure(error, [error description]);
-                                    }];
-    [[DDModelHttpClient sharedInstance] addOperation:getOperation withKey:viewController];
+    return [[DDModelHttpClient sharedInstance] GET:path
+                                        parameters:params
+                                           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                               
+                                               id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
+                                               if (success && JSON)
+                                                   success([[self class] convertToObject:JSON]);
+                                           }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               if(failure)
+                                                   failure(error, [error description]);
+                                           }];
 }
 
-+ (void)post:(NSString *)path
-      params:(id)params
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-     success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure{
-    /**
-     *  show the hud view
-     */
-    [[DDModelHttpClient sharedInstance] showHud:show];
++ (AFHTTPRequestOperation *)post:(NSString *)path
+                          params:(id)params
+                         success:(DDResponseSuccessBlock)success
+                         failure:(DDResponseFailureBlock)failure{
     
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
-    AFHTTPRequestOperation *postOperation =
-    [[DDModelHttpClient sharedInstance] POST:path
-                                  parameters:params
-                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                         /**
-                                          *  hide the hud view
-                                          */
-                                         [[DDModelHttpClient sharedInstance] hideHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                         
-                                         id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
-                                         
-                                         if (success && JSON)
-                                             success([[self class] convertJsonToObject:JSON]);
-                                     }
-                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                         [[DDModelHttpClient sharedInstance] hideHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
-                                         if(failure)
-                                             failure(error, [error description]);
-                                     }];
-    [[DDModelHttpClient sharedInstance] addOperation:postOperation withKey:viewController];
+    return [[DDModelHttpClient sharedInstance] POST:path
+                                         parameters:params
+                                            success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                                id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
+                                                
+                                                if (success && JSON)
+                                                    success([[self class] convertToObject:JSON]);
+                                            }
+                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                if(failure)
+                                                    failure(error, [error description]);
+                                            }];
 }
 
-+ (void)post:(NSString *)path
-  fileStream:(NSData *)stream
-      params:(id)params
-    userInfo:(id)userInfo
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-     success:(DDUploadReponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure{
++ (AFHTTPRequestOperation *)post:(NSString *)path
+                      fileStream:(NSData *)stream
+                          params:(id)params
+                        userInfo:(id)userInfo
+                         success:(DDUploadReponseSuccessBlock)success
+                         failure:(DDResponseFailureBlock)failure{
     
-    [[DDModelHttpClient sharedInstance] showHud:show];
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     
     AFHTTPRequestOperation *uploadOperation =
@@ -245,20 +184,14 @@ parentViewController:(id)viewController
                        [formData appendPartWithFileData:stream name:uploadInfo.name fileName:uploadInfo.fileName mimeType:uploadInfo.mimeType];
                    }
                                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                         [[DDModelHttpClient sharedInstance] hideHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
                                          if (success && JSON)
-                                             success(userInfo,[[self class] convertJsonToObject:JSON]);
+                                             success(userInfo,[[self class] convertToObject:JSON]);
                                      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                         [[DDModelHttpClient sharedInstance] showHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                      }];
     uploadOperation.userInfo = userInfo;
-    [[DDModelHttpClient sharedInstance] addOperation:uploadOperation withKey:viewController];
+    return uploadOperation;
 }
 
 #pragma mark - 
@@ -346,92 +279,31 @@ parentViewController:(id)viewController
 #pragma mark - Object Mapping Handle Methods
 
 + (NSString *)parseNode{
-    //Compatibility to the jsonNode Method in old version
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    if([self jsonNode]){
-        return [self jsonNode];
-    }
-#pragma clang diagnostic pop
     return @"NULL";
 }
 
 + (NSDictionary *)parseMappings{
-    //Compatibile to the jsonMappings Method in old version
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    if([self jsonMappings]){
-        return [self jsonMappings];
-    }
-#pragma clang diagnostic pop
     return nil;
 }
 
-+ (id)convertJsonToObject:(id)jsonObject{
-    if(jsonObject == nil){
++ (id)convertToObject:(id)dictObject{
+    if(dictObject == nil){
         return nil;
     }
     id data = nil;
-    if([jsonObject isKindOfClass:[NSArray class]]){
-        data = jsonObject;
+    if([dictObject isKindOfClass:[NSArray class]]){
+        data = dictObject;
     }else{
         if ([[[self class] parseNode] isEqualToString:@"NULL"]) {
-            data = jsonObject;
+            data = dictObject;
         }else{
-            data = [jsonObject objectForKey:[[self class] parseNode]];
+            data = [dictObject valueForKeyPath:[[self class] parseNode]];
         }
     }
     if(data == nil){
         return nil;
     }
     return [[self class] objectFromJSONObject:data mapping:[[self class] parseMappings]];
-}
-
-
-@end
-
-@implementation DDModel(Deprecated)
-
-+ (NSString *)jsonNode{
-    return @"NULL";
-}
-
-+ (NSDictionary *)jsonMappings{
-    return nil;
-}
-
-- (NSDictionary *)propertiesOfSelf{
-    NSMutableDictionary *props = [NSMutableDictionary dictionary];
-    unsigned int outCount, i;
-    objc_property_t *properties = class_copyPropertyList([self class], &outCount);
-    for (i = 0; i < outCount; i++) {
-        objc_property_t property = properties[i];
-        NSString *propertyName = [[NSString alloc] initWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
-        id propertyValue = [self valueForKey:propertyName];
-        if ([propertyValue isKindOfClass:[NSArray class]]){
-            NSMutableArray *list = [NSMutableArray arrayWithCapacity:0];
-            for (id propetyItem in propertyValue) {
-                if([propetyItem isKindOfClass:[DDModel class]]){
-                    [list addObject:[propetyItem propertiesOfSelf]];
-                }else{
-                    if(propetyItem)
-                        [list addObject:propetyItem];
-                }
-            }
-            [props setObject:list forKey:propertyName];
-        }else if ([propertyValue isKindOfClass:[DDModel class]]){
-            [props setObject:[propertyValue propertiesOfSelf] forKey:propertyName];
-        }else{
-            if(propertyValue)
-                [props setObject:propertyValue forKey:propertyName];
-        }
-    }
-    free(properties);
-    return props;
-}
-
-+ (void)post:(NSString *)path params:(id)params postParams:(id)postParams parentView:(id)view success:(DDResponseSuccessBlock)success failure:(DDResponseFailureBlock)failure{
-    //depreacted
 }
 
 @end

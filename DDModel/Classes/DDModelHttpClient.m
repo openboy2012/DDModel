@@ -10,8 +10,6 @@
 
 static NSString *kAppUrl;
 
-static int hudCount = 0;
-
 @interface DDModelHttpClient()
 
 @property (nonatomic, strong) NSMutableDictionary *ddHttpQueueDict;
@@ -141,37 +139,5 @@ static int hudCount = 0;
     }
 }
 
-#pragma mark - HTTP HUD methods
-
-- (void)showHud:(BOOL)flag{
-    if(!flag)
-        return;
-    if(hudCount > 0){
-        hudCount ++;
-        return;
-    }
-    UIWindow *topWindow = [[[UIApplication sharedApplication] windows] lastObject];
-    if(!_hud){
-        _hud = [[MBProgressHUD alloc] initWithView:topWindow];
-        _hud.labelText = @"请稍候...";
-        _hud.yOffset = -20.0f;
-        _hud.userInteractionEnabled = NO;
-        _hud.mode = MBProgressHUDModeIndeterminate;
-        _hud.color = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3f];
-    }
-    [topWindow addSubview:_hud];
-    //处理背景颜色 按需更换
-    hudCount++;
-    [_hud show:NO];
-}
-
-- (void)hideHud:(BOOL)flag{
-    if(!flag)
-        return;
-    if(hudCount == 1 && _hud){
-        [_hud hide:NO];
-    }
-    hudCount --;
-}
 
 @end

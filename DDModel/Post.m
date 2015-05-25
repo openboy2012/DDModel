@@ -46,7 +46,7 @@
             success:(DDResponseSuccessBlock)success
             failure:(DDResponseFailureBlock)failure
 {
-    [[self class] get:@"stream/0/posts/stream/global" params:params showHUD:show parentViewController:viewController success:success failure:failure];
+    [[self class] get:@"stream/0/posts/stream/global" params:params success:success failure:failure];
 }
 
 @end
@@ -79,7 +79,7 @@
              dbSuccess:(DDSQLiteBlock)dbResult
                success:(DDResponseSuccessBlock)success
                failure:(DDResponseFailureBlock)failure{
-    [[self class] get:@"index.php" params:params showHUD:show parentViewController:params dbSuccess:dbResult success:success failure:failure];
+    [[self class] get:@"index.php" params:params dbSuccess:dbResult success:success failure:failure];
 }
 
 @end
