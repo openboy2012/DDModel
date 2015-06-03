@@ -40,7 +40,7 @@
 
 @end
 
-@implementation NSDictionary(JSON)
+@implementation NSDictionary(DDJSON)
 
 - (NSString *)JSONString{
     NSError *error = nil;

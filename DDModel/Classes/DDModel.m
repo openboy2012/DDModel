@@ -83,10 +83,10 @@
 }
 
 + (AFHTTPRequestOperation *)post:(NSString *)path
-      params:(id)params
-   dbSuccess:(DDSQLiteBlock)dbBlock
-     success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure
+                          params:(id)params
+                       dbSuccess:(DDSQLiteBlock)dbBlock
+                         success:(DDResponseSuccessBlock)success
+                         failure:(DDResponseFailureBlock)failure
 {
     
     if(dbBlock){
@@ -129,12 +129,10 @@
                          params:(id)params
                         success:(DDResponseSuccessBlock)success
                         failure:(DDResponseFailureBlock)failure{
-    
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     return [[DDModelHttpClient sharedInstance] GET:path
                                         parameters:params
                                            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                               
                                                id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
                                                if (success && JSON)
                                                    success([[self class] convertToObject:JSON]);
@@ -238,10 +236,6 @@
         return nil;
     }
     return jsonValue?:@{};
-}
-
-+ (void)cancelRequest:(id)viewController{
-    [[DDModelHttpClient sharedInstance] cancelOperationWithKey:viewController];
 }
 
 #pragma mark - Propery Methods

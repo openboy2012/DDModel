@@ -57,3 +57,53 @@ static int hudCount = 0;
 }
 
 @end
+
+@implementation DDModelHttpClient (OperationHandler)
+
+- (NSMutableDictionary *)ddHttpQueueDict{
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setDdHttpQueueDict:(NSMutableDictionary *)ddHttpQueueDict{
+    objc_setAssociatedObject(self, @selector(ddHttpQueueDict), ddHttpQueueDict, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+#pragma mark - HTTP Operation Methods
+
+- (void)addOperation:(AFURLConnectionOperation *)operation withKey:(id)key{
+    __block NSString *keyStr = [self description];
+    if(key)
+        keyStr = [key description];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSMutableArray *operations = self.ddHttpQueueDict[keyStr];
+        if(!operations)
+            operations = [[NSMutableArray alloc] initWithObjects:operation, nil];
+        else
+            [operations addObject:operation];
+        [self.ddHttpQueueDict setObject:operations forKey:keyStr];
+    });
+}
+
+- (void)removeOperation:(AFURLConnectionOperation *)operation withKey:(id)key{
+    __block NSString *keyStr = [self description];
+    if(key)
+        keyStr = [key description];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSMutableArray *operations = self.ddHttpQueueDict[keyStr];
+        [operations removeObject:operation];
+    });
+}
+
+- (void)cancelOperationWithKey:(id)key{
+    __block NSString *keyStr = [self description];
+    if(key)
+        keyStr = [key description];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSMutableArray *operations = self.ddHttpQueueDict[keyStr];
+        if(operations.count > 0)
+            [operations makeObjectsPerformSelector:@selector(cancel)];
+        [self.ddHttpQueueDict removeObjectForKey:keyStr];
+    });
+}
+
+@end

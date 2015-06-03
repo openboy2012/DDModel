@@ -83,29 +83,6 @@ typedef enum : NSUInteger {
  */
 + (void)removeHTTPHeaderFieldValue:(NSDictionary *)keyValue;
 
-#pragma mark - operation handler methods
-/**
- *  Add operation with key <根据Key值加入Opeartion>
- *
- *  @param operation requesting operation <正在请求的HTTP Operation>
- *  @param key       key <关键字，方便再次查找>
- */
-- (void)addOperation:(AFURLConnectionOperation *)operation withKey:(id)key;
-
-/**
- *  Cancel operation with key <根据Key值取消某个Opeartion>
- *
- *  @param operation requesting operation <正在请求的HTTP Operation>
- *  @param key       key <关键字，方便再次查找>
- */
-- (void)removeOperation:(AFURLConnectionOperation *)operation withKey:(id)key;
-
-/**
- *  Cancel all operation with key <根据Key取消所有的Operation>
- *
- *  @param key key <关键字>
- */
-- (void)cancelOperationWithKey:(id)key;
 
 #pragma mark - decode & encode methods
 /**

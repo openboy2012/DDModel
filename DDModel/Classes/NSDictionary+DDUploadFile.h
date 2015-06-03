@@ -23,7 +23,7 @@
 @end
 
 
-@interface NSDictionary (JSON)
+@interface NSDictionary (DDJSON)
 
 - (NSString *)JSONString;
 

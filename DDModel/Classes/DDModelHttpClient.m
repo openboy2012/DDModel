@@ -12,7 +12,6 @@ static NSString *kAppUrl;
 
 @interface DDModelHttpClient()
 
-@property (nonatomic, strong) NSMutableDictionary *ddHttpQueueDict;
 @property (nonatomic, weak) id<DDHttpClientDelegate> delegate;
 
 @end
@@ -39,11 +38,7 @@ static NSString *kAppUrl;
         }
         client = [[DDModelHttpClient alloc] initWithBaseURL:clientURL];
         
-        //instance the ddHttpQueueDictionary
-        client.ddHttpQueueDict = [[NSMutableDictionary alloc] initWithCapacity:0];
-        
         client.type = DDResponseJSON;
-        
     });
     return client;
 }
@@ -65,44 +60,6 @@ static NSString *kAppUrl;
     for (id key in [keyValue allKeys]) {
         [[[self sharedInstance] requestSerializer] setValue:@"" forHTTPHeaderField:key];
     }
-}
-
-#pragma mark - HTTP Operation Methods
-
-- (void)addOperation:(AFURLConnectionOperation *)operation withKey:(id)key{
-    __block NSString *keyStr = [self description];
-    if(key)
-        keyStr = [key description];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableArray *operations = self.ddHttpQueueDict[keyStr];
-        if(!operations)
-            operations = [[NSMutableArray alloc] initWithObjects:operation, nil];
-        else
-            [operations addObject:operation];
-        [self.ddHttpQueueDict setObject:operations forKey:keyStr];
-    });
-}
-
-- (void)removeOperation:(AFURLConnectionOperation *)operation withKey:(id)key{
-    __block NSString *keyStr = [self description];
-    if(key)
-        keyStr = [key description];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableArray *operations = self.ddHttpQueueDict[keyStr];
-        [operations removeObject:operation];
-    });
-}
-
-- (void)cancelOperationWithKey:(id)key{
-    __block NSString *keyStr = [self description];
-    if(key)
-        keyStr = [key description];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableArray *operations = self.ddHttpQueueDict[keyStr];
-        if(operations.count > 0)
-            [operations makeObjectsPerformSelector:@selector(cancel)];
-        [self.ddHttpQueueDict removeObjectForKey:keyStr];
-    });
 }
 
 #pragma mark - HTTP Decode & Encode Methods
