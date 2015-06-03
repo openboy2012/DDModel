@@ -7,6 +7,7 @@
 //
 
 #import "DDModelHttpClient.h"
+#import "AFHTTPRequestOperationManager+DDAddition.h"
 
 static NSString *kAppUrl;
 
@@ -37,11 +38,12 @@ static NSString *kAppUrl;
             NSLog(@"you have lost the method 'startWithURL:' or 'startWithURL:delegate:' in lanuching AppDelegate");
         }
         client = [[DDModelHttpClient alloc] initWithBaseURL:clientURL];
-        
+        [client dd_addURL:kAppUrl];
         client.type = DDResponseJSON;
     });
     return client;
 }
+
 
 + (void)startWithURL:(NSString *)url delegate:(id<DDHttpClientDelegate>)delegate{
     [self startWithURL:url];

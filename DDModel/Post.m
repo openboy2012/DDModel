@@ -83,3 +83,33 @@
 }
 
 @end
+
+
+@implementation BESTItemList
+
+
+@end
+
+@implementation BESTItemListRoot
+
++ (NSString *)parseNode{
+    return @"data";
+}
+
++ (NSDictionary *)parseMappings{
+    id handlerItemList = [BESTItemList mappingWithKey:@"list" mapping:[BESTItemList parseMappings]];
+    NSDictionary *mappings = @{@"list":handlerItemList};
+    return mappings;
+}
+
++ (void)getItemList:(id)params
+            showHUD:(BOOL)show
+parentViewController:(id)viewController
+            success:(DDResponseSuccessBlock)success
+            failure:(DDResponseFailureBlock)failure{
+    
+    [[self class] post:@"/v1/search/list" params:params success:success failure:failure];
+    
+}
+
+@end

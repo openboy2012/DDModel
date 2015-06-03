@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DDModelKit.h"
+#import "AFHTTPRequestOperationManager+DDAddition.h"
 
 @interface AppDelegate ()<DDHttpClientDelegate>
 

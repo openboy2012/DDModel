@@ -1,15 +1,15 @@
 //
-//  DDModelHttpClient+Addition.m
+//  DDModelHttpClient+DDAddition.m
 //  DDModel
 //
 //  Created by HIK-DeJohn on 15/5/25.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
-#import "DDModelHttpClient+Addition.h"
+#import "DDModelHttpClient+DDAddition.h"
 #import <objc/runtime.h>
 
-@implementation DDModelHttpClient (Addition)
+@implementation DDModelHttpClient (DDAddition)
 
 static int hudCount = 0;
 

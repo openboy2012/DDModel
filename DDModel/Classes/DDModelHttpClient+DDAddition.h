@@ -1,5 +1,5 @@
 //
-//  DDModelHttpClient+Addition.h
+//  DDModelHttpClient+DDAddition.h
 //  DDModel
 //
 //  Created by HIK-DeJohn on 15/5/25.
@@ -8,7 +8,7 @@
 
 #import "DDModelHttpClient.h"
 
-@interface DDModelHttpClient (Addition)
+@interface DDModelHttpClient (DDAddition)
 
 @property (nonatomic, strong) MBProgressHUD *hud;
 

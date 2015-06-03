@@ -11,7 +11,8 @@
 #import "NSDictionary+DDUploadFile.h"
 #import "DDCache.h"
 #import "NSString+CacheMD5.h"
-#import "DDModelHttpClient+Addition.h"
+#import "DDModelHttpClient+DDAddition.h"
+#import "AFHTTPRequestOperationManager+DDAddition.h"
 
 #define DDFILE @"fileInfo"
 
