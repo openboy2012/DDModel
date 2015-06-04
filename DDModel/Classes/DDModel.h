@@ -12,6 +12,8 @@
 #import <XMLDictionary.h>
 #import "DDModelHttpClient.h"
 
+#define DDFILE @"fileInfo"
+
 @protocol DDMappings <NSObject>
 
 /**
@@ -126,5 +128,25 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @return a dictionary of self entity
  */
 - (NSDictionary *)propertiesOfObject;
+
+/**
+ *  Get Object(s) from reponse string
+ *
+ *  @param reponseString reponse string
+ *  @param failure       failure handler block
+ *
+ *  @return Object(s)
+ */
++ (id)getObjectFromReponseString:(NSString *)reponseString
+                         failure:(DDResponseFailureBlock)failure;
+
+/**
+ *  conver dictionary object to Model
+ *
+ *  @param dictObject dictionary object
+ *
+ *  @return modol or model array
+ */
++ (id)convertToObject:(id)dictObject;
 
 @end
