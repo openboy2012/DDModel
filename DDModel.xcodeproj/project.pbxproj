@@ -121,8 +121,6 @@
 		8E0B672D1AAD918D0020FD73 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				0D65662F1B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.h */,
-				0D6566301B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.m */,
 				8E0B672B1AAD918D0020FD73 /* NSDictionary+DDUploadFile.h */,
 				8E0B672C1AAD918D0020FD73 /* NSDictionary+DDUploadFile.m */,
 				8E0092D71AAF234600043C5E /* NSString+CacheMD5.h */,
@@ -134,6 +132,8 @@
 		8E0B67321AAD918D0020FD73 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				0D65662F1B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.h */,
+				0D6566301B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.m */,
 				8E0092D41AAF232C00043C5E /* DDCache.h */,
 				8E0092D51AAF232C00043C5E /* DDCache.m */,
 				8E0B672E1AAD918D0020FD73 /* DDModel.h */,

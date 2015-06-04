@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
    ss.dependency 'AFNetworking', '2.5.4'
    ss.dependency 'MBProgressHUD','0.9.1'
 
-    ss.source_files = 'DDModel/Classes/DDModelHttpClient.{h,m}', 'DDModel/Classes/DDModelHttpClient+DDAddition.{h,m}','AFHTTPRequestOperationManager+DDAddition.{h,m}'
+   ss.source_files = 'DDModel/Classes/DDModelHttpClient.{h,m}', 'DDModel/Classes/DDModelHttpClient+DDAddition.{h,m}', 'DDModel/Classes/AFHTTPRequestOperationManager+DDAddition.{h,m}'
 
  end
  s.subspec 'Core' do |ss|
