@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
  s.requires_arc = true
 
  s.subspec 'Categories' do |ss|
-   ss.source_files = 'DDModel/Classes/{NS}*.{h,m}'
+   ss.source_files = 'DDModel/Classes/{NS}*.{h,m}','AFHTTPRequestOperationManager+DDAddition.{h,m}'
  end
  s.subspec 'Cache' do |ss|
    ss.dependency 'DDModel/Categories'
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
    ss.dependency 'AFNetworking', '2.5.3'
    ss.dependency 'MBProgressHUD','0.9.1'
 
-   ss.source_files = 'DDModel/Classes/DDModelHttpClient.{h,m}', 'DDModel/Classes/DDModelHttpClient+Addition.{h,m}'
+   ss.source_files = 'DDModel/Classes/DDModelHttpClient.{h,m}', 'DDModel/Classes/DDModelHttpClient+DDAddition.{h,m}'
  end
  s.subspec 'Core' do |ss|
    ss.dependency 'DDModel/Cache'
@@ -34,7 +34,7 @@ Pod::Spec.new do |s|
    ss.dependency 'JTObjectMapping','1.1.2'
    ss.dependency 'XMLDictionary','1.4'
 
-   ss.source_files = 'DDModel/Classes/DDModel.{h,m}'
+   ss.source_files = 'DDModel/Classes/DDModel.{h,m}', 'DDModel/Classes/DDModel+DDAddition.{h,m}'
  end
 end
 
