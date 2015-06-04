@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name     = 'DDModel'
- s.version  = '0.4.2'
+ s.version  = '0.5'
  s.license  = 'MIT'
  s.summary  = 'a HTTP-JSON-ORM-Persisent Object Kit'
  s.homepage = 'https://github.com/openboy2012/DDModel.git'
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
  s.requires_arc = true
 
  s.subspec 'Categories' do |ss|
-   ss.source_files = 'DDModel/Classes/{NS}*.{h,m}','AFHTTPRequestOperationManager+DDAddition.{h,m}'
+   ss.source_files = 'DDModel/Classes/{NS}*.{h,m}'
  end
  s.subspec 'Cache' do |ss|
    ss.dependency 'DDModel/Categories'
@@ -22,10 +22,11 @@ Pod::Spec.new do |s|
  end
  s.subspec 'HTTP' do |ss|
    ss.dependency 'DDModel/Categories'
-   ss.dependency 'AFNetworking', '2.5.3'
+   ss.dependency 'AFNetworking', '2.5.4'
    ss.dependency 'MBProgressHUD','0.9.1'
 
-   ss.source_files = 'DDModel/Classes/DDModelHttpClient.{h,m}', 'DDModel/Classes/DDModelHttpClient+DDAddition.{h,m}'
+    ss.source_files = 'DDModel/Classes/DDModelHttpClient.{h,m}', 'DDModel/Classes/DDModelHttpClient+DDAddition.{h,m}','AFHTTPRequestOperationManager+DDAddition.{h,m}'
+
  end
  s.subspec 'Core' do |ss|
    ss.dependency 'DDModel/Cache'

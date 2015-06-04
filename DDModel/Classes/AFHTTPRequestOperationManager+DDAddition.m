@@ -1,5 +1,5 @@
 //
-//  AFHTTPRequestOperationManager+DDMoDDAddition.m
+//  AFHTTPRequestOperationManager+DDAddition.m
 //  DDModel
 //
 //  Created by DeJohn Dong on 15/6/3.
@@ -9,7 +9,7 @@
 #import "AFHTTPRequestOperationManager+DDAddition.h"
 #import <objc/runtime.h>
 
-@interface AFNetworkReachabilityManager()
+@interface AFHTTPRequestOperationManager()
 
 @property (nonatomic, strong) NSMutableArray *urls;
 

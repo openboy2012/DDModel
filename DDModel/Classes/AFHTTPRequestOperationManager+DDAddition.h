@@ -1,5 +1,5 @@
 //
-//  AFHTTPRequestOperationManager+DDMoDDAddition.h
+//  AFHTTPRequestOperationManager+DDAddition.h
 //  DDModel
 //
 //  Created by DeJohn Dong on 15/6/3.
