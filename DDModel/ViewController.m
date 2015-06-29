@@ -44,21 +44,37 @@
         dataList = [[NSMutableArray alloc] initWithCapacity:0];
     
     self.tableView.estimatedRowHeight = 100;
+    
+    NSLog(@"url = %@",[DDModelHttpClient sharedInstance].baseURL);
+    [BESTItemListRoot getItemList:@{@"sortBy":@"recommend",@"keyword":@"coach"} showHUD:YES parentViewController:self
+                          success:^(BESTItemListRoot *data) {
+                              NSLog(@"data.size = %i",(int)data.count);
+                              
+                              NSLog(@"data = %@",data);
+                              [dataList removeAllObjects];
+                              [dataList addObjectsFromArray:data.list];
+                              [self.tableView reloadData];
+                              
+                              
+                          } failure:^(NSError *error, NSString *message) {
+                              NSLog(@"error = %@ message = %@",error, message);
+                          }];
+
 #if UseXMLDemo
 
 
 #else
-    [Post getPostList:nil
-             parentVC:self
-              showHUD:YES
-              success:^(id data) {
-                  NSLog(@"data = %@",data);
-                  [dataList removeAllObjects];
-                  [dataList addObjectsFromArray:data];
-                  [self.tableView reloadData];
-              }
-              failure:^(NSError *error, NSString *message) {
-              }];
+//    [Post getPostList:nil
+//             parentVC:self
+//              showHUD:YES
+//              success:^(id data) {
+//                  NSLog(@"data = %@",data);
+//                  [dataList removeAllObjects];
+//                  [dataList addObjectsFromArray:data];
+//                  [self.tableView reloadData];
+//              }
+//              failure:^(NSError *error, NSString *message) {
+//              }];
 #endif
 }
 
@@ -122,8 +138,9 @@
 //                        NSLog(@"error = %@ message = %@",error, message);
 //                    }];
     
-    if(isChanged){
-        [[DDModelHttpClient sharedInstance] dd_exchangeURL:@"https://api.app.net/"];
+    if(!isChanged){
+        [[DDModelHttpClient sharedInstance] dd_addURL:@"https://api.app.net/"];
+        NSLog(@"url = %@",[DDModelHttpClient sharedInstance].baseURL);
         [Post getPostList:nil
                  parentVC:self
                   showHUD:YES

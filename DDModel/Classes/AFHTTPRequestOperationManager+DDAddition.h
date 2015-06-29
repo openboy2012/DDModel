@@ -24,4 +24,12 @@
  */
 - (void)dd_addURL:(NSString *)url;
 
+
+/**
+ *  set the auth in every operation
+ *
+ *  @param block auth block
+ */
+- (void)dd_setWillSendRequestForAuthenticationChallengeBlock:(void (^)(NSURLConnection *connection, NSURLAuthenticationChallenge *challenge))block;
+
 @end

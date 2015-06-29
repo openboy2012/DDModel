@@ -17,10 +17,6 @@
 		8E0B67361AAD918D0020FD73 /* DDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B672F1AAD918D0020FD73 /* DDModel.m */; };
 		8E0B67371AAD918D0020FD73 /* DDModelHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B67311AAD918D0020FD73 /* DDModelHttpClient.m */; };
 		8E183C9A1A834B370005AB69 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E183C991A834B370005AB69 /* Post.m */; };
-		8E183C9D1A834CE30005AB69 /* adn.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9B1A834CE30005AB69 /* adn.cer */; };
-		8E183C9E1A834CE30005AB69 /* adn.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9B1A834CE30005AB69 /* adn.cer */; };
-		8E183C9F1A834CE30005AB69 /* root_ca.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9C1A834CE30005AB69 /* root_ca.cer */; };
-		8E183CA01A834CE30005AB69 /* root_ca.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9C1A834CE30005AB69 /* root_ca.cer */; };
 		8E76A7781A81FB4C00352063 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E76A7771A81FB4C00352063 /* main.m */; };
 		8E76A77B1A81FB4C00352063 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E76A77A1A81FB4C00352063 /* AppDelegate.m */; };
 		8E76A77E1A81FB4C00352063 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E76A77D1A81FB4C00352063 /* ViewController.m */; };
@@ -64,8 +60,6 @@
 		8E0B67331AAD918D0020FD73 /* DDModelKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModelKit.h; sourceTree = "<group>"; };
 		8E183C981A834B370005AB69 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		8E183C991A834B370005AB69 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
-		8E183C9B1A834CE30005AB69 /* adn.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = adn.cer; sourceTree = "<group>"; };
-		8E183C9C1A834CE30005AB69 /* root_ca.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = root_ca.cer; sourceTree = "<group>"; };
 		8E76A7721A81FB4C00352063 /* DDModel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDModel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E76A7761A81FB4C00352063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E76A7771A81FB4C00352063 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -200,8 +194,6 @@
 		8E76A7751A81FB4C00352063 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8E183C9B1A834CE30005AB69 /* adn.cer */,
-				8E183C9C1A834CE30005AB69 /* root_ca.cer */,
 				8E76A7761A81FB4C00352063 /* Info.plist */,
 				8E76A7771A81FB4C00352063 /* main.m */,
 			);
@@ -310,8 +302,6 @@
 				8EAEA6C11ACA9B5C00C92584 /* DDModel.podspec in Resources */,
 				8E76A7811A81FB4C00352063 /* Main.storyboard in Resources */,
 				8E76A7861A81FB4C00352063 /* LaunchScreen.xib in Resources */,
-				8E183C9F1A834CE30005AB69 /* root_ca.cer in Resources */,
-				8E183C9D1A834CE30005AB69 /* adn.cer in Resources */,
 				8E76A7831A81FB4C00352063 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,8 +310,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E183CA01A834CE30005AB69 /* root_ca.cer in Resources */,
-				8E183C9E1A834CE30005AB69 /* adn.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
