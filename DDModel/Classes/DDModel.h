@@ -95,7 +95,7 @@ typedef void(^DDSQLiteBlock)(id data);
  *  Get json data from http server by HTTP POST Mehod.
  *
  *  @param path           HTTP Path
- *  @param params         GET Paramtters
+ *  @param params         POST Paramtters
  *  @param success        success block
  *  @param failure        failre block
  *
@@ -120,6 +120,21 @@ typedef void(^DDSQLiteBlock)(id data);
                           params:(id)params
                         userInfo:(id)userInfo
                          success:(DDUploadReponseSuccessBlock)success
+                         failure:(DDResponseFailureBlock)failure;
+
+/**
+ *  Get json data from http server by HTTP POST Mehod with more infos.
+ *
+ *  @param path        HTTP Path
+ *  @param params      POST Parameter
+ *  @param moreSuccess more info success block
+ *  @param failure     failure block
+ *
+ *  @return AFHTTPRequestOperation
+ */
++ (AFHTTPRequestOperation *)post:(NSString *)path
+                          params:(id)params
+                     moreSuccess:(DDResponseSuccessMoreBlock)moreSuccess
                          failure:(DDResponseFailureBlock)failure;
 
 /**

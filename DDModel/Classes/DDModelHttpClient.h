@@ -32,6 +32,14 @@ typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message);
  */
 typedef void(^DDUploadReponseSuccessBlock)(NSDictionary *userInfo, id data);
 
+/**
+ *  Http Response Success Block callback an object or an object arrays and more infos;
+ *
+ *  @param JSON JSON value
+ *  @param data  data an object or an object arrays;
+ */
+typedef void(^DDResponseSuccessMoreBlock)(id JSON, id data);
+
 typedef enum : NSUInteger {
     DDResponseXML,
     DDResponseJSON,

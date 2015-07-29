@@ -40,7 +40,6 @@ static NSString *kAppUrl;
         client = [[DDModelHttpClient alloc] initWithBaseURL:clientURL];
         [client dd_addURL:kAppUrl];
         client.type = DDResponseJSON;
-        client.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     });
     return client;
 }

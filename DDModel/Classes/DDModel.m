@@ -174,6 +174,25 @@
     return uploadOperation;
 }
 
++ (AFHTTPRequestOperation *)post:(NSString *)path
+                          params:(id)params
+                     moreSuccess:(DDResponseSuccessMoreBlock)moreSuccess
+                         failure:(DDResponseFailureBlock)failure{
+    params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
+    return [[DDModelHttpClient sharedInstance] POST:path
+                                         parameters:params
+                                            success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                                id JSON = [self getObjectFromReponseString:operation.responseString failure:failure];
+                                                
+                                                if (moreSuccess && JSON)
+                                                    moreSuccess(JSON, [[self class] convertToObject:JSON]);
+                                            }
+                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                if(failure)
+                                                    failure(error, [error description]);
+                                            }];
+}
+
 #pragma mark - 
 
 + (id)getObjectFromReponseString:(NSString *)responseString failure:(DDResponseFailureBlock)failure{
