@@ -42,7 +42,11 @@ typedef void (^dd_AFURLConnectionOperationAuthenticationChallengeBlock)(NSURLCon
 }
 
 - (NSURL *)dd_baseURL{
-    return [NSURL URLWithString:self.urls[0]];
+    NSString *url = self.urls[0];
+    if([url rangeOfString:@"http"].location == NSNotFound){
+        url = [NSString stringWithFormat:@"http://%@",url];
+    }
+    return [NSURL URLWithString:url];
 }
 
 - (AFHTTPRequestOperation *)dd_HTTPRequestOperationWithRequest:(NSURLRequest *)request
@@ -100,7 +104,14 @@ typedef void (^dd_AFURLConnectionOperationAuthenticationChallengeBlock)(NSURLCon
     if([url hasPrefix:@"https"]){
         self.hasHttpsPrefix = YES;
     }
-    [self.urls exchangeObjectAtIndex:0 withObjectAtIndex:[self.urls indexOfObject:url]];
+    if([self.urls containsObject:url]){
+        [self.urls exchangeObjectAtIndex:0 withObjectAtIndex:[self.urls indexOfObject:url]];
+    }else{
+        if(!self.urls){
+            self.urls = [NSMutableArray new];
+        }
+        [self.urls insertObject:url atIndex:0];
+    }
 }
 
 - (void)dd_addURL:(NSString *)url{
