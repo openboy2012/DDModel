@@ -14,10 +14,7 @@
 #import "DDModelHttpClient+DDAddition.h"
 #import "AFHTTPRequestOperationManager+DDAddition.h"
 
-
 @interface DDModel()
-
-
 
 @end
 
