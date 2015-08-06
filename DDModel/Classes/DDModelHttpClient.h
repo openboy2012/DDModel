@@ -17,12 +17,12 @@
  */
 typedef void(^DDResponseSuccessBlock)(id data);
 /**
- *  Http Response Failure Block callback an error object & a message object
+ *  Http Response Failure Block callback an error object & a userInfo object
  *
  *  @param error   error
- *  @param message error message
+ *  @param userInfo error userInfo
  */
-typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message);
+typedef void(^DDResponseFailureBlock)(NSError *error, NSDictionary *userInfo);
 
 /**
  *  Http Upload file response success block callback with userinfo & response object
@@ -50,8 +50,29 @@ typedef enum : NSUInteger {
 
 @interface DDModelHttpClient : AFHTTPRequestOperationManager
 
-@property (nonatomic, strong) NSDictionary *checkKeyValue;
-@property (nonatomic) DDResponseType type;
+@property (nonatomic) DDResponseType type; //reponse type
+
+/**
+ *  check failure response callback flag status
+ */
+@property (nonatomic, readonly) BOOL isFailureResponseCallback;
+
+@property (nonatomic, copy) NSString *descKey;   //error description key
+
+/**
+ *  error code key, .eg. your response json is {'resultCode':0,'resultDesc':'success',list:[{'xxx':xxx},...]}
+ *  so you should set the resultKey is 'resultCode' hook the result code info and set the descKey is 'resultDesc' hook the
+ *  result description
+ */
+@property (nonatomic, copy) NSString *resultKey;
+
+
+/**
+ *  set if the response callback when it's failure request
+ *
+ *  @param flag YES/NO, default is NO.
+ */
+- (void)setFailureCallbackResponse:(BOOL)flag;
 
 #pragma mark - initlize methods
 /**

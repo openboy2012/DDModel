@@ -64,7 +64,7 @@ parentViewController:(id)viewController
                                         
                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                         if(failure)
-                                            failure(error, [error description]);
+                                            failure(error, @{@"errorMessage":[error description]});
                                     }];
     [[DDModelHttpClient sharedInstance] addOperation:getOperation withKey:viewController];
 }
@@ -116,7 +116,7 @@ parentViewController:(id)viewController
                                          
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          if(failure)
-                                             failure(error, [error description]);
+                                             failure(error, @{@"errorMessage":[error description]});
                                      }];
     [[DDModelHttpClient sharedInstance] addOperation:getOperation withKey:viewController];
 }
@@ -150,7 +150,7 @@ parentViewController:(id)viewController
                                         
                                         [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                         if(failure)
-                                            failure(error, [error description]);
+                                            failure(error, @{@"errorMessage":[error description]});
                                     }];
     [[DDModelHttpClient sharedInstance] addOperation:getOperation withKey:viewController];
 }
@@ -188,7 +188,7 @@ parentViewController:(id)viewController
                                          
                                          [[DDModelHttpClient sharedInstance] removeOperation:operation withKey:viewController];
                                          if(failure)
-                                             failure(error, [error description]);
+                                             failure(error, @{@"errorMessage":[error description]});
                                      }];
     [[DDModelHttpClient sharedInstance] addOperation:postOperation withKey:viewController];
 }

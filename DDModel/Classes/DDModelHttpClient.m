@@ -14,6 +14,7 @@ static NSString *kAppUrl;
 @interface DDModelHttpClient()
 
 @property (nonatomic, weak) id<DDHttpClientDelegate> delegate;
+@property (nonatomic, readwrite) BOOL isFailureResponseCallback;
 
 @end
 
@@ -43,7 +44,6 @@ static NSString *kAppUrl;
     });
     return client;
 }
-
 
 + (void)startWithURL:(NSString *)url delegate:(id<DDHttpClientDelegate>)delegate{
     [self startWithURL:url];
@@ -98,5 +98,8 @@ static NSString *kAppUrl;
     }
 }
 
+- (void)setFailureCallbackResponse:(BOOL)flag{
+    self.isFailureResponseCallback = flag;
+}
 
 @end
