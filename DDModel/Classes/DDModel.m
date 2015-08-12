@@ -216,7 +216,7 @@
     {
         if([DDModelHttpClient sharedInstance].isFailureResponseCallback && failure){
             NSInteger responseCode = [value[[DDModelHttpClient sharedInstance].resultKey?:@"resultCode"] integerValue];
-            NSString *message = value[[DDModelHttpClient sharedInstance].descKey?:@"resultDesc"];
+            NSString *message = value[[DDModelHttpClient sharedInstance].descKey?:@"resultDes"];
             NSError *error = [NSError errorWithDomain:[DDModelHttpClient sharedInstance].baseURL.host
                                                  code:responseCode
                                              userInfo:nil];
