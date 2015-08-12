@@ -24,7 +24,6 @@
  */
 - (void)dd_addURL:(NSString *)url;
 
-
 /**
  *  set the auth in every operation
  *

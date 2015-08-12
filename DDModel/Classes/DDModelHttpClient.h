@@ -20,9 +20,10 @@ typedef void(^DDResponseSuccessBlock)(id data);
  *  Http Response Failure Block callback an error object & a userInfo object
  *
  *  @param error   error
- *  @param userInfo error userInfo
+ *  @param message message info
+ *  @param data    data an object or an object arrays
  */
-typedef void(^DDResponseFailureBlock)(NSError *error, NSDictionary *userInfo);
+typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message, id data);
 
 /**
  *  Http Upload file response success block callback with userinfo & response object

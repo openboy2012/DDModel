@@ -128,7 +128,7 @@ typedef void (^dd_AFURLConnectionOperationAuthenticationChallengeBlock)(NSURLCon
     [self.urls insertObject:url atIndex:0];
 }
 
-- (void)dd_setWillSendRequestForAuthenticationChallengeBlock:(void (^)(NSURLConnection *, NSURLAuthenticationChallenge *))block{
+- (void)dd_setWillSendRequestForAuthenticationChallengeBlock:(void (^)(NSURLConnection *connection, NSURLAuthenticationChallenge *))block{
     self.authenticationChallenge = block;
 }
 

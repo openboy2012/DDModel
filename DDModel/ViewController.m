@@ -56,7 +56,7 @@
                               [self.tableView reloadData];
                               
                               
-                          } failure:^(NSError *error, NSDictionary *message) {
+                          } failure:^(NSError *error, NSString *message, id data) {
                               NSLog(@"error = %@ message = %@",error, message);
                           }];
 
@@ -150,7 +150,7 @@
                       [dataList addObjectsFromArray:data];
                       [self.tableView reloadData];
                   }
-                  failure:^(NSError *error, NSDictionary *message) {
+                  failure:^(NSError *error, NSString *message, id data) {
                   }];
     }else{
         [[DDModelHttpClient sharedInstance] dd_addURL:@"http://mapi.bstapp.cn"];
@@ -165,7 +165,7 @@
                                   [self.tableView reloadData];
                                   
                                   
-                              } failure:^(NSError *error, NSDictionary *message) {
+                              } failure:^(NSError *error, NSString *message, id data) {
                                   NSLog(@"error = %@ message = %@",error, message);
                               }];
     }

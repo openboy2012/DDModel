@@ -57,7 +57,7 @@
                                            }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                if(failure)
-                                                   failure(error, @{@"errorMessage":[error description]});
+                                                   failure(error, [error description], nil);
                                            }];
 }
 
@@ -97,7 +97,7 @@
                                      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          if(failure)
-                                             failure(error, @{@"errorMessage":[error description]});
+                                             failure(error, [error description], nil);
                                      }];
     return postOperation;
 }
@@ -118,7 +118,7 @@
                                            }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                if(failure)
-                                                   failure(error, @{@"errorMessage":[error description]});
+                                                   failure(error, [error description], nil);
                                            }];
 }
 
@@ -138,7 +138,7 @@
                                             }
                                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                 if(failure)
-                                                    failure(error, @{@"errorMessage":[error description]});
+                                                    failure(error, [error description], nil);
                                             }];
 }
 
@@ -186,7 +186,7 @@
                                             }
                                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                 if(failure)
-                                                    failure(error, @{@"errorMessage":[error description]});
+                                                    failure(error, [error description], nil);
                                             }];
 }
 
@@ -217,10 +217,11 @@
         if([DDModelHttpClient sharedInstance].isFailureResponseCallback && failure){
             NSInteger responseCode = [value[[DDModelHttpClient sharedInstance].resultKey?:@"resultCode"] integerValue];
             NSString *message = value[[DDModelHttpClient sharedInstance].descKey?:@"resultDesc"];
-            failure([NSError errorWithDomain:[DDModelHttpClient sharedInstance].baseURL.host
-                                        code:responseCode
-                                    userInfo:nil], @{@"message":message?:@"",
-                                                     @"object":[[self class] convertToObject:value]?:@""});
+            NSError *error = [NSError errorWithDomain:[DDModelHttpClient sharedInstance].baseURL.host
+                                                 code:responseCode
+                                             userInfo:nil];
+            id data = [[self class] convertToObject:value];
+            failure(error, message, data);
         }
         return nil;
     }
