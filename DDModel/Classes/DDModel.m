@@ -8,9 +8,9 @@
 
 #import "DDModel.h"
 #import "DDModelHttpClient.h"
-#import "NSDictionary+DDUploadFile.h"
+#import "NSDictionary+DDModel.h"
 #import "DDCache.h"
-#import "NSString+CacheMD5.h"
+#import "NSString+DDModel.h"
 #import "NSURLSessionTask+DDModel.h"
 
 #define DDFILE @"fileInfo"
@@ -58,7 +58,7 @@ parentViewController:(id)viewController
                         result:^(id data) {
                             DDCache *cache = data;
                             if(cache){
-                                id JSON = [cache.content dictionaryWithJSON];
+                                id JSON = [cache.content dd_dictionaryWithJSON];
                                 dbBlock([[self class] convertJsonToObject:JSON]);
                             }
                         }];
@@ -109,7 +109,7 @@ parentViewController:(id)viewController
                         result:^(id data) {
                             DDCache *cache = data;
                             if([cache.content length] > 1){
-                                id JSON = [cache.content dictionaryWithJSON];
+                                id JSON = [cache.content dd_dictionaryWithJSON];
                                 dbBlock([[self class] convertJsonToObject:JSON]);
                             }
                         }];
@@ -234,7 +234,7 @@ parentViewController:(id)viewController
                                              constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                                  NSDictionary *uploadInfo = userInfo[DDFILE];
                                                  if(!uploadInfo)
-                                                     uploadInfo = [NSDictionary defaultFile];
+                                                     uploadInfo = [NSDictionary dd_defaultFile];
                                                  [formData appendPartWithFileData:stream
                                                                              name:uploadInfo.name
                                                                          fileName:uploadInfo.fileName

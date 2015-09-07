@@ -39,4 +39,4 @@ SPEC CHECKSUMS:
   SQLitePersistentObject: 9dad39d84f5a1ba1e2307bd6c0b2dcf63cfef187
   XMLDictionary: f9f51601ba76678b594ab485f2b00ec1fed23724
 
-COCOAPODS: 0.37.1
+COCOAPODS: 0.38.2
