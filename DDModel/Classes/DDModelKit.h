@@ -2,7 +2,7 @@
 //  DDModelKit.h
 //  DDModel
 //
-//  Created by Diaoshu on 15-2-5.
+//  Created by DeJohn Dong on 15-2-5.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
@@ -12,6 +12,8 @@
     #import "DDModel.h"
     #import "DDCache.h"
     #import "DDModelHttpClient.h"
+    #import "DDModelHttpClient+DDAddition.h"
+    #import "DDModel+DDAddition.h"
     #import "NSDictionary+DDUploadFile.h"
 
 #endif

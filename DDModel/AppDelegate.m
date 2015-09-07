@@ -2,12 +2,43 @@
 //  AppDelegate.m
 //  DDModel
 //
-//  Created by Diaoshu on 15-2-4.
+//  Created by DeJohn Dong on 15-2-4.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "DDModelKit.h"
+#import "AFHTTPRequestOperationManager+DDAddition.h"
+
+static OSStatus RNSecTrustEvaluateAsX509(SecTrustRef trust,
+                                         SecTrustResultType *result
+                                         )
+{
+    OSStatus status = errSecSuccess;
+    SecPolicyRef policy = SecPolicyCreateBasicX509();
+    SecTrustRef newTrust;
+    CFIndex numberOfCerts = SecTrustGetCertificateCount(trust);
+    CFMutableArrayRef certs;
+    certs = CFArrayCreateMutable(NULL,
+                                 numberOfCerts,
+                                 &kCFTypeArrayCallBacks);
+    for (NSUInteger index = 0; index < numberOfCerts; ++index) {
+        SecCertificateRef cert;
+        cert = SecTrustGetCertificateAtIndex(trust, index);
+        CFArrayAppendValue(certs, cert);
+    }
+    status = SecTrustCreateWithCertificates(certs,
+                                            policy,
+                                            &newTrust);
+    if (status == errSecSuccess) {
+        status = SecTrustEvaluate(newTrust, result);
+    }
+    CFRelease(policy);
+    CFRelease(newTrust);
+    CFRelease(certs);
+    
+    return status;
+}
 
 @interface AppDelegate ()<DDHttpClientDelegate>
 
@@ -23,10 +54,60 @@
     [DDModelHttpClient startWithURL:@"http://prov.mobile.arnd.fm" delegate:self];
     [DDModelHttpClient sharedInstance].type = DDResponseXML;
 #else
-    [DDModelHttpClient startWithURL:@"https://api.app.net/" delegate:self];
-    [DDModelHttpClient sharedInstance].type = DDResponseJSON;
+    [DDModelHttpClient startWithURL:@"http://mapi.bstapp.cn" delegate:self];
+    [[DDModelHttpClient sharedInstance] dd_setWillSendRequestForAuthenticationChallengeBlock:^(NSURLConnection *connection, NSURLAuthenticationChallenge *challenge) {
+        NSURLProtectionSpace *protSpace = challenge.protectionSpace;
+        SecTrustRef trust = protSpace.serverTrust;
+        SecTrustResultType result = kSecTrustResultFatalTrustFailure;
+        
+        OSStatus status = SecTrustEvaluate(trust, &result);
+        if (status == errSecSuccess &&
+            result == kSecTrustResultRecoverableTrustFailure) {
+            SecCertificateRef cert = SecTrustGetCertificateAtIndex(trust,
+                                                                   0);
+            CFStringRef subject = SecCertificateCopySubjectSummary(cert);
+            
+            CFRange range = CFStringFind(subject, CFSTR(".shipin7.com"),
+                                         kCFCompareAnchored|
+                                         kCFCompareBackwards);
+            if (range.location != kCFNotFound) {
+                status = RNSecTrustEvaluateAsX509(trust, &result);
+            }
+            CFRelease(subject);
+        }
+        if (status == errSecSuccess) {
+            switch (result) {
+                case kSecTrustResultInvalid:
+                case kSecTrustResultDeny:
+                case kSecTrustResultFatalTrustFailure:
+                case kSecTrustResultOtherError:
+                case kSecTrustResultRecoverableTrustFailure:
+                    // 证书有问题
+                    NSLog(@"证书有问题");
+                    [challenge.sender cancelAuthenticationChallenge:challenge];
+                    break;
+                    
+                case kSecTrustResultProceed:
+                case kSecTrustResultUnspecified: {
+                    NSURLCredential *cred;
+                    cred = [NSURLCredential credentialForTrust:trust];
+                    [challenge.sender useCredential:cred
+                         forAuthenticationChallenge:challenge];
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+        else {
+            // 证书有问题
+            NSLog(@"证书有问题");
+            [challenge.sender cancelAuthenticationChallenge:challenge];
+        }
+    }];
 #endif
-    
+
     return YES;
 }
 

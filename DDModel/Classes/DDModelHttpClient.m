@@ -2,20 +2,19 @@
 //  DDHttpClient.m
 //  DDModel
 //
-//  Created by Diaoshu on 15-2-4.
+//  Created by DeJohn Dong on 15-2-4.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
 #import "DDModelHttpClient.h"
+#import "AFHTTPRequestOperationManager+DDAddition.h"
 
 static NSString *kAppUrl;
 
-static int hudCount = 0;
-
 @interface DDModelHttpClient()
 
-@property (nonatomic, strong) NSMutableDictionary *ddHttpQueueDict;
 @property (nonatomic, weak) id<DDHttpClientDelegate> delegate;
+@property (nonatomic, readwrite) BOOL isFailureResponseCallback;
 
 @end
 
@@ -40,12 +39,8 @@ static int hudCount = 0;
             NSLog(@"you have lost the method 'startWithURL:' or 'startWithURL:delegate:' in lanuching AppDelegate");
         }
         client = [[DDModelHttpClient alloc] initWithBaseURL:clientURL];
-        
-        //instance the ddHttpQueueDictionary
-        client.ddHttpQueueDict = [[NSMutableDictionary alloc] initWithCapacity:0];
-        
-        client.type = DDResponseOhter;
-        
+        [client dd_addURL:kAppUrl];
+        client.type = DDResponseJSON;
     });
     return client;
 }
@@ -67,44 +62,6 @@ static int hudCount = 0;
     for (id key in [keyValue allKeys]) {
         [[[self sharedInstance] requestSerializer] setValue:@"" forHTTPHeaderField:key];
     }
-}
-
-#pragma mark - HTTP Operation Methods
-
-- (void)addTask:(NSURLSessionDataTask *)task withKey:(id)key{
-    __block NSString *keyStr = [self description];
-    if(key)
-        keyStr = [key description];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableArray *tasks = self.ddHttpQueueDict[keyStr];
-        if(!tasks)
-            tasks = [[NSMutableArray alloc] initWithObjects:task, nil];
-        else
-            [tasks addObject:task];
-        [self.ddHttpQueueDict setObject:tasks forKey:keyStr];
-    });
-}
-
-- (void)removeTask:(NSURLSessionDataTask *)task withKey:(id)key{
-    __block NSString *keyStr = [self description];
-    if(key)
-        keyStr = [key description];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableArray *tasks = self.ddHttpQueueDict[keyStr];
-        [tasks removeObject:task];
-    });
-}
-
-- (void)cancelTasksWithKey:(id)key{
-    __block NSString *keyStr = [self description];
-    if(key)
-        keyStr = [key description];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableArray *tasks = self.ddHttpQueueDict[keyStr];
-        if(tasks.count > 0)
-            [tasks makeObjectsPerformSelector:@selector(cancel)];
-        [self.ddHttpQueueDict removeObjectForKey:keyStr];
-    });
 }
 
 #pragma mark - HTTP Decode & Encode Methods
@@ -136,44 +93,13 @@ static int hudCount = 0;
     _type = type;
     if(type == DDResponseXML){
         self.responseSerializer = [AFXMLParserResponseSerializer serializer];
-    }else if(type == DDResponseJSON){
-        self.responseSerializer = [AFJSONResponseSerializer serializer];
     }else{
-        self.responseSerializer = [AFHTTPResponseSerializer serializer];
+        self.responseSerializer = [AFJSONResponseSerializer serializer];
     }
 }
 
-#pragma mark - HTTP HUD methods
-
-- (void)showHud:(BOOL)flag{
-    if(!flag)
-        return;
-    if(hudCount > 0){
-        hudCount ++;
-        return;
-    }
-    UIWindow *topWindow = [[[UIApplication sharedApplication] windows] lastObject];
-    if(!_hud){
-        _hud = [[MBProgressHUD alloc] initWithView:topWindow];
-        _hud.labelText = @"请稍候...";
-        _hud.yOffset = -20.0f;
-        _hud.userInteractionEnabled = NO;
-        _hud.mode = MBProgressHUDModeIndeterminate;
-        _hud.color = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3f];
-    }
-    [topWindow addSubview:_hud];
-    //处理背景颜色 按需更换
-    hudCount++;
-    [_hud show:NO];
-}
-
-- (void)hideHud:(BOOL)flag{
-    if(!flag)
-        return;
-    if(hudCount == 1 && _hud){
-        [_hud hide:NO];
-    }
-    hudCount --;
+- (void)setFailureCallbackResponse:(BOOL)flag{
+    self.isFailureResponseCallback = flag;
 }
 
 @end

@@ -2,13 +2,13 @@
 //  DDHttpClient.h
 //  DDModel
 //
-//  Created by Diaoshu on 15-2-4.
+//  Created by DeJohn Dong on 15-2-4.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <AFHTTPSessionManager.h>
-#import <MBProgressHUD.h>
+#import "AFHTTPRequestOperationManager.h"
+#import "MBProgressHUD.h"
 
 /**
  *  Http Response Success Block callback an object or an object arrays;
@@ -17,12 +17,13 @@
  */
 typedef void(^DDResponseSuccessBlock)(id data);
 /**
- *  Http Response Failure Block callback an error object & a message object
+ *  Http Response Failure Block callback an error object & a userInfo object
  *
  *  @param error   error
- *  @param message error message
+ *  @param message message info
+ *  @param data    data an object or an object arrays
  */
-typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message);
+typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message, id data);
 
 /**
  *  Http Upload file response success block callback with userinfo & response object
@@ -32,6 +33,14 @@ typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message);
  */
 typedef void(^DDUploadReponseSuccessBlock)(NSDictionary *userInfo, id data);
 
+/**
+ *  Http Response Success Block callback an object or an object arrays and more infos;
+ *
+ *  @param JSON JSON value
+ *  @param data  data an object or an object arrays;
+ */
+typedef void(^DDResponseSuccessMoreBlock)(id JSON, id data);
+
 typedef enum : NSUInteger {
     DDResponseXML,
     DDResponseJSON,
@@ -40,25 +49,31 @@ typedef enum : NSUInteger {
 
 @protocol DDHttpClientDelegate;
 
-@interface DDModelHttpClient : AFHTTPSessionManager
+@interface DDModelHttpClient : AFHTTPRequestOperationManager
 
-@property (nonatomic, strong) MBProgressHUD *hud;
-@property (nonatomic, strong) NSDictionary *checkKeyValue;
-@property (nonatomic) DDResponseType type;
+@property (nonatomic) DDResponseType type; //reponse type
 
 /**
- *  show hud if flag = YES
- *
- *  @param flag flag
+ *  check failure response callback flag status
  */
-- (void)showHud:(BOOL)flag;
+@property (nonatomic, readonly) BOOL isFailureResponseCallback;
+
+@property (nonatomic, copy) NSString *descKey;   //error description key
 
 /**
- *  hide hud if flag = YES
- *
- *  @param flag flag
+ *  error code key, .eg. your response json is {'resultCode':0,'resultDesc':'success',list:[{'xxx':xxx},...]}
+ *  so you should set the resultKey is 'resultCode' hook the result code info and set the descKey is 'resultDesc' hook the
+ *  result description
  */
-- (void)hideHud:(BOOL)flag;
+@property (nonatomic, copy) NSString *resultKey;
+
+
+/**
+ *  set if the response callback when it's failure request
+ *
+ *  @param flag YES/NO, default is NO.
+ */
+- (void)setFailureCallbackResponse:(BOOL)flag;
 
 #pragma mark - initlize methods
 /**
@@ -98,30 +113,6 @@ typedef enum : NSUInteger {
  */
 + (void)removeHTTPHeaderFieldValue:(NSDictionary *)keyValue;
 
-#pragma mark - NSURLSessionDataTask handler methods
-
-/**
- *  add the NSURLSessionDataTask with key identifier into the DDHttpClient Container
- *
- *  @param task NSURLSessionDataTask
- *  @param key  key identifier
- */
-- (void)addTask:(NSURLSessionDataTask *)task withKey:(id)key;
-
-/**
- *  remove the NSURLSessionDataTask with key identifier from the DDHttpClient Container
- *
- *  @param task NSURLSessionDataTask
- *  @param key  key idenitifier
- */
-- (void)removeTask:(NSURLSessionDataTask *)task withKey:(id)key;
-
-/**
- *  cancel all the NSURLSessionTask with the key identifier
- *
- *  @param key key identifier
- */
-- (void)cancelTasksWithKey:(id)key;
 
 #pragma mark - decode & encode methods
 /**

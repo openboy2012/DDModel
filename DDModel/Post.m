@@ -2,11 +2,12 @@
 //  Post.m
 //  DDKit
 //
-//  Created by Diaoshu on 14-12-15.
-//  Copyright (c) 2014年 Dejohn Dong. All rights reserved.
+//  Created by DeJohn Dong on 14-12-15.
+//  Copyright (c) 2014年 DDKit. All rights reserved.
 //
 
 #import "Post.h"
+#import "DDModel+DDAddition.h"
 
 @implementation Post
 
@@ -46,7 +47,7 @@
             success:(DDResponseSuccessBlock)success
             failure:(DDResponseFailureBlock)failure
 {
-    [[self class] get:@"stream/0/posts/stream/global" params:params showHUD:show parentViewController:viewController success:success failure:failure];
+    [[self class] get:@"stream/0/posts/stream/global" params:params showHUD:show parentViewController:viewController  success:success failure:failure];
 }
 
 @end
@@ -79,7 +80,37 @@
              dbSuccess:(DDSQLiteBlock)dbResult
                success:(DDResponseSuccessBlock)success
                failure:(DDResponseFailureBlock)failure{
-    [[self class] get:@"index.php" params:params showHUD:show parentViewController:params dbSuccess:dbResult success:success failure:failure];
+    [[self class] get:@"index.php"  params:params showHUD:show parentViewController:params dbSuccess:dbResult success:success failure:failure];
+}
+
+@end
+
+
+@implementation BESTItemList
+
+
+@end
+
+@implementation BESTItemListRoot
+
++ (NSString *)parseNode{
+    return @"data";
+}
+
++ (NSDictionary *)parseMappings{
+    id handlerItemList = [BESTItemList mappingWithKey:@"list" mapping:[BESTItemList parseMappings]];
+    NSDictionary *mappings = @{@"list":handlerItemList};
+    return mappings;
+}
+
++ (void)getItemList:(id)params
+            showHUD:(BOOL)show
+parentViewController:(id)viewController
+            success:(DDResponseSuccessBlock)success
+            failure:(DDResponseFailureBlock)failure{
+    
+    [[self class] post:@"/v1/search/list" params:params showHUD:show parentViewController:viewController success:success failure:failure];
+    
 }
 
 @end

@@ -2,14 +2,14 @@
 //  DDCache.m
 //  DDModel
 //
-//  Created by Diaoshu on 15-3-10.
+//  Created by DeJohn Dong on 15-3-10.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
 #import "DDCache.h"
 #import "NSDictionary+DDUploadFile.h"
 #import "NSString+CacheMD5.h"
-#import <XMLDictionary.h>
+#import "XMLDictionary.h"
 
 @implementation DDCache
 

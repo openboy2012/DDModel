@@ -2,17 +2,19 @@
 //  DDModel.h
 //  DDModel
 //
-//  Created by Diaoshu on 15-2-4.
+//  Created by DeJohn Dong on 15-2-4.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <SQLitePersistentObject.h>
-#import <NSObject+JTObjectMapping.h>
-#import <XMLDictionary.h>
+#import "SQLitePersistentObject.h"
+#import "NSObject+JTObjectMapping.h"
+#import "XMLDictionary.h"
 #import "DDModelHttpClient.h"
 
-@protocol DDMappings
+#define DDFILE @"fileInfo"
+
+@protocol DDMappings <NSObject>
 
 /**
  *  Set the parse node, every subclass override the method if you want parse any node
@@ -38,86 +40,70 @@
  */
 typedef void(^DDSQLiteBlock)(id data);
 
+@class AFHTTPRequestOperation;
+
 @interface DDModel : SQLitePersistentObject<DDMappings>{
     
 }
-
-@property (nonatomic, copy) NSString *parameter;
 
 /**
  *  Get json data first from db cache then from http server by HTTP GET Mehod.
  *
  *  @param path           HTTP Path
  *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
  *  @param dbResult       db cache result block
  *  @param success        success block
  *  @param failure        failre block
  */
-+ (void)get:(NSString *)path
-     params:(id)params
-    showHUD:(BOOL)show
-parentViewController:(id)viewController
-  dbSuccess:(DDSQLiteBlock)dbResult
-    success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure;
++ (AFHTTPRequestOperation *)get:(NSString *)path
+                         params:(id)params
+                      dbSuccess:(DDSQLiteBlock)dbResult
+                        success:(DDResponseSuccessBlock)success
+                        failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Get json data first from db cache then from http server by HTTP POST Mehod.
  *
  *  @param path           HTTP Path
  *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
  *  @param dbResult       db cache result block
  *  @param success        success block
  *  @param failure        failre block
  *
  */
-+ (void)post:(NSString *)path
-      params:(id)params
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-   dbSuccess:(DDSQLiteBlock)dbResult
-     success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure;
++ (AFHTTPRequestOperation *)post:(NSString *)path
+                          params:(id)params
+                       dbSuccess:(DDSQLiteBlock)dbResult
+                         success:(DDResponseSuccessBlock)success
+                         failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Get json data from http server by HTTP GET Mehod.
  *
  *  @param path           HTTP Path
  *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
  *  @param success        success block
  *  @param failure        failre block
  *
  */
-+ (void)get:(NSString *)path
-     params:(id)params
-    showHUD:(BOOL)show
-parentViewController:(id)viewController
-    success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure;
++ (AFHTTPRequestOperation *)get:(NSString *)path
+                         params:(id)params
+                        success:(DDResponseSuccessBlock)success
+                        failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Get json data from http server by HTTP POST Mehod.
  *
  *  @param path           HTTP Path
- *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
+ *  @param params         POST Paramtters
  *  @param success        success block
  *  @param failure        failre block
  *
  */
-+ (void)post:(NSString *)path
-      params:(id)params
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-     success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure;
++ (AFHTTPRequestOperation *)post:(NSString *)path
+                          params:(id)params
+                         success:(DDResponseSuccessBlock)success
+                         failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Upload a data stream to http server by HTTP POST Method.
@@ -126,26 +112,30 @@ parentViewController:(id)viewController
  *  @param stream         stream data
  *  @param params         POST Parameters
  *  @param userInfo       userInfo dictionary
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
  *  @param success        success block
  *  @param failure        failure block
  */
-+ (void)post:(NSString *)path
-  fileStream:(NSData *)stream
-      params:(id)params
-    userInfo:(id)userInfo
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-     success:(DDUploadReponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure;
++ (AFHTTPRequestOperation *)post:(NSString *)path
+                      fileStream:(NSData *)stream
+                          params:(id)params
+                        userInfo:(id)userInfo
+                         success:(DDUploadReponseSuccessBlock)success
+                         failure:(DDResponseFailureBlock)failure;
 
 /**
- *  Cancel all the request in the viewController.
+ *  Get json data from http server by HTTP POST Mehod with more infos.
  *
- *  @param viewController viewcontroller
+ *  @param path        HTTP Path
+ *  @param params      POST Parameter
+ *  @param moreSuccess more info success block
+ *  @param failure     failure block
+ *
+ *  @return AFHTTPRequestOperation
  */
-+ (void)cancelRequest:(id)viewController;
++ (AFHTTPRequestOperation *)post:(NSString *)path
+                          params:(id)params
+                     moreSuccess:(DDResponseSuccessMoreBlock)moreSuccess
+                         failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Parse self entity into a dictionary
@@ -154,16 +144,24 @@ parentViewController:(id)viewController
  */
 - (NSDictionary *)propertiesOfObject;
 
-@end
-
-@interface DDModel(DDKit)
+/**
+ *  Get Object(s) from reponse string
+ *
+ *  @param reponseString reponse string
+ *  @param failure       failure handler block
+ *
+ *  @return Object(s)
+ */
++ (id)getObjectFromReponseString:(NSString *)reponseString
+                         failure:(DDResponseFailureBlock)failure;
 
 /**
- *  Get the property names of object
+ *  conver dictionary object to Model
  *
- *  @return a array of all property name
+ *  @param dictObject dictionary object
+ *
+ *  @return modol or model array
  */
-+ (NSArray *)getPropertyNames;
++ (id)convertToObject:(id)dictObject;
 
 @end
-
