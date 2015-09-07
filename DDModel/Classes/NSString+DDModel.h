@@ -8,14 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (CacheMD5)
+@interface NSString (DDModel)
 
-- (NSString *)cacheMD5;
+- (NSString *)dd_md5;
 
-@end
+- (NSDictionary *)dd_dictionaryWithJSON;
 
-@interface NSString (DDJSON)
-
-- (NSDictionary *)dictionaryWithJSON;
 
 @end

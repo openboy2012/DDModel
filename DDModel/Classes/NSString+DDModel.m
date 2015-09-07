@@ -6,12 +6,12 @@
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
-#import "NSString+CacheMD5.h"
+#import "NSString+DDModel.h"
 #import <CommonCrypto/CommonCrypto.h>
 
-@implementation NSString (CacheMD5)
+@implementation NSString (DDModel)
 
-- (NSString *)cacheMD5
+- (NSString *)dd_md5
 {
     const char *cStr = [self UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
@@ -25,11 +25,7 @@
              ] lowercaseString];
 }
 
-@end
-
-@implementation NSString (DDJSON)
-
-- (NSDictionary *)dictionaryWithJSON{
+- (NSDictionary *)dd_dictionaryWithJSON{
     NSError *jsonError = nil;
     NSData *jsonData = [self dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:jsonData

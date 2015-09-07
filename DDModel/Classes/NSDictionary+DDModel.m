@@ -2,11 +2,11 @@
 //  NSDictionary+DDModelKit.m
 //  DDModel
 //
-//  Created by DeJohn Dong on 15-2-9.
+//  Created by Diaoshu on 15-2-9.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
-#import "NSDictionary+DDUploadFile.h"
+#import "NSDictionary+DDModel.h"
 
 #define ddmime @"mimeType"
 #define ddfile @"fileName"
@@ -14,7 +14,7 @@
 
 @implementation NSDictionary (DDUploadFile)
 
-+ (instancetype)dictionaryWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType{
++ (instancetype)dd_dictionaryWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType{
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:0];
     [dictionary setObject:name forKey:ddname];
     [dictionary setObject:fileName forKey:ddfile];
@@ -23,7 +23,7 @@
 }
 
 + (instancetype)defaultFile{
-    return [self dictionaryWithName:@"uploadFile" fileName:@"file" mimeType:@"image/jpg"];
+    return [self dd_dictionaryWithName:@"uploadFile" fileName:@"file" mimeType:@"image/jpg"];
 }
 
 - (NSString *)mimeType{
@@ -38,11 +38,7 @@
     return [self objectForKey:ddname];
 }
 
-@end
-
-@implementation NSDictionary(DDJSON)
-
-- (NSString *)JSONString{
+- (NSString *)dd_jsonString{
     NSError *error = nil;
     NSData *data = [NSJSONSerialization dataWithJSONObject:self
                                                    options:NSJSONWritingPrettyPrinted
@@ -53,3 +49,4 @@
 }
 
 @end
+

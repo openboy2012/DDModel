@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D26DDDA1B12CC03004EB0D0 /* DDModelHttpClient+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D26DDD91B12CC03004EB0D0 /* DDModelHttpClient+DDAddition.m */; };
-		0D6566311B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D6566301B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.m */; };
-		0D6566341B1F1CB400E3F4A8 /* DDModel+DDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D6566331B1F1CB400E3F4A8 /* DDModel+DDAddition.m */; };
 		1CE94457405E247B699B3A15 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6838089F4BD1C8C012F49E /* libPods.a */; };
+		2FD44F1A1AEE21F1000A5225 /* NSURLSessionTask+DDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FD44F191AEE21F1000A5225 /* NSURLSessionTask+DDModel.m */; };
 		8E0092D61AAF232C00043C5E /* DDCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0092D51AAF232C00043C5E /* DDCache.m */; };
-		8E0092D91AAF234600043C5E /* NSString+CacheMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0092D81AAF234600043C5E /* NSString+CacheMD5.m */; };
-		8E0B67351AAD918D0020FD73 /* NSDictionary+DDUploadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B672C1AAD918D0020FD73 /* NSDictionary+DDUploadFile.m */; };
+		8E0092D91AAF234600043C5E /* NSString+DDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0092D81AAF234600043C5E /* NSString+DDModel.m */; };
+		8E0B67351AAD918D0020FD73 /* NSDictionary+DDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B672C1AAD918D0020FD73 /* NSDictionary+DDModel.m */; };
 		8E0B67361AAD918D0020FD73 /* DDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B672F1AAD918D0020FD73 /* DDModel.m */; };
 		8E0B67371AAD918D0020FD73 /* DDModelHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0B67311AAD918D0020FD73 /* DDModelHttpClient.m */; };
 		8E183C9A1A834B370005AB69 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E183C991A834B370005AB69 /* Post.m */; };
+		8E183C9D1A834CE30005AB69 /* adn.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9B1A834CE30005AB69 /* adn.cer */; };
+		8E183C9E1A834CE30005AB69 /* adn.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9B1A834CE30005AB69 /* adn.cer */; };
+		8E183C9F1A834CE30005AB69 /* root_ca.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9C1A834CE30005AB69 /* root_ca.cer */; };
+		8E183CA01A834CE30005AB69 /* root_ca.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8E183C9C1A834CE30005AB69 /* root_ca.cer */; };
 		8E76A7781A81FB4C00352063 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E76A7771A81FB4C00352063 /* main.m */; };
 		8E76A77B1A81FB4C00352063 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E76A77A1A81FB4C00352063 /* AppDelegate.m */; };
 		8E76A77E1A81FB4C00352063 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E76A77D1A81FB4C00352063 /* ViewController.m */; };
@@ -39,20 +41,16 @@
 
 /* Begin PBXFileReference section */
 		09B82CB2FC0265BCA81EEC52 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		0D26DDD81B12CC03004EB0D0 /* DDModelHttpClient+DDAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDModelHttpClient+DDAddition.h"; sourceTree = "<group>"; };
-		0D26DDD91B12CC03004EB0D0 /* DDModelHttpClient+DDAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DDModelHttpClient+DDAddition.m"; sourceTree = "<group>"; };
-		0D65662F1B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+DDAddition.h"; sourceTree = "<group>"; };
-		0D6566301B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+DDAddition.m"; sourceTree = "<group>"; };
-		0D6566321B1F1CB400E3F4A8 /* DDModel+DDAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDModel+DDAddition.h"; sourceTree = "<group>"; };
-		0D6566331B1F1CB400E3F4A8 /* DDModel+DDAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DDModel+DDAddition.m"; sourceTree = "<group>"; };
+		2FD44F181AEE21F1000A5225 /* NSURLSessionTask+DDModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionTask+DDModel.h"; sourceTree = "<group>"; };
+		2FD44F191AEE21F1000A5225 /* NSURLSessionTask+DDModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionTask+DDModel.m"; sourceTree = "<group>"; };
 		4A6838089F4BD1C8C012F49E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FC4DE19BCFAEA876CA7C5F4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8E0092D41AAF232C00043C5E /* DDCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCache.h; sourceTree = "<group>"; };
 		8E0092D51AAF232C00043C5E /* DDCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCache.m; sourceTree = "<group>"; };
-		8E0092D71AAF234600043C5E /* NSString+CacheMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CacheMD5.h"; sourceTree = "<group>"; };
-		8E0092D81AAF234600043C5E /* NSString+CacheMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CacheMD5.m"; sourceTree = "<group>"; };
-		8E0B672B1AAD918D0020FD73 /* NSDictionary+DDUploadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDUploadFile.h"; sourceTree = "<group>"; };
-		8E0B672C1AAD918D0020FD73 /* NSDictionary+DDUploadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDUploadFile.m"; sourceTree = "<group>"; };
+		8E0092D71AAF234600043C5E /* NSString+DDModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDModel.h"; sourceTree = "<group>"; };
+		8E0092D81AAF234600043C5E /* NSString+DDModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDModel.m"; sourceTree = "<group>"; };
+		8E0B672B1AAD918D0020FD73 /* NSDictionary+DDModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DDModel.h"; sourceTree = "<group>"; };
+		8E0B672C1AAD918D0020FD73 /* NSDictionary+DDModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DDModel.m"; sourceTree = "<group>"; };
 		8E0B672E1AAD918D0020FD73 /* DDModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModel.h; sourceTree = "<group>"; };
 		8E0B672F1AAD918D0020FD73 /* DDModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDModel.m; sourceTree = "<group>"; };
 		8E0B67301AAD918D0020FD73 /* DDModelHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModelHttpClient.h; sourceTree = "<group>"; };
@@ -60,6 +58,8 @@
 		8E0B67331AAD918D0020FD73 /* DDModelKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDModelKit.h; sourceTree = "<group>"; };
 		8E183C981A834B370005AB69 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		8E183C991A834B370005AB69 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		8E183C9B1A834CE30005AB69 /* adn.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = adn.cer; sourceTree = "<group>"; };
+		8E183C9C1A834CE30005AB69 /* root_ca.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = root_ca.cer; sourceTree = "<group>"; };
 		8E76A7721A81FB4C00352063 /* DDModel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDModel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E76A7761A81FB4C00352063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E76A7771A81FB4C00352063 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -115,10 +115,12 @@
 		8E0B672D1AAD918D0020FD73 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				8E0B672B1AAD918D0020FD73 /* NSDictionary+DDUploadFile.h */,
-				8E0B672C1AAD918D0020FD73 /* NSDictionary+DDUploadFile.m */,
-				8E0092D71AAF234600043C5E /* NSString+CacheMD5.h */,
-				8E0092D81AAF234600043C5E /* NSString+CacheMD5.m */,
+				8E0B672B1AAD918D0020FD73 /* NSDictionary+DDModel.h */,
+				8E0B672C1AAD918D0020FD73 /* NSDictionary+DDModel.m */,
+				8E0092D71AAF234600043C5E /* NSString+DDModel.h */,
+				8E0092D81AAF234600043C5E /* NSString+DDModel.m */,
+				2FD44F181AEE21F1000A5225 /* NSURLSessionTask+DDModel.h */,
+				2FD44F191AEE21F1000A5225 /* NSURLSessionTask+DDModel.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -126,18 +128,12 @@
 		8E0B67321AAD918D0020FD73 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				0D65662F1B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.h */,
-				0D6566301B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.m */,
 				8E0092D41AAF232C00043C5E /* DDCache.h */,
 				8E0092D51AAF232C00043C5E /* DDCache.m */,
 				8E0B672E1AAD918D0020FD73 /* DDModel.h */,
 				8E0B672F1AAD918D0020FD73 /* DDModel.m */,
-				0D6566321B1F1CB400E3F4A8 /* DDModel+DDAddition.h */,
-				0D6566331B1F1CB400E3F4A8 /* DDModel+DDAddition.m */,
 				8E0B67301AAD918D0020FD73 /* DDModelHttpClient.h */,
 				8E0B67311AAD918D0020FD73 /* DDModelHttpClient.m */,
-				0D26DDD81B12CC03004EB0D0 /* DDModelHttpClient+DDAddition.h */,
-				0D26DDD91B12CC03004EB0D0 /* DDModelHttpClient+DDAddition.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -194,6 +190,8 @@
 		8E76A7751A81FB4C00352063 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8E183C9B1A834CE30005AB69 /* adn.cer */,
+				8E183C9C1A834CE30005AB69 /* root_ca.cer */,
 				8E76A7761A81FB4C00352063 /* Info.plist */,
 				8E76A7771A81FB4C00352063 /* main.m */,
 			);
@@ -302,6 +300,8 @@
 				8EAEA6C11ACA9B5C00C92584 /* DDModel.podspec in Resources */,
 				8E76A7811A81FB4C00352063 /* Main.storyboard in Resources */,
 				8E76A7861A81FB4C00352063 /* LaunchScreen.xib in Resources */,
+				8E183C9F1A834CE30005AB69 /* root_ca.cer in Resources */,
+				8E183C9D1A834CE30005AB69 /* adn.cer in Resources */,
 				8E76A7831A81FB4C00352063 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,6 +310,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E183CA01A834CE30005AB69 /* root_ca.cer in Resources */,
+				8E183C9E1A834CE30005AB69 /* adn.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,18 +355,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FD44F1A1AEE21F1000A5225 /* NSURLSessionTask+DDModel.m in Sources */,
 				8E0092D61AAF232C00043C5E /* DDCache.m in Sources */,
 				8E76A77E1A81FB4C00352063 /* ViewController.m in Sources */,
 				8E0B67361AAD918D0020FD73 /* DDModel.m in Sources */,
 				8E76A77B1A81FB4C00352063 /* AppDelegate.m in Sources */,
-				0D6566311B1EDB8800E3F4A8 /* AFHTTPRequestOperationManager+DDAddition.m in Sources */,
-				8E0B67351AAD918D0020FD73 /* NSDictionary+DDUploadFile.m in Sources */,
+				8E0B67351AAD918D0020FD73 /* NSDictionary+DDModel.m in Sources */,
 				8E76A7781A81FB4C00352063 /* main.m in Sources */,
-				0D26DDDA1B12CC03004EB0D0 /* DDModelHttpClient+DDAddition.m in Sources */,
-				8E0092D91AAF234600043C5E /* NSString+CacheMD5.m in Sources */,
+				8E0092D91AAF234600043C5E /* NSString+DDModel.m in Sources */,
 				8E0B67371AAD918D0020FD73 /* DDModelHttpClient.m in Sources */,
 				8E183C9A1A834B370005AB69 /* Post.m in Sources */,
-				0D6566341B1F1CB400E3F4A8 /* DDModel+DDAddition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,7 +440,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -475,7 +475,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -489,7 +489,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = DDModel/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -502,7 +502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = DDModel/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
