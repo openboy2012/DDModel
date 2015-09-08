@@ -7,7 +7,7 @@
 //
 
 #import "DDModelHttpClient.h"
-#import "AFHTTPRequestOperationManager+DDAddition.h"
+#import "AFHTTPSessionManager+DDModel.h"
 
 static NSString *kAppUrl;
 
@@ -39,8 +39,7 @@ static NSString *kAppUrl;
             NSLog(@"you have lost the method 'startWithURL:' or 'startWithURL:delegate:' in lanuching AppDelegate");
         }
         client = [[DDModelHttpClient alloc] initWithBaseURL:clientURL];
-        [client dd_addURL:kAppUrl];
-        client.type = DDResponseJSON;
+        client.type = DDResponseOhter;
     });
     return client;
 }
@@ -93,8 +92,10 @@ static NSString *kAppUrl;
     _type = type;
     if(type == DDResponseXML){
         self.responseSerializer = [AFXMLParserResponseSerializer serializer];
-    }else{
+    }else if(type == DDResponseJSON){
         self.responseSerializer = [AFJSONResponseSerializer serializer];
+    }else{
+        self.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
 }
 

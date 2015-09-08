@@ -15,41 +15,15 @@
 
 #define DDFILE @"fileInfo"
 
-@interface DDModel()
-
-/**
- *  Get Object(s) from reponse object
- *
- *  @param reponseString reponse string
- *  @param failure       failure handler block
- *
- *  @return Object(s)
- */
-+ (id)getObjectFromReponseObject:(id)responseObject
-                         failure:(DDResponseFailureBlock)failure;
-
-/**
- *  conver JSON object to Model
- *
- *  @param jsonObject json object
- *
- *  @return modol or model array
- */
-+ (id)convertJsonToObject:(id)jsonObject;
-
-@end
-
 @implementation DDModel
 
 #pragma mark - DB Cache - Http Handler Methods
 
-+ (void)get:(NSString *)path
-     params:(id)params
-    showHUD:(BOOL)show
-parentViewController:(id)viewController
-  dbSuccess:(DDSQLiteBlock)dbBlock
-    success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure
++ (NSURLSessionDataTask *)get:(NSString *)path
+                       params:(id)params
+                    dbSuccess:(DDSQLiteBlock)dbBlock
+                      success:(DDResponseSuccessBlock)success
+                      failure:(DDResponseFailureBlock)failure
 {
     if(dbBlock){
         //query the cache
@@ -59,12 +33,11 @@ parentViewController:(id)viewController
                             DDCache *cache = data;
                             if(cache){
                                 id JSON = [cache.content dd_dictionaryWithJSON];
-                                dbBlock([[self class] convertJsonToObject:JSON]);
+                                dbBlock([[self class] convertToObject:JSON]);
                             }
                         }];
     }
     
-    [[DDModelHttpClient sharedInstance] showHud:show];
     
     NSDictionary *getParams = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     NSURLSessionDataTask *getTask =
@@ -72,34 +45,26 @@ parentViewController:(id)viewController
                                  parameters:getParams
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         
-                                        [[DDModelHttpClient sharedInstance] hideHud:show];
-                                        
-                                        [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
                                         
                                         id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
                                         //save the cache
                                         [DDCache cacheWithPath:path parameter:params content:JSON];
                                         if (success && JSON){
-                                            success([[self class] convertJsonToObject:JSON]);
+                                            success([[self class] convertToObject:JSON]);
                                         }
                                     }
                                     failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                        [[DDModelHttpClient sharedInstance] hideHud:show];
-                                        
-                                        [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
                                         if(failure)
-                                            failure(error, [error description]);
+                                            failure(error, [error description], nil);
                                     }];
-    [[DDModelHttpClient sharedInstance] addTask:getTask withKey:viewController];
+    return getTask;
 }
 
-+ (void)post:(NSString *)path
-      params:(id)params
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-   dbSuccess:(DDSQLiteBlock)dbBlock
-     success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure
++ (NSURLSessionDataTask *)post:(NSString *)path
+                        params:(id)params
+                     dbSuccess:(DDSQLiteBlock)dbBlock
+                       success:(DDResponseSuccessBlock)success
+                       failure:(DDResponseFailureBlock)failure
 {
     
     if(dbBlock){
@@ -110,12 +75,11 @@ parentViewController:(id)viewController
                             DDCache *cache = data;
                             if([cache.content length] > 1){
                                 id JSON = [cache.content dd_dictionaryWithJSON];
-                                dbBlock([[self class] convertJsonToObject:JSON]);
+                                dbBlock([[self class] convertToObject:JSON]);
                             }
                         }];
     }
     
-    [[DDModelHttpClient sharedInstance] showHud:show];
     
     NSDictionary *postParams = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     NSURLSessionDataTask *postTask =
@@ -123,38 +87,27 @@ parentViewController:(id)viewController
                                   parameters:postParams
                                      success:^(NSURLSessionDataTask *task, id responseObject) {
                                          
-                                         [[DDModelHttpClient sharedInstance] hideHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                         
                                          id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
                                          
                                          //save the cache
                                          [DDCache cacheWithPath:path parameter:params content:JSON];
                                          if (success && JSON){
-                                             success([[self class] convertJsonToObject:JSON]);
+                                             success([[self class] convertToObject:JSON]);
                                          }
                                      }
                                      failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                         [[DDModelHttpClient sharedInstance] hideHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
                                          if(failure)
-                                             failure(error, [error description]);
+                                             failure(error, [error description], nil);
                                      }];
-    [[DDModelHttpClient sharedInstance] addTask:postTask withKey:viewController];
+    return postTask;
 }
 
 #pragma mark - HTTP Request Handler Methods
 
-+ (void)get:(NSString *)path
-     params:(id)params
-    showHUD:(BOOL)show
-parentViewController:(id)viewController
-    success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure{
-    
-    [[DDModelHttpClient sharedInstance] showHud:show];
++ (NSURLSessionDataTask *)get:(NSString *)path
+                       params:(id)params
+                      success:(DDResponseSuccessBlock)success
+                      failure:(DDResponseFailureBlock)failure{
     
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     NSURLSessionDataTask *getTask =
@@ -162,35 +115,22 @@ parentViewController:(id)viewController
                                  parameters:params
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         
-                                        [[DDModelHttpClient sharedInstance] hideHud:show];
-                                        
-                                        [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                        
                                         id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
                                         if (success && JSON){
-                                            success([[self class] convertJsonToObject:JSON]);
+                                            success([[self class] convertToObject:JSON]);
                                         }
                                     }
                                     failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                        [[DDModelHttpClient sharedInstance] hideHud:show];
-                                        
-                                        [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
                                         if(failure)
-                                            failure(error, [error description]);
+                                            failure(error, [error description], nil);
                                     }];
-    [[DDModelHttpClient sharedInstance] addTask:getTask withKey:viewController];
+    return getTask;
 }
 
-+ (void)post:(NSString *)path
++ (NSURLSessionDataTask *)post:(NSString *)path
       params:(id)params
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
      success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure{
-    /**
-     *  show the hud view
-     */
-    [[DDModelHttpClient sharedInstance] showHud:show];
+     failure:(DDResponseFailureBlock)failure {
     
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     NSURLSessionDataTask *postTask =
@@ -198,66 +138,52 @@ parentViewController:(id)viewController
                                   parameters:params
                                      success:^(NSURLSessionDataTask *task, id responseObject) {
                                          
-                                         [[DDModelHttpClient sharedInstance] hideHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                         
                                          id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
                                          if (success && JSON){
-                                             success([[self class] convertJsonToObject:JSON]);
+                                             success([[self class] convertToObject:JSON]);
                                          }
                                      }
                                      failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                         [[DDModelHttpClient sharedInstance] hideHud:show];
-                                         
-                                         [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
                                          if(failure)
-                                             failure(error, [error description]);
+                                             failure(error, [error description], nil);
                                      }];
-    [[DDModelHttpClient sharedInstance] addTask:postTask withKey:viewController];}
-
-+ (void)post:(NSString *)path
-  fileStream:(NSData *)stream
-      params:(id)params
-    userInfo:(id)userInfo
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-     success:(DDUploadReponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure{
-    
-    [[DDModelHttpClient sharedInstance] showHud:show];
-    params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
-    
-    NSURLSessionUploadTask *uploadTask =
-    (NSURLSessionUploadTask *)[[DDModelHttpClient sharedInstance] POST:path
-                                                            parameters:params
-                                             constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                                                 NSDictionary *uploadInfo = userInfo[DDFILE];
-                                                 if(!uploadInfo)
-                                                     uploadInfo = [NSDictionary dd_defaultFile];
-                                                 [formData appendPartWithFileData:stream
-                                                                             name:uploadInfo.name
-                                                                         fileName:uploadInfo.fileName
-                                                                         mimeType:uploadInfo.mimeType];
-                                             }
-                                                               success:^(NSURLSessionDataTask *task, id responseObject) {
-                                                                   [[DDModelHttpClient sharedInstance] hideHud:show];
-                                                                   
-                                                                   [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                                                   id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
-                                                                   if (success && JSON)
-                                                                       success([(NSURLSessionUploadTask *)task userInfo],[[self class] convertJsonToObject:JSON]);
-                                                               }
-                                                               failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                                                   [[DDModelHttpClient sharedInstance] showHud:show];
-                                                                   
-                                                                   [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                                               }];
-    uploadTask.userInfo = userInfo;
-    [[DDModelHttpClient sharedInstance] addTask:uploadTask withKey:viewController];
+    return postTask;
 }
 
-#pragma mark - 
++ (NSURLSessionDataTask *)post:(NSString *)path
+                    fileStream:(NSData *)stream
+                        params:(id)params
+                      userInfo:(id)userInfo
+                       success:(DDUploadReponseSuccessBlock)success
+                       failure:(DDResponseFailureBlock)failure {
+    
+    params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
+    
+    NSURLSessionUploadTask *uploadTask = (NSURLSessionUploadTask *)
+    [[DDModelHttpClient sharedInstance] POST:path
+                                  parameters:params
+                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                       NSDictionary *uploadInfo = userInfo[DDFILE];
+                       if(!uploadInfo)
+                           uploadInfo = [NSDictionary dd_defaultFile];
+                       [formData appendPartWithFileData:stream
+                                                   name:uploadInfo.name
+                                               fileName:uploadInfo.fileName
+                                               mimeType:uploadInfo.mimeType];
+                   }
+                                     success:^(NSURLSessionDataTask *task, id responseObject) {
+                                         id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
+                                         if (success && JSON)
+                                             success([(NSURLSessionUploadTask *)task userInfo],[[self class] convertToObject:JSON]);
+                                     }
+                                     failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                         
+                                     }];
+    uploadTask.userInfo = userInfo;
+    return uploadTask;
+}
+
+#pragma mark -
 
 + (id)getObjectFromReponseObject:(id)responseObject failure:(DDResponseFailureBlock)failure{
     NSDictionary *value = nil;
@@ -294,10 +220,6 @@ parentViewController:(id)viewController
         return nil;
     }
     return value?:@{};
-}
-
-+ (void)cancelRequest:(id)viewController{
-    [[DDModelHttpClient sharedInstance] cancelTasksWithKey:viewController];
 }
 
 #pragma mark - Propery Methods
@@ -342,7 +264,7 @@ parentViewController:(id)viewController
     return nil;
 }
 
-+ (id)convertJsonToObject:(id)jsonObject{
++ (id)convertToObject:(id)jsonObject{
     if(jsonObject == nil){
         return nil;
     }

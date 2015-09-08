@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "Post.h"
 #import "AppDelegate.h"
-#import "AFHTTPRequestOperationManager+DDAddition.h"
+//#import "AFHTTPRequestOperationManager+DDAddition.h"
 #import <UITableView+FDTemplateLayoutCell.h>
 
 @interface PostCell : UITableViewCell
@@ -139,7 +139,7 @@
 //                    }];
     
     if(!isChanged){
-        [[DDModelHttpClient sharedInstance] dd_addURL:@"https://api.app.net/"];
+//        [[DDModelHttpClient sharedInstance] dd_addURL:@"https://api.app.net/"];
         NSLog(@"url = %@",[DDModelHttpClient sharedInstance].baseURL);
         [Post getPostList:nil
                  parentVC:self
@@ -153,7 +153,7 @@
                   failure:^(NSError *error, NSString *message, id data) {
                   }];
     }else{
-        [[DDModelHttpClient sharedInstance] dd_addURL:@"http://mapi.bstapp.cn"];
+//        [[DDModelHttpClient sharedInstance] dd_addURL:@"http://mapi.bstapp.cn"];
         NSLog(@"url = %@",[DDModelHttpClient sharedInstance].baseURL);
         [BESTItemListRoot getItemList:@{@"sortBy":@"recommend",@"keyword":@"coach"} showHUD:YES parentViewController:self
                               success:^(BESTItemListRoot *data) {

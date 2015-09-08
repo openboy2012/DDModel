@@ -40,8 +40,6 @@
  */
 typedef void(^DDSQLiteBlock)(id data);
 
-@class AFHTTPRequestOperation;
-
 @interface DDModel : SQLitePersistentObject<DDMappings>{
     
 }
@@ -55,11 +53,11 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param success        success block
  *  @param failure        failre block
  */
-+ (AFHTTPRequestOperation *)get:(NSString *)path
-                         params:(id)params
-                      dbSuccess:(DDSQLiteBlock)dbResult
-                        success:(DDResponseSuccessBlock)success
-                        failure:(DDResponseFailureBlock)failure;
++ (NSURLSessionDataTask *)get:(NSString *)path
+                       params:(id)params
+                    dbSuccess:(DDSQLiteBlock)dbResult
+                      success:(DDResponseSuccessBlock)success
+                      failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Get json data first from db cache then from http server by HTTP POST Mehod.
@@ -71,11 +69,11 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param failure        failre block
  *
  */
-+ (AFHTTPRequestOperation *)post:(NSString *)path
-                          params:(id)params
-                       dbSuccess:(DDSQLiteBlock)dbResult
-                         success:(DDResponseSuccessBlock)success
-                         failure:(DDResponseFailureBlock)failure;
++ (NSURLSessionDataTask *)post:(NSString *)path
+                        params:(id)params
+                     dbSuccess:(DDSQLiteBlock)dbResult
+                       success:(DDResponseSuccessBlock)success
+                       failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Get json data from http server by HTTP GET Mehod.
@@ -86,10 +84,10 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param failure        failre block
  *
  */
-+ (AFHTTPRequestOperation *)get:(NSString *)path
-                         params:(id)params
-                        success:(DDResponseSuccessBlock)success
-                        failure:(DDResponseFailureBlock)failure;
++ (NSURLSessionDataTask *)get:(NSString *)path
+                       params:(id)params
+                      success:(DDResponseSuccessBlock)success
+                      failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Get json data from http server by HTTP POST Mehod.
@@ -100,10 +98,10 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param failure        failre block
  *
  */
-+ (AFHTTPRequestOperation *)post:(NSString *)path
-                          params:(id)params
-                         success:(DDResponseSuccessBlock)success
-                         failure:(DDResponseFailureBlock)failure;
++ (NSURLSessionDataTask *)post:(NSString *)path
+                        params:(id)params
+                       success:(DDResponseSuccessBlock)success
+                       failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Upload a data stream to http server by HTTP POST Method.
@@ -115,27 +113,12 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param success        success block
  *  @param failure        failure block
  */
-+ (AFHTTPRequestOperation *)post:(NSString *)path
-                      fileStream:(NSData *)stream
-                          params:(id)params
-                        userInfo:(id)userInfo
-                         success:(DDUploadReponseSuccessBlock)success
-                         failure:(DDResponseFailureBlock)failure;
-
-/**
- *  Get json data from http server by HTTP POST Mehod with more infos.
- *
- *  @param path        HTTP Path
- *  @param params      POST Parameter
- *  @param moreSuccess more info success block
- *  @param failure     failure block
- *
- *  @return AFHTTPRequestOperation
- */
-+ (AFHTTPRequestOperation *)post:(NSString *)path
-                          params:(id)params
-                     moreSuccess:(DDResponseSuccessMoreBlock)moreSuccess
-                         failure:(DDResponseFailureBlock)failure;
++ (NSURLSessionDataTask *)post:(NSString *)path
+                    fileStream:(NSData *)stream
+                        params:(id)params
+                      userInfo:(id)userInfo
+                       success:(DDUploadReponseSuccessBlock)success
+                       failure:(DDResponseFailureBlock)failure;
 
 /**
  *  Parse self entity into a dictionary
@@ -152,7 +135,7 @@ typedef void(^DDSQLiteBlock)(id data);
  *
  *  @return Object(s)
  */
-+ (id)getObjectFromReponseString:(NSString *)reponseString
++ (id)getObjectFromReponseObject:(NSString *)responseObject
                          failure:(DDResponseFailureBlock)failure;
 
 /**

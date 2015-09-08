@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "DDModelKit.h"
-#import "AFHTTPRequestOperationManager+DDAddition.h"
 
 static OSStatus RNSecTrustEvaluateAsX509(SecTrustRef trust,
                                          SecTrustResultType *result
@@ -55,57 +54,6 @@ static OSStatus RNSecTrustEvaluateAsX509(SecTrustRef trust,
     [DDModelHttpClient sharedInstance].type = DDResponseXML;
 #else
     [DDModelHttpClient startWithURL:@"http://mapi.bstapp.cn" delegate:self];
-    [[DDModelHttpClient sharedInstance] dd_setWillSendRequestForAuthenticationChallengeBlock:^(NSURLConnection *connection, NSURLAuthenticationChallenge *challenge) {
-        NSURLProtectionSpace *protSpace = challenge.protectionSpace;
-        SecTrustRef trust = protSpace.serverTrust;
-        SecTrustResultType result = kSecTrustResultFatalTrustFailure;
-        
-        OSStatus status = SecTrustEvaluate(trust, &result);
-        if (status == errSecSuccess &&
-            result == kSecTrustResultRecoverableTrustFailure) {
-            SecCertificateRef cert = SecTrustGetCertificateAtIndex(trust,
-                                                                   0);
-            CFStringRef subject = SecCertificateCopySubjectSummary(cert);
-            
-            CFRange range = CFStringFind(subject, CFSTR(".shipin7.com"),
-                                         kCFCompareAnchored|
-                                         kCFCompareBackwards);
-            if (range.location != kCFNotFound) {
-                status = RNSecTrustEvaluateAsX509(trust, &result);
-            }
-            CFRelease(subject);
-        }
-        if (status == errSecSuccess) {
-            switch (result) {
-                case kSecTrustResultInvalid:
-                case kSecTrustResultDeny:
-                case kSecTrustResultFatalTrustFailure:
-                case kSecTrustResultOtherError:
-                case kSecTrustResultRecoverableTrustFailure:
-                    // 证书有问题
-                    NSLog(@"证书有问题");
-                    [challenge.sender cancelAuthenticationChallenge:challenge];
-                    break;
-                    
-                case kSecTrustResultProceed:
-                case kSecTrustResultUnspecified: {
-                    NSURLCredential *cred;
-                    cred = [NSURLCredential credentialForTrust:trust];
-                    [challenge.sender useCredential:cred
-                         forAuthenticationChallenge:challenge];
-                }
-                    break;
-                    
-                default:
-                    break;
-            }
-        }
-        else {
-            // 证书有问题
-            NSLog(@"证书有问题");
-            [challenge.sender cancelAuthenticationChallenge:challenge];
-        }
-    }];
 #endif
 
     return YES;
