@@ -11,11 +11,11 @@
 @interface NSString (DDModel)
 
 /**
- *  md5 encode
+ *  cache string md5 encode
  *
  *  @return md5 string
  */
-- (NSString *)dd_md5;
+- (NSString *)dd_cacheMD5;
 
 /**
  *  string convert to NSDictionary object

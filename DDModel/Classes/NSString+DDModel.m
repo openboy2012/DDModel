@@ -11,7 +11,7 @@
 
 @implementation NSString (DDModel)
 
-- (NSString *)dd_md5
+- (NSString *)dd_cacheMD5
 {
     const char *cStr = [self UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
