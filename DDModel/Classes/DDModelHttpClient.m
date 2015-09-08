@@ -39,6 +39,7 @@ static NSString *kAppUrl;
             NSLog(@"you have lost the method 'startWithURL:' or 'startWithURL:delegate:' in lanuching AppDelegate");
         }
         client = [[DDModelHttpClient alloc] initWithBaseURL:clientURL];
+        [client dd_addURL:kAppUrl];
         client.type = DDResponseOhter;
     });
     return client;
