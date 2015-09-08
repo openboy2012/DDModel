@@ -23,7 +23,7 @@ PODS:
   - JTObjectMapping (1.1.2)
   - MBProgressHUD (0.9.1)
   - SQLitePersistentObject (0.3.1)
-  - UITableView+FDTemplateLayoutCell (1.2)
+  - UITableView+FDTemplateLayoutCell (1.3)
   - XMLDictionary (1.4)
 
 DEPENDENCIES:
@@ -39,7 +39,7 @@ SPEC CHECKSUMS:
   JTObjectMapping: 179cae6acadb27be5b7f5c019c216cb99d28e112
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   SQLitePersistentObject: 9dad39d84f5a1ba1e2307bd6c0b2dcf63cfef187
-  UITableView+FDTemplateLayoutCell: 355e1c52461bf51e2338f443ee358faca9628878
+  UITableView+FDTemplateLayoutCell: d5be6056b5060313f5955a2590ecd33142ad713d
   XMLDictionary: f9f51601ba76678b594ab485f2b00ec1fed23724
 
 COCOAPODS: 0.38.2
