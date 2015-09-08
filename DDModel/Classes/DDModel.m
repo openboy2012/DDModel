@@ -216,10 +216,20 @@
                                                       error:&decodeError];
         
     }
-    if(![[DDModelHttpClient sharedInstance] checkResponseValue:value failure:failure]){
+    if(![[DDModelHttpClient sharedInstance] checkResponseValue:value failure:failure])
+        //check the failure response callback status
+    {
+        if([DDModelHttpClient sharedInstance].isFailureResponseCallback && failure){
+            NSInteger responseCode = [value[[DDModelHttpClient sharedInstance].resultKey?:@"resultCode"] integerValue];
+            NSString *message = value[[DDModelHttpClient sharedInstance].descKey?:@"resultDes"];
+            NSError *error = [NSError errorWithDomain:[DDModelHttpClient sharedInstance].baseURL.host
+                                                 code:responseCode
+                                             userInfo:nil];
+            id data = [[self class] convertToObject:value];
+            failure(error, message, data);
+        }
         return nil;
-    }
-    return value?:@{};
+    }    return value?:@{};
 }
 
 #pragma mark - Propery Methods
