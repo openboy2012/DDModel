@@ -52,6 +52,8 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param dbResult       db cache result block
  *  @param success        success block
  *  @param failure        failre block
+ *
+ *  @return NSURLSessionDataTask
  */
 + (NSURLSessionDataTask *)get:(NSString *)path
                        params:(id)params
@@ -68,6 +70,7 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param success        success block
  *  @param failure        failre block
  *
+ *  @return NSURLSessionDataTask
  */
 + (NSURLSessionDataTask *)post:(NSString *)path
                         params:(id)params
@@ -83,6 +86,7 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param success        success block
  *  @param failure        failre block
  *
+ *  @return NSURLSessionDataTask
  */
 + (NSURLSessionDataTask *)get:(NSString *)path
                        params:(id)params
@@ -97,6 +101,7 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param success        success block
  *  @param failure        failre block
  *
+ *  @return NSURLSessionDataTask
  */
 + (NSURLSessionDataTask *)post:(NSString *)path
                         params:(id)params
@@ -112,6 +117,8 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @param userInfo       userInfo dictionary
  *  @param success        success block
  *  @param failure        failure block
+ *
+ *  @return NSURLSessionDataTask
  */
 + (NSURLSessionDataTask *)post:(NSString *)path
                     fileStream:(NSData *)stream

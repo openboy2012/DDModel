@@ -10,9 +10,18 @@
 
 @interface NSString (DDModel)
 
+/**
+ *  md5 encode
+ *
+ *  @return md5 string
+ */
 - (NSString *)dd_md5;
 
+/**
+ *  string convert to NSDictionary object
+ *
+ *  @return dictionary
+ */
 - (NSDictionary *)dd_dictionaryWithJSON;
-
 
 @end
