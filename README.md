@@ -26,7 +26,7 @@ To run the example project; clone the repo, and run `pod install` from the Proje
 
 2.initialize a DDModelHttpClient in your gobal object, such as AppDelegate;
 for example: 
-```
+```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
@@ -44,7 +44,7 @@ you should implement the Protocol Method `- (BOOL)checkResponseValueAvaliable:(N
 
 for example:
 
-```
+```objective-c
 #pragma mark - DDHttpClient Delegate Method
 
 - (NSDictionary *)encodeParameters:(NSDictionary *)params{
@@ -85,11 +85,11 @@ for example:
 Define the property according the JSON value Property.
 for exmale:   
 JSON:   
-```
+```javascript
 {"created_at":"2015-03-09T06:45:45Z","num_stars":0,"num_replies":0,"source":{"link":"http://themodernink.com/portfolio/dash-for-app-net/","name":"Dash","client_id":"nxz5USfARxELsYVpfPJc3mYaX42USb2E"},"text":"K\u00f6nnen wir bitte nochmal Sonntag haben? So einen wie gestern - nur mit anderem Spielergebnis der Eintracht? ","num_reposts":0,"id":"54842887","canonical_url":"https://alpha.app.net/berenike/post/54842887","entities":{"mentions":[],"hashtags":[],"links":[]},"html":"<span itemscope=\"https://app.net/schemas/Post\">K&#246;nnen wir bitte nochmal Sonntag haben? So einen wie gestern - nur mit anderem Spielergebnis der Eintracht? </span>","machine_only":false,"user":{"username":"berenike","avatar_image":{"url":"https://d1f0fplrc06slp.cloudfront.net/assets/user/68/b6/70/68b6700000000000.gif","width":500,"is_default":false,"height":500},"description":{"text":"irgendwie is hier anders.\r\nhttp://keinnaturtalent.wordpress.com\r\nhttp://franziskanaja.tumblr.com/","html":"<span itemscope=\"https://app.net/schemas/Post\">irgendwie is hier anders.&#13;<br><a href=\"http://keinnaturtalent.wordpress.com\">http://keinnaturtalent.wordpress.com</a>&#13;<br><a href=\"http://franziskanaja.tumblr.com/\">http://franziskanaja.tumblr.com/</a></span>","entities":{"mentions":[],"hashtags":[],"links":[{"url":"http://keinnaturtalent.wordpress.com","text":"http://keinnaturtalent.wordpress.com","pos":27,"len":36},{"url":"http://franziskanaja.tumblr.com/","text":"http://franziskanaja.tumblr.com/","pos":65,"len":32}]}},"locale":"de_DE","created_at":"2013-05-26T12:20:30Z","canonical_url":"https://alpha.app.net/berenike","cover_image":{"url":"https://d2rfichhc2fb9n.cloudfront.net/image/5/77Bi7kWHejTDAceY-gaw4B0h2SF7InMiOiJzMyIsImIiOiJhZG4tdXNlci1hc3NldHMiLCJrIjoiYXNzZXRzL3VzZXIvZTEvNDcvNDAvZTE0NzQwMDAwMDAwMDAwMC5qcGciLCJvIjoiIn0","width":960,"is_default":false,"height":300},"timezone":"Europe/Berlin","counts":{"following":40,"posts":682,"followers":43,"stars":340},"type":"human","id":"108262","name":"Franziska Naja"},"thread_id":"54842887","pagination_id":"54842887"}
 ```
 Model Define:   
-```
+```objective-c
 @interface User : DDModel
 
 @property (nonatomic, strong) NSNumber *id;
@@ -155,7 +155,7 @@ Model Define:
 ## Methods
 
 ##### DDModelHttpClient.h
-```
+```objective-c
 /**
  *  start a singleton HTTP client with url<启动一个设置URL单例HTTP请求>
  *
@@ -223,7 +223,7 @@ Model Define:
 
 ##### DDModel.h
 
-```
+```objective-c
 /**
  *  set the parse node, every subclass override the method if you want parse any node
  *
