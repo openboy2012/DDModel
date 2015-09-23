@@ -14,13 +14,32 @@
 @property (nonatomic, readonly) NSString *fileName;
 @property (nonatomic, readonly) NSString *mimeType;
 
+/**
+ *  initilization with name, fileName & mimeType dictionary object
+ *
+ *  @param name     name
+ *  @param fileName file name
+ *  @param mimeType mime type
+ *
+ *  @return dictionary
+ */
 + (instancetype)dd_dictionaryWithName:(NSString *)name
                              fileName:(NSString *)fileName
                              mimeType:(NSString *)mimeType;
 
+/**
+ *  default initilize
+ *
+ *  @return dictionary
+ */
 + (instancetype)dd_defaultFile;
 
 
+/**
+ *  NSDictionary object convert to JSON string
+ *
+ *  @return json string
+ */
 - (NSString *)dd_jsonString;
 
 @end

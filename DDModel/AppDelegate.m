@@ -9,36 +9,6 @@
 #import "AppDelegate.h"
 #import "DDModelKit.h"
 
-static OSStatus RNSecTrustEvaluateAsX509(SecTrustRef trust,
-                                         SecTrustResultType *result
-                                         )
-{
-    OSStatus status = errSecSuccess;
-    SecPolicyRef policy = SecPolicyCreateBasicX509();
-    SecTrustRef newTrust;
-    CFIndex numberOfCerts = SecTrustGetCertificateCount(trust);
-    CFMutableArrayRef certs;
-    certs = CFArrayCreateMutable(NULL,
-                                 numberOfCerts,
-                                 &kCFTypeArrayCallBacks);
-    for (NSUInteger index = 0; index < numberOfCerts; ++index) {
-        SecCertificateRef cert;
-        cert = SecTrustGetCertificateAtIndex(trust, index);
-        CFArrayAppendValue(certs, cert);
-    }
-    status = SecTrustCreateWithCertificates(certs,
-                                            policy,
-                                            &newTrust);
-    if (status == errSecSuccess) {
-        status = SecTrustEvaluate(newTrust, result);
-    }
-    CFRelease(policy);
-    CFRelease(newTrust);
-    CFRelease(certs);
-    
-    return status;
-}
-
 @interface AppDelegate ()<DDHttpClientDelegate>
 
 @end
