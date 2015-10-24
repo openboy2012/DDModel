@@ -228,32 +228,39 @@ parentViewController:(id)viewController
     [[DDModelHttpClient sharedInstance] showHud:show];
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     
-    NSURLSessionUploadTask *uploadTask =
-    (NSURLSessionUploadTask *)[[DDModelHttpClient sharedInstance] POST:path
-                                                            parameters:params
-                                             constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                                                 NSDictionary *uploadInfo = userInfo[DDFILE];
-                                                 if(!uploadInfo)
-                                                     uploadInfo = [NSDictionary defaultFile];
-                                                 [formData appendPartWithFileData:stream
-                                                                             name:uploadInfo.name
-                                                                         fileName:uploadInfo.fileName
-                                                                         mimeType:uploadInfo.mimeType];
-                                             }
-                                                               success:^(NSURLSessionDataTask *task, id responseObject) {
-                                                                   [[DDModelHttpClient sharedInstance] hideHud:show];
-                                                                   
-                                                                   [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                                                   id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
-                                                                   if (success && JSON)
-                                                                       success([(NSURLSessionUploadTask *)task userInfo],[[self class] convertJsonToObject:JSON]);
-                                                               }
-                                                               failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                                                   [[DDModelHttpClient sharedInstance] showHud:show];
-                                                                   
-                                                                   [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                                               }];
-    uploadTask.userInfo = userInfo;
+    NSURLSessionDataTask *uploadTask = [[DDModelHttpClient sharedInstance] POST:path
+                                                                     parameters:params
+                                                      constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                                                          NSDictionary *uploadInfo = userInfo[DDFILE];
+                                                          if(!uploadInfo)
+                                                              uploadInfo = [NSDictionary defaultFile];
+                                                          [formData appendPartWithFileData:stream
+                                                                                      name:uploadInfo.name
+                                                                                  fileName:uploadInfo.fileName
+                                                                                  mimeType:uploadInfo.mimeType];
+                                                      }
+                                                                        success:^(NSURLSessionDataTask *task, id responseObject) {
+                                                                            [[DDModelHttpClient sharedInstance] hideHud:show];
+                                                                            
+                                                                            [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
+                                                                            id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
+                                                                            if (success && JSON)
+                                                                            {
+                                                                                NSDictionary *uInfo = nil;
+                                                                                if([task respondsToSelector:@selector(userInfo)]){
+                                                                                    uInfo = [task userInfo];
+                                                                                }
+                                                                                success(uInfo,[[self class] convertJsonToObject:JSON]);
+                                                                            }
+                                                                            
+                                                                        }
+                                                                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                                                            [[DDModelHttpClient sharedInstance] showHud:show];
+                                                                            
+                                                                            [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
+                                                                        }];
+    if(userInfo)
+        uploadTask.userInfo = userInfo;
     [[DDModelHttpClient sharedInstance] addTask:uploadTask withKey:viewController];
 }
 
