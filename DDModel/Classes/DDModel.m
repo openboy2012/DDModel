@@ -174,12 +174,13 @@
                                      success:^(NSURLSessionDataTask *task, id responseObject) {
                                          id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
                                          if (success && JSON)
-                                             success([(NSURLSessionUploadTask *)task userInfo],[[self class] convertToObject:JSON]);
+                                             success([task.taskDescription dd_dictionaryWithJSON],[[self class] convertToObject:JSON]);
                                      }
                                      failure:^(NSURLSessionDataTask *task, NSError *error) {
                                          
                                      }];
-    uploadTask.userInfo = userInfo;
+    if(userInfo)
+        uploadTask.taskDescription = [userInfo dd_jsonString];
     return uploadTask;
 }
 
