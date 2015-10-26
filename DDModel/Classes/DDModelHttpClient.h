@@ -15,14 +15,24 @@
  *  @param data an object or an object arrays
  */
 typedef void(^DDResponseSuccessBlock)(id data);
+
 /**
- *  Http Response Failure Block callback an error object & a userInfo object
+ *  Http Response Failure Block callback an error object & a message object & a parased object
  *
  *  @param error   error
  *  @param message message info
  *  @param data    data an object or an object arrays
  */
-typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message, id data);
+typedef void(^DDResponsesFailureBlock)(NSError *error, NSString *message, id data);
+
+/**
+ *  Http Response Failure Block callback an error object & a message object
+ *
+ *  @param error   error
+ *  @param message message info
+ */
+typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message) __deprecated_msg("Please use 'DDResponsesFailureBlock' replaced the block.");
+
 
 /**
  *  Http Upload file response success block callback with userinfo & response object
@@ -125,14 +135,14 @@ typedef enum : NSUInteger {
 - (NSString *)responseStringHandler:(NSString *)responseString;
 
 /**
- *   Check the response values is an avaliable value
+ *   Check the response values is an available value
  *
  *  @param values  origin value
  *  @param failure failure block
  *
  *  @return true or false
  */
-- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure;
+- (BOOL)checkResponseValues:(NSDictionary *)values failure:(DDResponsesFailureBlock)failure;
 
 @end
 
@@ -158,7 +168,7 @@ typedef enum : NSUInteger {
 - (NSString *)decodeResponseString:(NSString *)responseString;
 
 /**
- *  Check the response values is an avaliable value.
+ *  Check the response values is an available value.
     e.g. You will sign in an account but you press a wrong username/password, server will response a error for you, you can catch them use this protocol methods and handle this error exception.
  *
  *  @param values  should check value
@@ -166,6 +176,33 @@ typedef enum : NSUInteger {
  *
  *  @return true or false
  */
-- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure;
+- (BOOL)checkResponseValuesAvailable:(NSDictionary *)values failure:(DDResponsesFailureBlock)failure;
+
+
+/**
+ *  Check the response values is an available value.
+ e.g. You will sign in an account but you press a wrong username/password, server will response a error for you, you can catch them use this protocol methods and handle this error exception.
+ *
+ *  @param values  should check value
+ *  @param failure failure block
+ *
+ *  @return true or false
+ */
+- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_enum_msg("Please use the 'checkResponseValueAvailable:failure:' replace the method.");
+
+
+@end
+
+@interface DDModelHttpClient (DDDeprecated)
+
+/**
+ *   Check the response values is an avaliable value
+ *
+ *  @param values  origin value
+ *  @param failure failure block
+ *
+ *  @return true or false
+ */
+- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use the 'checkResponseValues:failure:' replace the method.");
 
 @end

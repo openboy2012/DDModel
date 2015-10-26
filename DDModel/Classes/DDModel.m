@@ -23,7 +23,7 @@
                        params:(id)params
                     dbSuccess:(DDSQLiteBlock)dbBlock
                       success:(DDResponseSuccessBlock)success
-                      failure:(DDResponseFailureBlock)failure
+                      failure:(DDResponsesFailureBlock)failure
 {
     if(dbBlock){
         //query the cache
@@ -64,7 +64,7 @@
                         params:(id)params
                      dbSuccess:(DDSQLiteBlock)dbBlock
                        success:(DDResponseSuccessBlock)success
-                       failure:(DDResponseFailureBlock)failure
+                       failure:(DDResponsesFailureBlock)failure
 {
     
     if(dbBlock){
@@ -107,7 +107,7 @@
 + (NSURLSessionDataTask *)get:(NSString *)path
                        params:(id)params
                       success:(DDResponseSuccessBlock)success
-                      failure:(DDResponseFailureBlock)failure{
+                      failure:(DDResponsesFailureBlock)failure{
     
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     NSURLSessionDataTask *getTask =
@@ -130,7 +130,7 @@
 + (NSURLSessionDataTask *)post:(NSString *)path
       params:(id)params
      success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure {
+     failure:(DDResponsesFailureBlock)failure {
     
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     NSURLSessionDataTask *postTask =
@@ -155,7 +155,7 @@
                         params:(id)params
                       userInfo:(id)userInfo
                        success:(DDUploadReponseSuccessBlock)success
-                       failure:(DDResponseFailureBlock)failure {
+                       failure:(DDResponsesFailureBlock)failure {
     
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     
@@ -177,7 +177,8 @@
                                              success([task.taskDescription dd_dictionaryWithJSON],[[self class] convertToObject:JSON]);
                                      }
                                      failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                         
+                                         if(failure)
+                                             failure(error, [error description], nil);
                                      }];
     if(userInfo)
         uploadTask.taskDescription = [userInfo dd_jsonString];
@@ -186,7 +187,7 @@
 
 #pragma mark -
 
-+ (id)getObjectFromReponseObject:(id)responseObject failure:(DDResponseFailureBlock)failure{
++ (id)getObjectFromReponseObject:(id)responseObject failure:(DDResponsesFailureBlock)failure{
     NSDictionary *value = nil;
     if([responseObject isKindOfClass:[NSDictionary class]] && [DDModelHttpClient sharedInstance].type == DDResponseJSON){
         value = responseObject;
@@ -217,7 +218,7 @@
                                                       error:&decodeError];
         
     }
-    if(![[DDModelHttpClient sharedInstance] checkResponseValue:value failure:failure])
+    if(![[DDModelHttpClient sharedInstance] checkResponseValues:value failure:failure])
         //check the failure response callback status
     {
         if([DDModelHttpClient sharedInstance].isFailureResponseCallback && failure){
@@ -298,7 +299,8 @@
 
 @end
 
-@implementation DDModel(DDKit)
+
+@implementation DDModel (DDKit)
 
 + (NSArray *)getPropertyNames{
     NSMutableArray *propertiesArray = [[NSMutableArray alloc] initWithCapacity:0];

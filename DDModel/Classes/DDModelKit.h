@@ -13,5 +13,7 @@
     #import "DDCache.h"
     #import "DDModelHttpClient.h"
     #import "NSDictionary+DDModel.h"
+    #import "DDModel+DDAddition.h"
+    #import "DDModelHttpClient+DDAddition.h"
 
 #endif

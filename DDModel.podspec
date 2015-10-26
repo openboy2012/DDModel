@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
  s.homepage = 'https://github.com/openboy2012/DDModel.git'
  s.author   = { 'DeJohn Dong' => 'dongjia_9251@126.com' }
  s.source   = { :git => 'https://github.com/openboy2012/DDModel.git',:tag =>s.version.to_s}
- s.ios.deployment_target = '6.0'
+ s.ios.deployment_target = '7.0'
  s.public_header_files = 'DDModel/Classes/DDModelKit.h'
  s.source_files = 'DDModel/Classes/DDModelKit.h'
  s.requires_arc = true

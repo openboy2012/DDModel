@@ -59,7 +59,7 @@ typedef void(^DDSQLiteBlock)(id data);
                        params:(id)params
                     dbSuccess:(DDSQLiteBlock)dbResult
                       success:(DDResponseSuccessBlock)success
-                      failure:(DDResponseFailureBlock)failure;
+                      failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  Get json data first from db cache then from http server by HTTP POST Mehod.
@@ -76,7 +76,7 @@ typedef void(^DDSQLiteBlock)(id data);
                         params:(id)params
                      dbSuccess:(DDSQLiteBlock)dbResult
                        success:(DDResponseSuccessBlock)success
-                       failure:(DDResponseFailureBlock)failure;
+                       failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  Get json data from http server by HTTP GET Mehod.
@@ -91,7 +91,7 @@ typedef void(^DDSQLiteBlock)(id data);
 + (NSURLSessionDataTask *)get:(NSString *)path
                        params:(id)params
                       success:(DDResponseSuccessBlock)success
-                      failure:(DDResponseFailureBlock)failure;
+                      failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  Get json data from http server by HTTP POST Mehod.
@@ -106,7 +106,7 @@ typedef void(^DDSQLiteBlock)(id data);
 + (NSURLSessionDataTask *)post:(NSString *)path
                         params:(id)params
                        success:(DDResponseSuccessBlock)success
-                       failure:(DDResponseFailureBlock)failure;
+                       failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  Upload a data stream to http server by HTTP POST Method.
@@ -125,7 +125,7 @@ typedef void(^DDSQLiteBlock)(id data);
                         params:(id)params
                       userInfo:(id)userInfo
                        success:(DDUploadReponseSuccessBlock)success
-                       failure:(DDResponseFailureBlock)failure;
+                       failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  Parse self entity into a dictionary
@@ -143,7 +143,7 @@ typedef void(^DDSQLiteBlock)(id data);
  *  @return Object(s)
  */
 + (id)getObjectFromReponseObject:(NSString *)responseObject
-                         failure:(DDResponseFailureBlock)failure;
+                         failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  conver dictionary object to Model
@@ -155,3 +155,4 @@ typedef void(^DDSQLiteBlock)(id data);
 + (id)convertToObject:(id)dictObject;
 
 @end
+

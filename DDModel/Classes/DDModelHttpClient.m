@@ -80,9 +80,9 @@ static NSString *kAppUrl;
     return responseString;
 }
 
-- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure{
+- (BOOL)checkResponseValues:(NSDictionary *)values failure:(DDResponsesFailureBlock)failure {
     if([self.delegate respondsToSelector:@selector(checkResponseValueAvaliable:failure:)]){
-        return [self.delegate checkResponseValueAvaliable:values failure:failure];
+        return [self.delegate checkResponseValuesAvailable:values failure:failure];
     }
     return YES;
 }
@@ -105,3 +105,19 @@ static NSString *kAppUrl;
 }
 
 @end
+
+
+
+@implementation DDModelHttpClient (DDDeprecated)
+
+
+- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure{
+    if([self.delegate respondsToSelector:@selector(checkResponseValueAvaliable:failure:)]){
+        return [self.delegate checkResponseValueAvaliable:values failure:failure];
+    }
+    return YES;
+}
+
+@end
+
+

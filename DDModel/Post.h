@@ -27,7 +27,7 @@
            parentVC:(id)viewController
             showHUD:(BOOL)show
             success:(DDResponseSuccessBlock)success
-            failure:(DDResponseFailureBlock)failure;
+            failure:(DDResponsesFailureBlock)failure;
 
 @end
 
