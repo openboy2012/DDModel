@@ -45,9 +45,9 @@
            parentVC:(id)viewController
             showHUD:(BOOL)show
             success:(DDResponseSuccessBlock)success
-            failure:(DDResponseFailureBlock)failure
+            failure:(DDResponsesFailureBlock)failure
 {
-    [[self class] get:@"stream/0/posts/stream/global" params:params showHUD:show parentViewController:viewController  success:success failure:failure];
+    [[self class] get:@"stream/0/posts/stream/global" params:params showHUD:show parentViewController:viewController  successBlock:success failureBlock:failure];
 }
 
 @end
@@ -79,8 +79,8 @@
                showHUD:(BOOL)show
              dbSuccess:(DDSQLiteBlock)dbResult
                success:(DDResponseSuccessBlock)success
-               failure:(DDResponseFailureBlock)failure{
-    [[self class] get:@"index.php"  params:params showHUD:show parentViewController:params dbSuccess:dbResult success:success failure:failure];
+               failure:(DDResponsesFailureBlock)failure{
+    [[self class] get:@"index.php"  params:params showHUD:show parentViewController:params dbSuccess:dbResult successBlock:success failureBlock:failure];
 }
 
 @end
@@ -107,9 +107,9 @@
             showHUD:(BOOL)show
 parentViewController:(id)viewController
             success:(DDResponseSuccessBlock)success
-            failure:(DDResponseFailureBlock)failure{
+            failure:(DDResponsesFailureBlock)failure{
     
-    [[self class] post:@"/v1/search/list" params:params showHUD:show parentViewController:viewController success:success failure:failure];
+    [[self class] post:@"/v1/search/list" params:params showHUD:show parentViewController:viewController successBlock:success failureBlock:failure];
     
 }
 

@@ -14,14 +14,14 @@
 @property (nonatomic, strong) MBProgressHUD *hud;
 
 /**
- *  show hud if flag = YES
+ *  show hud if flag is YES
  *
  *  @param flag flag
  */
 - (void)showHud:(BOOL)flag;
 
 /**
- *  hide hud if flag = YES
+ *  hide hud if flag is YES
  *
  *  @param flag flag
  */
@@ -33,27 +33,26 @@
 
 @property (nonatomic, strong) NSMutableDictionary *ddHttpQueueDict;
 
-#pragma mark - operation handler methods
 /**
- *  Add operation with key <根据Key值加入Opeartion>
+ *  Add the requesting task into the tasks queue with the key. the tasks queue may have many keys, so we use the key value to 
  *
- *  @param operation requesting operation <正在请求的HTTP Operation>
- *  @param key       key <关键字，方便再次查找>
+ *  @param task requesting task
+ *  @param key  key
  */
 - (void)addTask:(NSURLSessionDataTask *)task withKey:(id)key;
 
 /**
- *  Cancel operation with key <根据Key值取消某个Opeartion>
+ *  Cancel the requesting task in the tasks queue with the key.
  *
- *  @param operation requesting operation <正在请求的HTTP Operation>
- *  @param key       key <关键字，方便再次查找>
+ *  @param task requesting task
+ *  @param key  key
  */
 - (void)removeTask:(NSURLSessionDataTask *)task withKey:(id)key;
 
 /**
- *  Cancel all operation with key <根据Key取消所有的Operation>
+ *  Cancel the all requesting tasks in tasks queue with the key.
  *
- *  @param key key <关键字>
+ *  @param key key
  */
 - (void)cancelTasksWithKey:(id)key;
 

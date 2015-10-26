@@ -11,14 +11,14 @@
 @interface AFHTTPSessionManager (DDModel)
 
 /**
- *  dynomic replace the url
+ *  Dynomic replace the url
  *
  *  @param url target url
  */
 - (void)dd_exchangeURL:(NSString *)url;
 
 /**
- *  add a new url into http client
+ *  Add a new url into http client
  *
  *  @param url target url
  */

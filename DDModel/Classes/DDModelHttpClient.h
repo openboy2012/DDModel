@@ -31,7 +31,7 @@ typedef void(^DDResponsesFailureBlock)(NSError *error, NSString *message, id dat
  *  @param error   error
  *  @param message message info
  */
-typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message) __deprecated_msg("Please use 'DDResponsesFailureBlock' replaced the block.");
+typedef void(^DDResponseFailureBlock)(NSError *error, NSString *message) __deprecated_msg("Please use 'DDResponsesFailureBlock' instead.");
 
 
 /**
@@ -55,14 +55,14 @@ typedef enum : NSUInteger {
 @property (nonatomic) DDResponseType type; //reponse type
 
 /**
- *  check failure response callback flag status
+ *  Check failure response callback flag status
  */
 @property (nonatomic, readonly) BOOL isFailureResponseCallback;
 
 @property (nonatomic, copy) NSString *descKey;   //error description key
 
 /**
- *  error code key, .eg. your response json is {'resultCode':0,'resultDesc':'success',list:[{'xxx':xxx},...]}
+ *  Error code key, .eg. your response json is {'resultCode':0,'resultDesc':'success',list:[{'xxx':xxx},...]}
  *  so you should set the resultKey is 'resultCode' hook the result code info and set the descKey is 'resultDesc' hook the
  *  result description
  */
@@ -70,7 +70,7 @@ typedef enum : NSUInteger {
 
 
 /**
- *  set if the response callback when it's failure request
+ *  Set if the response callback when it's failure request
  *
  *  @param flag YES/NO, default is NO.
  */
@@ -78,14 +78,14 @@ typedef enum : NSUInteger {
 
 #pragma mark - initlize methods
 /**
- *  start a singleton HTTP client with url<启动一个设置URL单例HTTP请求>
+ *  Start a singleton HTTP client with url.
  *
- *  @param url HTTP target url<http目标URL>
+ *  @param url HTTP target url
  */
 + (void)startWithURL:(NSString *)url;
 
 /**
- *  start a singleton HTTP client with url and delegate
+ *  Start a singleton HTTP client with url & delegate
  *
  *  @param url      HTTP target url
  *  @param delegate DDHttpClientDelegate
@@ -93,22 +93,22 @@ typedef enum : NSUInteger {
 + (void)startWithURL:(NSString *)url delegate:(id<DDHttpClientDelegate>)delegate;
 
 /**
- *  singleton client<单例客户端>
+ *  Singleton client
  *
- *  @return instance client<实例化的客户端>
+ *  @return instance client
  */
 + (instancetype)sharedInstance;
 
 #pragma mark -
 /**
- *  set the HTTP header field value
+ *  Set the HTTP header field value
  *
  *  @param keyValue keyValue
  */
 + (void)addHTTPHeaderFieldValue:(NSDictionary *)keyValue;
 
 /**
- *  remove the HTTP header field value
+ *  Remove the HTTP header field value
  *
  *  @param keyValue keyValue
  */
@@ -179,30 +179,13 @@ typedef enum : NSUInteger {
 - (BOOL)checkResponseValuesAvailable:(NSDictionary *)values failure:(DDResponsesFailureBlock)failure;
 
 
-/**
- *  Check the response values is an available value.
- e.g. You will sign in an account but you press a wrong username/password, server will response a error for you, you can catch them use this protocol methods and handle this error exception.
- *
- *  @param values  should check value
- *  @param failure failure block
- *
- *  @return true or false
- */
-- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_enum_msg("Please use the 'checkResponseValueAvailable:failure:' replace the method.");
+- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_enum_msg("Please use the -checkResponseValueAvailable:failure: instead.");
 
 
 @end
 
 @interface DDModelHttpClient (DDDeprecated)
 
-/**
- *   Check the response values is an avaliable value
- *
- *  @param values  origin value
- *  @param failure failure block
- *
- *  @return true or false
- */
-- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use the 'checkResponseValues:failure:' replace the method.");
+- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use the -checkResponseValues:failure: instead.");
 
 @end

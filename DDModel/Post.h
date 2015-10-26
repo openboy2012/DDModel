@@ -44,7 +44,7 @@
                showHUD:(BOOL)show
              dbSuccess:(DDSQLiteBlock)dbResult
                success:(DDResponseSuccessBlock)success
-               failure:(DDResponseFailureBlock)failure;
+               failure:(DDResponsesFailureBlock)failure;
 
 @end
 
@@ -70,6 +70,6 @@
             showHUD:(BOOL)show
 parentViewController:(id)viewController
             success:(DDResponseSuccessBlock)success
-            failure:(DDResponseFailureBlock)failure;
+            failure:(DDResponsesFailureBlock)failure;
 
 @end

@@ -18,8 +18,8 @@
  *  @param show           is show the HUD on the view
  *  @param viewController parentViewController
  *  @param dbResult       db cache result block
- *  @param success        success block
- *  @param failure        failre block
+ *  @param successBlock   success block
+ *  @param failureBlock   failre block
  */
 + (void)get:(NSString *)path
      params:(id)params
@@ -37,8 +37,8 @@ failureBlock:(DDResponsesFailureBlock)failure;
  *  @param show           is show the HUD on the view
  *  @param viewController parentViewController
  *  @param dbResult       db cache result block
- *  @param success        success block
- *  @param failure        failre block
+ *  @param successBlock   success block
+ *  @param failureBlock   failre block
  *
  */
 + (void)post:(NSString *)path
@@ -56,8 +56,8 @@ parentViewController:(id)viewController
  *  @param params         GET Paramtters
  *  @param show           is show the HUD on the view
  *  @param viewController parentViewController
- *  @param success        success block
- *  @param failure        failre block
+ *  @param successBlock   success block
+ *  @param failureBlock   failre block
  *
  */
 + (void)get:(NSString *)path
@@ -74,8 +74,8 @@ parentViewController:(id)viewController
  *  @param params         GET Paramtters
  *  @param show           is show the HUD on the view
  *  @param viewController parentViewController
- *  @param success        success block
- *  @param failure        failre block
+ *  @param successBlock   success block
+ *  @param failureBlock   failre block
  *
  */
 + (void)post:(NSString *)path
@@ -94,8 +94,8 @@ parentViewController:(id)viewController
  *  @param userInfo       userInfo dictionary
  *  @param show           is show the HUD on the view
  *  @param viewController parentViewController
- *  @param success        success block
- *  @param failure        failure block
+ *  @param successBlock   success block
+ *  @param failureBlock   failure block
  */
 + (void)post:(NSString *)path
   fileStream:(NSData *)stream
@@ -107,7 +107,7 @@ parentViewController:(id)viewController
      failureBlock:(DDResponsesFailureBlock)failure;
 
 /**
- *  Cancel all the request in the viewController.
+ *  Cancel all the requests in the viewController.
  *
  *  @param viewController viewcontroller
  */
@@ -118,93 +118,36 @@ parentViewController:(id)viewController
 
 @interface DDModel (DDDeprecated)
 
-/**
- *  Get json data first from db cache then from http server by HTTP GET Mehod.
- *
- *  @param path           HTTP Path
- *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
- *  @param dbResult       db cache result block
- *  @param success        success block
- *  @param failure        failre block
- */
 + (void)get:(NSString *)path
      params:(id)params
     showHUD:(BOOL)show
 parentViewController:(id)viewController
   dbSuccess:(DDSQLiteBlock)dbResult
     success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'get:params:showHUD:parentViewController:dbSuccess:successBlock:failureBlock' method replaced.");
+    failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use +get:params:showHUD:parentViewController:dbSuccess:successBlock:failureBlock instead.");
 
-/**
- *  Get json data first from db cache then from http server by HTTP POST Mehod.
- *
- *  @param path           HTTP Path
- *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
- *  @param dbResult       db cache result block
- *  @param success        success block
- *  @param failure        failre block
- *
- */
 + (void)post:(NSString *)path
       params:(id)params
      showHUD:(BOOL)show
 parentViewController:(id)viewController
    dbSuccess:(DDSQLiteBlock)dbResult
      success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'post:params:showHUD:parentViewController:dbSuccess:successBlock:failureBlock' method replaced.");
+     failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use +post:params:showHUD:parentViewController:dbSuccess:successBlock:failureBlock instead.");
 
-/**
- *  Get json data from http server by HTTP GET Mehod.
- *
- *  @param path           HTTP Path
- *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
- *  @param success        success block
- *  @param failure        failre block
- *
- */
 + (void)get:(NSString *)path
      params:(id)params
     showHUD:(BOOL)show
 parentViewController:(id)viewController
     success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'get:params:showHUD:parentViewController:successBlock:failureBlock' method replaced.");
+    failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use +get:params:showHUD:parentViewController:successBlock:failureBlock instead.");
 
-/**
- *  Get json data from http server by HTTP POST Mehod.
- *
- *  @param path           HTTP Path
- *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
- *  @param success        success block
- *  @param failure        failre block
- *
- */
 + (void)post:(NSString *)path
       params:(id)params
      showHUD:(BOOL)show
 parentViewController:(id)viewController
      success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'post:params:showHUD:parentViewController:successBlock:failureBlock' method replaced.");
+     failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use +post:params:showHUD:parentViewController:successBlock:failureBlock instead");
 
-/**
- *  Upload a data stream to http server by HTTP POST Method.
- *
- *  @param path           HTTP Path
- *  @param stream         stream data
- *  @param params         POST Parameters
- *  @param userInfo       userInfo dictionary
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
- *  @param success        success block
- *  @param failure        failure block
- */
 + (void)post:(NSString *)path
   fileStream:(NSData *)stream
       params:(id)params
@@ -212,6 +155,6 @@ parentViewController:(id)viewController
      showHUD:(BOOL)show
 parentViewController:(id)viewController
      success:(DDUploadReponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'post:fileStream:params:userInfo:showHUD:parentViewController:successBlock:failureBlock' method replaced.");
+     failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use +post:fileStream:params:userInfo:showHUD:parentViewController:successBlock:failureBlock instead.");
 
 @end

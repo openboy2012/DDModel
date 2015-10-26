@@ -39,7 +39,7 @@
                      content:(id)content;
 
 /**
- *  save a DDCache Object
+ *  Save a DDCache Object
  *
  *  @param path      url
  *  @param parameter request parameter

@@ -15,7 +15,7 @@
 @property (nonatomic, readonly) NSString *mimeType;
 
 /**
- *  initilization with name, fileName & mimeType dictionary object
+ *  Initilization with name, fileName & mimeType dictionary object
  *
  *  @param name     name
  *  @param fileName file name
@@ -28,7 +28,7 @@
                              mimeType:(NSString *)mimeType;
 
 /**
- *  default initilize
+ *  Default initilize
  *
  *  @return dictionary
  */
