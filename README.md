@@ -40,7 +40,7 @@ You can set response type use the property of DDModelHttpClient like this: `[DDM
 
 Please implement the Protocol Methods `- (NSDictionary *)encodeParameters:(NSDictionary *)params;` or `- (NSString *)decodeResponseString:(NSString *)responseString; ` if you want to handle http request parameters or response string.
 
-you should implement the Protocol Method `- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure` if you have custom business logic in your API.
+you should implement the Protocol Method `- (BOOL)checkResponseValueAvailable:(NSDictionary *)values failure:(DDResponsesFailureBlock)failure` if you have custom business logic in your API.
 
 for example:
 
@@ -66,7 +66,7 @@ for example:
     return responseString;
 }
 
-- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values
+- (BOOL)checkResponseValueAvailable:(NSDictionary *)values
                             failure:(DDResponseFailureBlock)failure{
     // handler your owner business logic
     if([[values objectForKey:@"returnCode"] isEqualToString:@"0000"])
@@ -109,7 +109,7 @@ Model Define:
            parentVC:(id)viewController
             showHUD:(BOOL)show
             success:(DDResponseSuccessBlock)success
-            failure:(DDResponseFailureBlock)failure;
+            failure:(DDResponsesFailureBlock)failure;
 
 @end
 
@@ -135,7 +135,7 @@ Model Define:
             success:(DDResponseSuccessBlock)success
             failure:(DDResponseFailureBlock)failure
 {
-    [[self class] get:@"stream/0/posts/stream/global" params:params showHUD:show parentViewController:viewController success:success failure:failure];
+    [[self class] get:@"stream/0/posts/stream/global" params:params showHUD:show parentViewController:viewController successBlock:success failureBlock:failure];
 }
 
 @end
@@ -157,14 +157,14 @@ Model Define:
 ##### DDModelHttpClient.h
 ```objective-c
 /**
- *  start a singleton HTTP client with url<启动一个设置URL单例HTTP请求>
+ *  Start a singleton HTTP client with url.
  *
- *  @param url HTTP target url<http目标URL>
+ *  @param url HTTP target url
  */
 + (void)startWithURL:(NSString *)url;
 
 /**
- *  start a singleton HTTP client with url and delegate
+ *  Start a singleton HTTP client with url & delegate
  *
  *  @param url      HTTP target url
  *  @param delegate DDHttpClientDelegate
@@ -172,14 +172,14 @@ Model Define:
 + (void)startWithURL:(NSString *)url delegate:(id<DDHttpClientDelegate>)delegate;
 
 /**
- *  set the HTTP header field value
+ *  Set the HTTP header field value
  *
  *  @param keyValue keyValue
  */
 + (void)addHTTPHeaderFieldValue:(NSDictionary *)keyValue;
 
 /**
- *  remove the HTTP header field value
+ *  Remove the HTTP header field value
  *
  *  @param keyValue keyValue
  */
@@ -215,7 +215,7 @@ Model Define:
  *
  *  @return true or false
  */
-- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure;
+- (BOOL)checkResponseValueAvailable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure;
 
 @end
 
@@ -224,96 +224,88 @@ Model Define:
 ##### DDModel.h
 
 ```objective-c
+@protocol DDMappings <NSObject>
+
 /**
- *  set the parse node, every subclass override the method if you want parse any node
+ *  Set the parse node, every subclass override the method if you want parse any node
  *
  *  @return node
  */
 + (NSString *)parseNode;
 
 /**
- *  handle the mappings about the json key-value transform to a model object.
-    The method support for KeyPathValue. e.g. you have a  @property name, you want get value from "{user:{name:'mike',id:10011},picture:'https://xxxx/headerimage/header01.jpg'}", you just set mapping dictionary is @{@"user.name":@"name"}.
+ *  Handle the mappings about the json key-value transform to a model object.
+ The method support for KeyPathValue. e.g. you have a  @property name, you want get value from "{user:{name:'mike',id:10011},picture:'https://xxxx/headerimage/header01.jpg'}", you just set mapping dictionary is @{@"user.name":@"name"}.
  *
  *  @return mappings
  */
 + (NSDictionary *)parseMappings;
+
+@end
 
 /**
  *  Get json data first from db cache then from http server by HTTP GET Mehod.
  *
  *  @param path           HTTP Path
  *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
  *  @param dbResult       db cache result block
  *  @param success        success block
  *  @param failure        failre block
+ *
+ *  @return NSURLSessionDataTask
  */
-+ (void)get:(NSString *)path
-     params:(id)params
-    showHUD:(BOOL)show
-parentViewController:(id)viewController
-  dbSuccess:(DDSQLiteBlock)dbResult
-    success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure;
++ (NSURLSessionDataTask *)get:(NSString *)path
+                       params:(id)params
+                    dbSuccess:(DDSQLiteBlock)dbResult
+                      success:(DDResponseSuccessBlock)success
+                      failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  Get json data first from db cache then from http server by HTTP POST Mehod.
  *
  *  @param path           HTTP Path
  *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
  *  @param dbResult       db cache result block
  *  @param success        success block
  *  @param failure        failre block
  *
+ *  @return NSURLSessionDataTask
  */
-+ (void)post:(NSString *)path
-      params:(id)params
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-   dbSuccess:(DDSQLiteBlock)dbResult
-     success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure;
-
++ (NSURLSessionDataTask *)post:(NSString *)path
+                        params:(id)params
+                     dbSuccess:(DDSQLiteBlock)dbResult
+                       success:(DDResponseSuccessBlock)success
+                       failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  Get json data from http server by HTTP GET Mehod.
  *
  *  @param path           HTTP Path
  *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
  *  @param success        success block
  *  @param failure        failre block
  *
+ *  @return NSURLSessionDataTask
  */
-+ (void)get:(NSString *)path
-     params:(id)params
-    showHUD:(BOOL)show
-parentViewController:(id)viewController
-    success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure;
++ (NSURLSessionDataTask *)get:(NSString *)path
+                       params:(id)params
+                      success:(DDResponseSuccessBlock)success
+                      failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  Get json data from http server by HTTP POST Mehod.
  *
  *  @param path           HTTP Path
- *  @param params         GET Paramtters
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
+ *  @param params         POST Paramtters
  *  @param success        success block
  *  @param failure        failre block
  *
+ *  @return NSURLSessionDataTask
  */
-+ (void)post:(NSString *)path
-      params:(id)params
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-     success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure;
++ (NSURLSessionDataTask *)post:(NSString *)path
+                        params:(id)params
+                       success:(DDResponseSuccessBlock)success
+                       failure:(DDResponsesFailureBlock)failure;
 
 /**
  *  Upload a data stream to http server by HTTP POST Method.
@@ -322,33 +314,25 @@ parentViewController:(id)viewController
  *  @param stream         stream data
  *  @param params         POST Parameters
  *  @param userInfo       userInfo dictionary
- *  @param show           is show the HUD on the view
- *  @param viewController parentViewController
  *  @param success        success block
  *  @param failure        failure block
- */
-+ (void)post:(NSString *)path
-  fileStream:(NSData *)stream
-      params:(id)params
-    userInfo:(id)userInfo
-     showHUD:(BOOL)show
-parentViewController:(id)viewController
-     success:(DDUploadReponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure;
-
-/**
- *  cancel all the request in the viewController.
  *
- *  @param viewController viewcontroller
+ *  @return NSURLSessionDataTask
  */
-+ (void)cancelRequest:(id)viewController;
++ (NSURLSessionDataTask *)post:(NSString *)path
+                    fileStream:(NSData *)stream
+                        params:(id)params
+                      userInfo:(id)userInfo
+                       success:(DDUploadReponseSuccessBlock)success
+                       failure:(DDResponsesFailureBlock)failure;
 
 /**
- *  Prase self entity into a dictionary
+ *  Parse self entity into a dictionary
  *
  *  @return a dictionary of self entity
  */
 - (NSDictionary *)propertiesOfObject;
+
 ```
 
 ## Updates
