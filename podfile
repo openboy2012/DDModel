@@ -2,7 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '6.0'
 
-pod 'AFNetworking', '2.5.3'
+pod 'AFNetworking', ‘2.5.4’
 pod 'SQLitePersistentObject', '~> 0.3.1'
 pod 'JTObjectMapping', '1.1.2'
 pod 'MBProgressHUD','0.9.1'
