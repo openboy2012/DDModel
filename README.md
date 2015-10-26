@@ -336,11 +336,12 @@ Model Define:
 ```
 
 ## Updates
-- 1.0 use the NSURLSession replace NSURLConnection
+- 1.1 Code refactoring and add the feature about url change when http client runing.
+- 1.0 Use the NSURLSession replace NSURLConnection
 
-- 0.4 add the db cache function
-- 0.3 add the xml parser function
-- 0.2 add the function of check api business logic 
+- 0.4 Add the db cache function
+- 0.3 Add the xml parser function
+- 0.2 Add the function of check api business logic 
 
 ## Requirements
 
