@@ -335,6 +335,8 @@ Model Define:
 
 ```
 
+you can see more method in the project, there are aslo have many categories in the project.
+
 ## Updates
 - 1.1 Code refactoring and add the feature about url change when http client runing.
 - 1.0 Use the NSURLSession replace NSURLConnection
