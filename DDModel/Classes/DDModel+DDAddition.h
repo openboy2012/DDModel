@@ -135,7 +135,7 @@ parentViewController:(id)viewController
 parentViewController:(id)viewController
   dbSuccess:(DDSQLiteBlock)dbResult
     success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure __deprecated_msg("");
+    failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'get:params:showHUD:parentViewController:dbSuccess:successBlock:failureBlock' method replaced.");
 
 /**
  *  Get json data first from db cache then from http server by HTTP POST Mehod.
@@ -155,7 +155,7 @@ parentViewController:(id)viewController
 parentViewController:(id)viewController
    dbSuccess:(DDSQLiteBlock)dbResult
      success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure __deprecated_msg("");
+     failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'post:params:showHUD:parentViewController:dbSuccess:successBlock:failureBlock' method replaced.");
 
 /**
  *  Get json data from http server by HTTP GET Mehod.
@@ -173,7 +173,7 @@ parentViewController:(id)viewController
     showHUD:(BOOL)show
 parentViewController:(id)viewController
     success:(DDResponseSuccessBlock)success
-    failure:(DDResponseFailureBlock)failure __deprecated_msg("");
+    failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'get:params:showHUD:parentViewController:successBlock:failureBlock' method replaced.");
 
 /**
  *  Get json data from http server by HTTP POST Mehod.
@@ -191,7 +191,7 @@ parentViewController:(id)viewController
      showHUD:(BOOL)show
 parentViewController:(id)viewController
      success:(DDResponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure __deprecated_msg("");
+     failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'post:params:showHUD:parentViewController:successBlock:failureBlock' method replaced.");
 
 /**
  *  Upload a data stream to http server by HTTP POST Method.
@@ -212,6 +212,6 @@ parentViewController:(id)viewController
      showHUD:(BOOL)show
 parentViewController:(id)viewController
      success:(DDUploadReponseSuccessBlock)success
-     failure:(DDResponseFailureBlock)failure __deprecated_msg("");
+     failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use 'post:fileStream:params:userInfo:showHUD:parentViewController:successBlock:failureBlock' method replaced.");
 
 @end
