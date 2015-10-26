@@ -246,11 +246,7 @@ parentViewController:(id)viewController
                                                                             id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
                                                                             if (success && JSON)
                                                                             {
-                                                                                NSDictionary *uInfo = nil;
-                                                                                if([task respondsToSelector:@selector(userInfo)]){
-                                                                                    uInfo = [task userInfo];
-                                                                                }
-                                                                                success(uInfo,[[self class] convertJsonToObject:JSON]);
+                                                                                success([task.taskDescription dictionaryWithJSON],[[self class] convertJsonToObject:JSON]);
                                                                             }
                                                                             
                                                                         }
@@ -260,7 +256,7 @@ parentViewController:(id)viewController
                                                                             [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
                                                                         }];
     if(userInfo)
-        uploadTask.userInfo = userInfo;
+        uploadTask.taskDescription = [userInfo JSONString];
     [[DDModelHttpClient sharedInstance] addTask:uploadTask withKey:viewController];
 }
 
