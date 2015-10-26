@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <SQLitePersistentObject.h>
-#import <NSObject+JTObjectMapping.h>
-#import <XMLDictionary.h>
+#import "SQLitePersistentObject.h"
+#import "NSObject+JTObjectMapping.h"
+#import "XMLDictionary.h"
 #import "DDModelHttpClient.h"
 
 @protocol DDMappings

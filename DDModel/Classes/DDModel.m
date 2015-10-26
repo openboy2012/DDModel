@@ -214,7 +214,8 @@ parentViewController:(id)viewController
                                          if(failure)
                                              failure(error, [error description]);
                                      }];
-    [[DDModelHttpClient sharedInstance] addTask:postTask withKey:viewController];}
+    [[DDModelHttpClient sharedInstance] addTask:postTask withKey:viewController];
+}
 
 + (void)post:(NSString *)path
   fileStream:(NSData *)stream

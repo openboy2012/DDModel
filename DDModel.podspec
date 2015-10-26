@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name     = 'DDModel'
- s.version  = '1.0.1'
+ s.version  = '1.0.3'
  s.license  = 'MIT'
  s.summary  = 'a HTTP-JSON-ORM-Persisent Object Kit'
  s.homepage = 'https://github.com/openboy2012/DDModel.git'
@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
  end
  s.subspec 'HTTP' do |ss|
    ss.dependency 'DDModel/Categories'
-   ss.dependency 'AFNetworking', '2.5.3'
+   ss.dependency 'AFNetworking', '2.5.4'
    ss.dependency 'MBProgressHUD','0.9.1'
 
    ss.source_files = 'DDModel/Classes/DDModelHttpClient.{h,m}'

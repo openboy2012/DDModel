@@ -9,7 +9,7 @@
 #import "DDCache.h"
 #import "NSDictionary+DDUploadFile.h"
 #import "NSString+CacheMD5.h"
-#import <XMLDictionary.h>
+#import "XMLDictionary.h"
 
 @implementation DDCache
 
