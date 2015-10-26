@@ -229,7 +229,7 @@ parentViewController:(id)viewController
 }
 
 + (void)cancelRequest:(id)viewController{
-    [[DDModelHttpClient sharedInstance] cancelTaskWithKey:viewController];
+    [[DDModelHttpClient sharedInstance] cancelTasksWithKey:viewController];
 }
 
 

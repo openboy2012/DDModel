@@ -55,7 +55,7 @@
  *
  *  @param key key <关键字>
  */
-- (void)cancelTaskWithKey:(id)key;
+- (void)cancelTasksWithKey:(id)key;
 
 
 @end

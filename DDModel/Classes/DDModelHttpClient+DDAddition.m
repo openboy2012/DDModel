@@ -94,7 +94,7 @@ static int hudCount = 0;
     });
 }
 
-- (void)cancelTaskWithKey:(id)key{
+- (void)cancelTasksWithKey:(id)key{
     __block NSString *keyStr = [self description];
     if(key)
         keyStr = [key description];
