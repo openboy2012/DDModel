@@ -12,7 +12,7 @@
 #define ddfile @"fileName"
 #define ddname @"name"
 
-@implementation NSDictionary (DDUploadFile)
+@implementation NSDictionary (DDModel)
 
 + (instancetype)dd_dictionaryWithName:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType{
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -22,7 +22,7 @@
     return dictionary;
 }
 
-+ (instancetype)defaultFile{
++ (instancetype)dd_defaultFile{
     return [self dd_dictionaryWithName:@"uploadFile" fileName:@"file" mimeType:@"image/jpg"];
 }
 
