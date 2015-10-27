@@ -155,7 +155,9 @@
     }else{
         [[DDModelHttpClient sharedInstance] dd_addURL:@"http://mapi.bstapp.cn"];
         NSLog(@"url = %@",[DDModelHttpClient sharedInstance].baseURL);
-        [BESTItemListRoot getItemList:@{@"sortBy":@"recommend",@"keyword":@"coach"} showHUD:YES parentViewController:self
+        [BESTItemListRoot getItemList:@{@"sortBy":@"recommend",@"keyword":@"coach"}
+                              showHUD:YES
+                 parentViewController:self
                               success:^(BESTItemListRoot *data) {
                                   NSLog(@"data.size = %i",(int)data.count);
                                   

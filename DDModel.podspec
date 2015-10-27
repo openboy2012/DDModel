@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name     = 'DDModel'
- s.version  = '1.1'
+ s.version  = '1.1.1'
  s.license  = 'MIT'
  s.summary  = 'a HTTP-JSON-ORM-Persisent Object Kit'
  s.homepage = 'https://github.com/openboy2012/DDModel.git'
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
  s.subspec 'Cache' do |ss|
    ss.dependency 'DDModel/Categories'
    ss.dependency 'XMLDictionary','1.4'
-   ss.dependency 'SQLitePersistentObject','~> 0.3'
+   ss.dependency 'SQLitePersistentObject','0.3.2'
 
    ss.source_files = 'DDModel/Classes/DDCache.{h,m}'
  end

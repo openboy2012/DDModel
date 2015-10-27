@@ -109,7 +109,14 @@ parentViewController:(id)viewController
             success:(DDResponseSuccessBlock)success
             failure:(DDResponsesFailureBlock)failure{
     
-    [[self class] post:@"/v1/search/list" params:params showHUD:show parentViewController:viewController successBlock:success failureBlock:failure];
+    [[self class] post:@"/v1/search/list" params:params
+               showHUD:show
+  parentViewController:viewController
+             dbSuccess:^(id data) {
+                 
+             }
+          successBlock:success
+          failureBlock:failure];
     
 }
 
