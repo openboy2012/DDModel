@@ -2,7 +2,7 @@
 //  NSURLSessionTask+DDModel.h
 //  DDModel
 //
-//  Created by diaoshu on 15/4/27.
+//  Created by DeJohn Dong on 15/4/27.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
