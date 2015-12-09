@@ -187,7 +187,7 @@
 
 #pragma mark -
 
-+ (id)getObjectFromReponseObject:(id)responseObject failure:(DDResponsesFailureBlock)failure{
++ (id)getObjectFromReponseObject:(id)responseObject failure:(DDResponsesFailureBlock)failure {
     NSDictionary *value = nil;
     if([responseObject isKindOfClass:[NSDictionary class]] && [DDModelHttpClient sharedInstance].type == DDResponseJSON){
         value = responseObject;
@@ -218,9 +218,9 @@
                                                       error:&decodeError];
         
     }
-    if(![[DDModelHttpClient sharedInstance] checkResponseValues:value failure:failure])
-        //check the failure response callback status
-    {
+    
+    //check the failure response callback status
+    if(![[DDModelHttpClient sharedInstance] checkResponseValues:value failure:failure]) {
         if([DDModelHttpClient sharedInstance].isFailureResponseCallback && failure){
             NSInteger responseCode = [value[[DDModelHttpClient sharedInstance].resultKey?:@"resultCode"] integerValue];
             NSString *message = value[[DDModelHttpClient sharedInstance].descKey?:@"resultDes"];
@@ -231,12 +231,13 @@
             failure(error, message, data);
         }
         return nil;
-    }    return value?:@{};
+    }
+    return value?:@{};
 }
 
 #pragma mark - Propery Methods
 
-- (NSDictionary *)propertiesOfObject{
+- (NSDictionary *)propertiesOfObject {
     NSMutableDictionary *props = [NSMutableDictionary dictionary];
     unsigned int outCount, i;
     objc_property_t *properties = class_copyPropertyList([self class], &outCount);

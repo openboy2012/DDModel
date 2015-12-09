@@ -178,14 +178,12 @@ typedef enum : NSUInteger {
  */
 - (BOOL)checkResponseValuesAvailable:(NSDictionary *)values failure:(DDResponsesFailureBlock)failure;
 
-
-- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_enum_msg("Please use the -checkResponseValueAvailable:failure: instead.");
-
+- (BOOL)checkResponseValueAvaliable:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_enum_msg("Please use the `-checkResponseValuesAvailable:failure:` instead.");
 
 @end
 
 @interface DDModelHttpClient (DDDeprecated)
 
-- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use the -checkResponseValues:failure: instead.");
+- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure __deprecated_msg("Please use the `-checkResponseValues:failure:` instead.");
 
 @end

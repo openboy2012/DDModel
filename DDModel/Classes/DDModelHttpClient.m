@@ -80,10 +80,22 @@ static NSString *kAppUrl;
     return responseString;
 }
 
-- (BOOL)checkResponseValues:(NSDictionary *)values failure:(DDResponsesFailureBlock)failure {
+- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure
+{
+    //instead methods
     if([self.delegate respondsToSelector:@selector(checkResponseValueAvaliable:failure:)]){
+        return [self.delegate checkResponseValueAvaliable:values failure:failure];
+    }
+    
+    return YES;
+}
+
+- (BOOL)checkResponseValues:(NSDictionary *)values failure:(DDResponsesFailureBlock)failure {
+    //instead methods
+    if([self.delegate respondsToSelector:@selector(checkResponseValuesAvailable:failure:)]){
         return [self.delegate checkResponseValuesAvailable:values failure:failure];
     }
+   
     return YES;
 }
 
