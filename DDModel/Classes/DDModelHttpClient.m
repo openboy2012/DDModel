@@ -80,13 +80,12 @@ static NSString *kAppUrl;
     return responseString;
 }
 
+//deprecated method
 - (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure
 {
-    //instead methods
     if([self.delegate respondsToSelector:@selector(checkResponseValueAvaliable:failure:)]){
         return [self.delegate checkResponseValueAvaliable:values failure:failure];
     }
-    
     return YES;
 }
 
