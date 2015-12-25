@@ -24,13 +24,13 @@ parentViewController:(id)viewController
 successBlock:(DDResponseSuccessBlock)success
 failureBlock:(DDResponsesFailureBlock)failure
 {
-    if(dbBlock){
+    if (dbBlock) {
         //query the cache
         [DDCache queryWithPath:path
                      parameter:params
                         result:^(id data) {
                             DDCache *cache = data;
-                            if(cache){
+                            if (cache) {
                                 id JSON = [cache.content dd_dictionaryWithJSON];
                                 dbBlock([[self class] convertToObject:JSON]);
                             }
@@ -53,16 +53,16 @@ failureBlock:(DDResponsesFailureBlock)failure
                                         
                                         //save the cache
                                         [DDCache cacheWithPath:path parameter:params content:JSON];
-                                        if (success && JSON){
+                                        if (success && JSON)
                                             success([[self class] convertToObject:JSON]);
-                                        }
                                     }
                                     failure:^(NSURLSessionDataTask *task, NSError *error) {
                                         [[DDModelHttpClient sharedInstance] hideHud:show];
                                         
                                         [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                        if(failure)
+                                        if (failure)
                                             failure(error, [error description], nil);
+                                        
                                     }];
     [[DDModelHttpClient sharedInstance] addTask:getTask withKey:viewController];
 }
@@ -75,13 +75,13 @@ parentViewController:(id)viewController
      successBlock:(DDResponseSuccessBlock)success
      failureBlock:(DDResponsesFailureBlock)failure {
     
-    if(dbBlock){
+    if (dbBlock) {
         //query the cache
         [DDCache queryWithPath:path
                      parameter:params
                         result:^(id data) {
                             DDCache *cache = data;
-                            if([cache.content length] > 1){
+                            if ([cache.content length] > 1) {
                                 id JSON = [cache.content dd_dictionaryWithJSON];
                                 dbBlock([[self class] convertToObject:JSON]);
                             }
@@ -104,15 +104,14 @@ parentViewController:(id)viewController
                                          
                                          //save the cache
                                          [DDCache cacheWithPath:path parameter:params content:responseObject];
-                                         if (success && JSON){
+                                         if (success && JSON)
                                              success([[self class] convertToObject:JSON]);
-                                         }
                                      }
                                      failure:^(NSURLSessionDataTask *task, NSError *error) {
                                          [[DDModelHttpClient sharedInstance] hideHud:show];
                                          
                                          [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                         if(failure)
+                                         if (failure)
                                              failure(error, [error description], nil);
                                      }];
     [[DDModelHttpClient sharedInstance] addTask:getTask withKey:viewController];
@@ -146,7 +145,7 @@ parentViewController:(id)viewController
                                         [[DDModelHttpClient sharedInstance] hideHud:show];
                                         
                                         [[DDModelHttpClient sharedInstance] removeTask:operation withKey:viewController];
-                                        if(failure)
+                                        if (failure)
                                             failure(error, [error description], nil);
                                     }];
     [[DDModelHttpClient sharedInstance] addTask:getTask withKey:viewController];
@@ -197,7 +196,7 @@ parentViewController:(id)viewController
      showHUD:(BOOL)show
 parentViewController:(id)viewController
      successBlock:(DDUploadReponseSuccessBlock)success
-     failureBlock:(DDResponsesFailureBlock)failure{
+     failureBlock:(DDResponsesFailureBlock)failure {
     
     [[DDModelHttpClient sharedInstance] showHud:show];
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
@@ -253,7 +252,7 @@ parentViewController:(id)viewController
                      parameter:params
                         result:^(id data) {
                             DDCache *cache = data;
-                            if(cache){
+                            if (cache) {
                                 id JSON = [cache.content dd_dictionaryWithJSON];
                                 dbBlock([[self class] convertToObject:JSON]);
                             }
@@ -276,15 +275,14 @@ parentViewController:(id)viewController
                                         
                                         //save the cache
                                         [DDCache cacheWithPath:path parameter:params content:JSON];
-                                        if (success && JSON){
+                                        if (success && JSON)
                                             success([[self class] convertToObject:JSON]);
-                                        }
                                     }
                                     failure:^(NSURLSessionDataTask *task, NSError *error) {
                                         [[DDModelHttpClient sharedInstance] hideHud:show];
                                         
                                         [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                        if(failure)
+                                        if (failure)
                                             failure(error, [error description]);
                                     }];
     [[DDModelHttpClient sharedInstance] addTask:getTask withKey:viewController];
@@ -328,9 +326,8 @@ parentViewController:(id)viewController
                                          
                                          //save the cache
                                          [DDCache cacheWithPath:path parameter:params content:responseObject];
-                                         if (success && JSON){
+                                         if (success && JSON)
                                              success([[self class] convertToObject:JSON]);
-                                         }
                                      }
                                      failure:^(NSURLSessionDataTask *task, NSError *error) {
                                          [[DDModelHttpClient sharedInstance] hideHud:show];
@@ -408,7 +405,7 @@ parentViewController:(id)viewController
                                          [[DDModelHttpClient sharedInstance] hideHud:show];
                                          
                                          [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
-                                         if(failure)
+                                         if (failure)
                                              failure(error, [error description]);
                                      }];
     [[DDModelHttpClient sharedInstance] addTask:postTask withKey:viewController];
@@ -447,6 +444,8 @@ parentViewController:(id)viewController
                                          [[DDModelHttpClient sharedInstance] showHud:show];
                                          
                                          [[DDModelHttpClient sharedInstance] removeTask:task withKey:viewController];
+                                         if (failure)
+                                             failure(error, [error description]);
                                      }];
     uploadTask.userInfo = userInfo;
     [[DDModelHttpClient sharedInstance] addTask:uploadTask withKey:viewController];
@@ -456,15 +455,17 @@ parentViewController:(id)viewController
 #pragma clang diagnostic ignored "-Wdeprecated-declarations" 
 + (id)getObjectFromReponseObject:(id)responseObject failureBlock:(DDResponseFailureBlock)failure {
     NSDictionary *value = nil;
-    if([responseObject isKindOfClass:[NSDictionary class]] && [DDModelHttpClient sharedInstance].type == DDResponseJSON){
+    if ([responseObject isKindOfClass:[NSDictionary class]] &&
+        [DDModelHttpClient sharedInstance].type == DDResponseJSON) {
         value = responseObject;
-    }else if([responseObject isKindOfClass:[NSXMLParser class]] && [DDModelHttpClient sharedInstance].type == DDResponseXML){
+    } else if([responseObject isKindOfClass:[NSXMLParser class]] &&
+              [DDModelHttpClient sharedInstance].type == DDResponseXML) {
         value = [NSDictionary dictionaryWithXMLParser:responseObject];
-    }else{
+    } else {
         NSString *responseString  = nil;
-        if([responseObject isKindOfClass:[NSData class]]){
+        if ([responseObject isKindOfClass:[NSData class]]) {
             responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        }else{
+        } else {
             responseString = responseObject;
         }
         /**
@@ -477,18 +478,17 @@ parentViewController:(id)viewController
         NSData *decodeData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
         
         
-        if([DDModelHttpClient sharedInstance].type == DDResponseXML){
+        if ([DDModelHttpClient sharedInstance].type == DDResponseXML)
             value = [NSDictionary dictionaryWithXMLData:decodeData];
-        }else
+        else
             value = [NSJSONSerialization JSONObjectWithData:decodeData
                                                     options:NSJSONReadingAllowFragments
                                                       error:&decodeError];
         
     }
-    if(![[DDModelHttpClient sharedInstance] checkResponseValue:value failure:failure])
-        //check the failure response callback status
-    {
-        if([DDModelHttpClient sharedInstance].isFailureResponseCallback && failure){
+    //check the failure response callback status
+    if (![[DDModelHttpClient sharedInstance] checkResponseValue:value failure:failure]) {
+        if ([DDModelHttpClient sharedInstance].isFailureResponseCallback && failure) {
             NSInteger responseCode = [value[[DDModelHttpClient sharedInstance].resultKey?:@"resultCode"] integerValue];
             NSString *message = value[[DDModelHttpClient sharedInstance].descKey?:@"resultDes"];
             NSError *error = [NSError errorWithDomain:[DDModelHttpClient sharedInstance].baseURL.host
@@ -497,7 +497,8 @@ parentViewController:(id)viewController
             failure(error, message);
         }
         return nil;
-    }    return value?:@{};
+    }
+    return value?:@{};
 }
 #pragma clang diagnostic pop
 @end

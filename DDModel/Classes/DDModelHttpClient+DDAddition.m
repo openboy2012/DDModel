@@ -15,25 +15,25 @@ static int hudCount = 0;
 
 #pragma mark - runtime methods
 
-- (MBProgressHUD *)hud{
+- (MBProgressHUD *)hud {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setHud:(MBProgressHUD *)hud{
+- (void)setHud:(MBProgressHUD *)hud {
     objc_setAssociatedObject(self, @selector(hud), hud, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - HTTP HUD methods
 
-- (void)showHud:(BOOL)flag{
-    if(!flag)
+- (void)showHud:(BOOL)flag {
+    if (!flag)
         return;
-    if(hudCount > 0){
+    if (hudCount > 0) {
         hudCount ++;
         return;
     }
     UIWindow *topWindow = [[[UIApplication sharedApplication] windows] lastObject];
-    if(!self.hud){
+    if (!self.hud) {
         self.hud = [[MBProgressHUD alloc] initWithView:topWindow];
         self.hud.labelText = @"请稍候...";
         self.hud.yOffset = -20.0f;
@@ -47,10 +47,10 @@ static int hudCount = 0;
     [self.hud show:NO];
 }
 
-- (void)hideHud:(BOOL)flag{
-    if(!flag)
+- (void)hideHud:(BOOL)flag {
+    if (!flag)
         return;
-    if(hudCount == 1 && self.hud){
+    if (hudCount == 1 && self.hud) {
         [self.hud hide:NO];
     }
     hudCount --;
@@ -60,19 +60,19 @@ static int hudCount = 0;
 
 @implementation DDModelHttpClient (NSURLSessionTaskHandler)
 
-- (NSMutableDictionary *)ddHttpQueueDict{
+- (NSMutableDictionary *)ddHttpQueueDict {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setDdHttpQueueDict:(NSMutableDictionary *)ddHttpQueueDict{
+- (void)setDdHttpQueueDict:(NSMutableDictionary *)ddHttpQueueDict {
     objc_setAssociatedObject(self, @selector(ddHttpQueueDict), ddHttpQueueDict, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - HTTP Operation Methods
 
-- (void)addTask:(NSURLSessionTask *)task withKey:(id)key{
+- (void)addTask:(NSURLSessionTask *)task withKey:(id)key {
     __block NSString *keyStr = [self description];
-    if(key)
+    if (key)
         keyStr = [key description];
     dispatch_async(dispatch_get_main_queue(), ^{
         NSMutableArray *tasks = self.ddHttpQueueDict[keyStr];
@@ -84,9 +84,9 @@ static int hudCount = 0;
     });
 }
 
-- (void)removeTask:(NSURLSessionTask *)task withKey:(id)key{
+- (void)removeTask:(NSURLSessionTask *)task withKey:(id)key {
     __block NSString *keyStr = [self description];
-    if(key)
+    if (key)
         keyStr = [key description];
     dispatch_async(dispatch_get_main_queue(), ^{
         NSMutableArray *tasks = self.ddHttpQueueDict[keyStr];
@@ -94,13 +94,13 @@ static int hudCount = 0;
     });
 }
 
-- (void)cancelTasksWithKey:(id)key{
+- (void)cancelTasksWithKey:(id)key {
     __block NSString *keyStr = [self description];
-    if(key)
+    if (key)
         keyStr = [key description];
     dispatch_async(dispatch_get_main_queue(), ^{
         NSMutableArray *tasks = self.ddHttpQueueDict[keyStr];
-        if(tasks.count > 0)
+        if (tasks.count > 0)
             [tasks makeObjectsPerformSelector:@selector(cancel)];
         [self.ddHttpQueueDict removeObjectForKey:keyStr];
     });

@@ -19,7 +19,7 @@
 
 #pragma mark - replace methods
 
-+ (void)load{
++ (void)load {
     
     SEL selectors[] = {
         @selector(baseURL)
@@ -36,9 +36,9 @@
     }
 }
 
-- (NSURL *)dd_baseURL{
+- (NSURL *)dd_baseURL {
     NSString *url = self.urls[0];
-    if([url rangeOfString:@"http"].location == NSNotFound){
+    if ([url rangeOfString:@"http"].location == NSNotFound) {
         url = [NSString stringWithFormat:@"http://%@",url];
     }
     return [NSURL URLWithString:url];
@@ -46,33 +46,33 @@
 
 #pragma mark - runtime methods
 
-- (NSMutableArray *)urls{
+- (NSMutableArray *)urls {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setUrls:(NSMutableArray *)urls{
+- (void)setUrls:(NSMutableArray *)urls {
     objc_setAssociatedObject(self, @selector(urls), urls, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)hasHttpsPrefix{
+- (BOOL)hasHttpsPrefix {
     return [objc_getAssociatedObject(self, _cmd) boolValue];
 }
 
-- (void)setHasHttpsPrefix:(BOOL)hasHttpsPrefix{
+- (void)setHasHttpsPrefix:(BOOL)hasHttpsPrefix {
     objc_setAssociatedObject(self, @selector(hasHttpsPrefix), @(hasHttpsPrefix), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Private Methods
 
-- (void)dd_exchangeURL:(NSString *)url{
+- (void)dd_exchangeURL:(NSString *)url {
     self.hasHttpsPrefix = NO;
-    if([url hasPrefix:@"https"]){
+    if ([url hasPrefix:@"https"]) {
         self.hasHttpsPrefix = YES;
     }
-    if([self.urls containsObject:url]){
+    if ([self.urls containsObject:url]) {
         [self.urls exchangeObjectAtIndex:0 withObjectAtIndex:[self.urls indexOfObject:url]];
-    }else{
-        if(!self.urls){
+    } else {
+        if (!self.urls) {
             self.urls = [NSMutableArray new];
         }
         [self.urls insertObject:url atIndex:0];
@@ -80,13 +80,13 @@
 }
 
 - (void)dd_addURL:(NSString *)url{
-    if(!self.urls){
+    if (!self.urls) {
         self.urls = [NSMutableArray new];
     }
-    if([url hasPrefix:@"https"]){
+    if ([url hasPrefix:@"https"]) {
         self.hasHttpsPrefix = YES;
     }
-    if([self.urls containsObject:url]){
+    if ([self.urls containsObject:url]) {
         [self dd_exchangeURL:url];
         return;
     }

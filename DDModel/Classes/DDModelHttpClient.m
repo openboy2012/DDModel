@@ -22,20 +22,20 @@ static NSString *kAppUrl;
 
 #pragma mark - lifecycle methods
 
-+ (void)startWithURL:(NSString *)url{
++ (void)startWithURL:(NSString *)url {
     kAppUrl = url;
     [self sharedInstance];
 }
 
-+ (instancetype)sharedInstance{
++ (instancetype)sharedInstance {
     static DDModelHttpClient *client = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSURL *clientURL = [NSURL URLWithString:kAppUrl];
-        if([clientURL.scheme isEqualToString:@"https"]){
+        if ([clientURL.scheme isEqualToString:@"https"]) {
             client.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
         }
-        if(!clientURL.host){
+        if (!clientURL.host) {
             NSLog(@"you have lost the method 'startWithURL:' or 'startWithURL:delegate:' in lanuching AppDelegate");
         }
         client = [[DDModelHttpClient alloc] initWithBaseURL:clientURL];
@@ -45,20 +45,20 @@ static NSString *kAppUrl;
     return client;
 }
 
-+ (void)startWithURL:(NSString *)url delegate:(id<DDHttpClientDelegate>)delegate{
++ (void)startWithURL:(NSString *)url delegate:(id<DDHttpClientDelegate>)delegate {
     [self startWithURL:url];
     [DDModelHttpClient sharedInstance].delegate = delegate;
 }
 
 #pragma mark - HTTP Header Field Value Handler Methods
 
-+ (void)addHTTPHeaderFieldValue:(NSDictionary *)keyValue{
++ (void)addHTTPHeaderFieldValue:(NSDictionary *)keyValue {
     for (id key in [keyValue allKeys]) {
         [[[self sharedInstance] requestSerializer] setValue:keyValue[key] forHTTPHeaderField:key];
     }
 }
 
-+ (void)removeHTTPHeaderFieldValue:(NSDictionary *)keyValue{
++ (void)removeHTTPHeaderFieldValue:(NSDictionary *)keyValue {
     for (id key in [keyValue allKeys]) {
         [[[self sharedInstance] requestSerializer] setValue:@"" forHTTPHeaderField:key];
     }
@@ -66,52 +66,42 @@ static NSString *kAppUrl;
 
 #pragma mark - HTTP Decode & Encode Methods
 
-- (NSDictionary *)parametersHandler:(NSDictionary *)params{
-    if([self.delegate respondsToSelector:@selector(encodeParameters:)]){
+- (NSDictionary *)parametersHandler:(NSDictionary *)params {
+    if ([self.delegate respondsToSelector:@selector(encodeParameters:)]) {
         params = [self.delegate encodeParameters:params];
     }
     return params;
 }
 
-- (NSString *)responseStringHandler:(NSString *)responseString{
-    if([self.delegate respondsToSelector:@selector(decodeResponseString:)]){
+- (NSString *)responseStringHandler:(NSString *)responseString {
+    if ([self.delegate respondsToSelector:@selector(decodeResponseString:)]) {
         responseString = [self.delegate decodeResponseString:responseString];
     }
     return responseString;
 }
 
-//deprecated method
-- (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure
-{
-    if([self.delegate respondsToSelector:@selector(checkResponseValueAvaliable:failure:)]){
-        return [self.delegate checkResponseValueAvaliable:values failure:failure];
-    }
-    return YES;
-}
-
 - (BOOL)checkResponseValues:(NSDictionary *)values failure:(DDResponsesFailureBlock)failure {
     //instead methods
-    if([self.delegate respondsToSelector:@selector(checkResponseValuesAvailable:failure:)]){
+    if ([self.delegate respondsToSelector:@selector(checkResponseValuesAvailable:failure:)]) {
         return [self.delegate checkResponseValuesAvailable:values failure:failure];
     }
-   
     return YES;
 }
 
 #pragma mark - Get & set methods
 
-- (void)setType:(DDResponseType)type{
+- (void)setType:(DDResponseType)type {
     _type = type;
-    if(type == DDResponseXML){
+    if (type == DDResponseXML) {
         self.responseSerializer = [AFXMLParserResponseSerializer serializer];
-    }else if(type == DDResponseJSON){
+    } else if(type == DDResponseJSON) {
         self.responseSerializer = [AFJSONResponseSerializer serializer];
-    }else{
+    } else {
         self.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
 }
 
-- (void)setFailureCallbackResponse:(BOOL)flag{
+- (void)setFailureCallbackResponse:(BOOL)flag {
     self.isFailureResponseCallback = flag;
 }
 
@@ -120,7 +110,6 @@ static NSString *kAppUrl;
 
 
 @implementation DDModelHttpClient (DDDeprecated)
-
 
 - (BOOL)checkResponseValue:(NSDictionary *)values failure:(DDResponseFailureBlock)failure{
     if([self.delegate respondsToSelector:@selector(checkResponseValueAvaliable:failure:)]){

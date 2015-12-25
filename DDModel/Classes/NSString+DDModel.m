@@ -11,8 +11,7 @@
 
 @implementation NSString (DDModel)
 
-- (NSString *)dd_cacheMD5
-{
+- (NSString *)dd_cacheMD5 {
     const char *cStr = [self UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
     CC_MD5(cStr, (CC_LONG)strlen(cStr), result);
@@ -25,7 +24,7 @@
              ] lowercaseString];
 }
 
-- (NSDictionary *)dd_dictionaryWithJSON{
+- (NSDictionary *)dd_dictionaryWithJSON {
     NSError *jsonError = nil;
     NSData *jsonData = [self dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:jsonData

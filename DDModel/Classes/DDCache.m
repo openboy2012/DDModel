@@ -15,7 +15,7 @@
 
 + (void)queryWithPath:(NSString *)path
             parameter:(NSDictionary *)parameter
-               result:(DBQueryResult)result{
+               result:(DBQueryResult)result {
     NSString *queryParameter = [NSString stringWithFormat:@"WHERE parameter = '%@' AND path = '%@';",[[parameter dd_jsonString] dd_cacheMD5], [path dd_cacheMD5]];
     [[self class] queryFirstItemByCriteria:queryParameter
                                     result:result];
@@ -23,9 +23,9 @@
 
 - (instancetype)initWithPath:(NSString *)path
                    parameter:(NSDictionary *)parameter
-                     content:(id)content{
+                     content:(id)content {
     self = [super init];
-    if(self){
+    if (self) {
         self.path = [path dd_cacheMD5];
         self.content = [[self class] contentHandler:content];
         self.parameter = [[parameter dd_jsonString] dd_cacheMD5];
@@ -35,22 +35,24 @@
 
 + (void)cacheWithPath:(NSString *)path
             parameter:(NSDictionary *)parameter
-              content:(id)content{
+              content:(id)content {
     [self queryWithPath:path parameter:parameter result:^(id data) {
         DDCache *cache = data;
-        if(!cache)
-            cache = [[DDCache alloc] initWithPath:path parameter:parameter content:content];
+        if (!cache)
+            cache = [[DDCache alloc] initWithPath:path
+                                        parameter:parameter
+                                          content:content];
         cache.content = [self contentHandler:content];
         [cache save];
     }];
 }
 
-+ (NSString *)contentHandler:(id)content{
-    if([content isKindOfClass:[NSString class]]){
++ (NSString *)contentHandler:(id)content {
+    if ([content isKindOfClass:[NSString class]]) {
         return content;
-    }else if([content isKindOfClass:[NSDictionary class]]){
+    } else if ([content isKindOfClass:[NSDictionary class]]) {
         return [content dd_jsonString];
-    }else if([content isKindOfClass:[NSXMLParser class]]){
+    } else if([content isKindOfClass:[NSXMLParser class]]) {
         NSDictionary *jsonDict = [NSDictionary dictionaryWithXMLParser:content];
         return [jsonDict dd_jsonString];
     }

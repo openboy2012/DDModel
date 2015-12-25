@@ -11,11 +11,11 @@
 
 @implementation NSURLSessionTask (DDModel)
 
-- (void)setUserInfo:(NSDictionary *)userInfo{
+- (void)setUserInfo:(NSDictionary *)userInfo {
     objc_setAssociatedObject(self, @selector(userInfo), userInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSDictionary *)userInfo{
+- (NSDictionary *)userInfo {
     return objc_getAssociatedObject(self, _cmd);
 }
 
