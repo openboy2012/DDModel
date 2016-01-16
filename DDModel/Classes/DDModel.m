@@ -106,7 +106,7 @@
 + (NSURLSessionDataTask *)get:(NSString *)path
                        params:(id)params
                       success:(DDResponseSuccessBlock)success
-                      failure:(DDResponsesFailureBlock)failure{
+                      failure:(DDResponsesFailureBlock)failure {
     
     params = [[DDModelHttpClient sharedInstance] parametersHandler:params];
     NSURLSessionDataTask *getTask =
@@ -288,7 +288,7 @@
         if ([[[self class] parseNode] isEqualToString:@"NULL"]) {
             data = jsonObject;
         } else {
-            data = [jsonObject objectForKey:[[self class] parseNode]];
+            data = [jsonObject valueForKeyPath:[[self class] parseNode]];
         }
     }
     if (data == nil) {
