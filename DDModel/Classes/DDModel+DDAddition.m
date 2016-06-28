@@ -43,6 +43,7 @@ failureBlock:(DDResponsesFailureBlock)failure
     NSURLSessionDataTask *getTask =
     [[DDModelHttpClient sharedInstance] GET:path
                                  parameters:getParams
+                                   progress:nil
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         
                                         [[DDModelHttpClient sharedInstance] hideHud:show];
@@ -94,6 +95,7 @@ parentViewController:(id)viewController
     NSURLSessionDataTask *getTask =
     [[DDModelHttpClient sharedInstance] POST:path
                                   parameters:postParams
+                                    progress:nil
                                      success:^(NSURLSessionDataTask *task, id responseObject) {
                                          
                                          [[DDModelHttpClient sharedInstance] hideHud:show];
@@ -132,6 +134,7 @@ parentViewController:(id)viewController
     NSURLSessionDataTask *getTask =
     [[DDModelHttpClient sharedInstance] GET:path
                                  parameters:params
+                                   progress:nil
                                     success:^(NSURLSessionDataTask *operation, id responseObject) {
                                         
                                         [[DDModelHttpClient sharedInstance] hideHud:show];
@@ -166,6 +169,7 @@ parentViewController:(id)viewController
     NSURLSessionDataTask *postTask =
     [[DDModelHttpClient sharedInstance] POST:path
                                   parameters:params
+                                    progress:nil
                                      success:^(NSURLSessionDataTask *task, id responseObject) {
                                          /**
                                           *  hide the hud view
@@ -210,6 +214,7 @@ parentViewController:(id)viewController
                                                      uploadInfo = [NSDictionary dd_defaultFile];
                                                  [formData appendPartWithFileData:stream name:uploadInfo.name fileName:uploadInfo.fileName mimeType:uploadInfo.mimeType];
                                              }
+                                                              progress:nil
                                                                success:^(NSURLSessionDataTask *task, id responseObject) {
                                                                    [[DDModelHttpClient sharedInstance] hideHud:show];
                                                                    

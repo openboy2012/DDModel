@@ -43,6 +43,7 @@
     NSURLSessionDataTask *getTask =
     [[DDModelHttpClient sharedInstance] GET:path
                                  parameters:getParams
+                                   progress:nil
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         id JSON = [self getObjectFromReponseObject:responseObject
                                                                            failure:failure];
@@ -85,6 +86,7 @@
     NSURLSessionDataTask *postTask =
     [[DDModelHttpClient sharedInstance] POST:path
                                   parameters:postParams
+                                    progress:nil
                                      success:^(NSURLSessionDataTask *task, id responseObject) {
                                          
                                          id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
@@ -112,6 +114,7 @@
     NSURLSessionDataTask *getTask =
     [[DDModelHttpClient sharedInstance] GET:path
                                  parameters:params
+                                   progress:nil
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         
                                         id JSON = [self getObjectFromReponseObject:responseObject
@@ -135,6 +138,7 @@
     NSURLSessionDataTask *postTask =
     [[DDModelHttpClient sharedInstance] POST:path
                                   parameters:params
+                                    progress:nil
                                      success:^(NSURLSessionDataTask *task, id responseObject) {
                                          
                                          id JSON = [self getObjectFromReponseObject:responseObject failure:failure];
@@ -169,6 +173,7 @@
                                                fileName:uploadInfo.fileName
                                                mimeType:uploadInfo.mimeType];
                    }
+                                    progress:nil
                                      success:^(NSURLSessionDataTask *task, id responseObject) {
                                          id JSON = [self getObjectFromReponseObject:responseObject
                                                                             failure:failure];
